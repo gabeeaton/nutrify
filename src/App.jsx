@@ -1,35 +1,45 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from "react";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+    <div className = 'cover'>
+      <div style = {{background: 'white'}}><Navbar /></div>
+      <div class = "container"><Cover /></div>
+    </div>
     </>
+  );
+}
+
+function Cover () {
+  return (
+    <div class="cover">
+  <h1>Welcome to SmartTracker <img src = "./src/assets/food-dish-svgrepo-com.svg"></img></h1>
+  <h2>Your ultimate tool in the journey towards a healthier, happier you.</h2>
+  <button type = "button" class="btn">Get Started</button>
+  <button type = "button" class="btn">Sign In</button>
+  </div>
   )
 }
 
-export default App
+function Navbar() {
+  return (
+    <ul className="nav justify-content-center">
+    <li className="nav-item">
+      <a className="nav-link" aria-current="page" href="/">Home</a>
+    </li>
+    <li className="nav-item">
+      <a className="nav-link" href="#">Log Food</a>
+    </li>
+    <li className="nav-item">
+      <a className="nav-link" href="#">View Entries</a>
+    </li>
+    <li className="nav-item">
+      <a className="nav-link" href="#">Settings</a>
+    </li>
+  </ul>
+  );
+}
+
+export default App;
