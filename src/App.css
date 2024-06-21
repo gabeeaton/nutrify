@@ -70,15 +70,15 @@ div .btn{
     background-color: white;
     margin: 30px;
     min-width: 120px;
-    border-radius: 12%;
+    border-radius: 10%;
     font-weight: bold;
     letter-spacing: 1.5px;
     transition: transform 0.3s ease-in-out;
     margin-top: 80px;
+    border: none;
 }
 div .btn:hover{
     transform: scale(1.05);
-    opacity: 0.8;
     background-color: white;
     opacity: 1;
 }
@@ -91,4 +91,23 @@ div .btn:hover{
 
 div h2{
     padding-top: 50px;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.nav {
+  animation: fadeIn 2.5s ease-in-out forwards;
+  opacity: 0;
+}
+
+.fade-in {
+  animation: fadeIn 2.5s ease-in-out forwards;
+  opacity: 0;
 }

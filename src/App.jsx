@@ -1,44 +1,69 @@
-import React from "react";
+// App.js
+
+import React, { useState, useEffect } from "react";
 import "./App.css";
 
 function App() {
   return (
     <>
-    <div className = 'cover'>
-      <div style = {{background: 'white'}}><Navbar /></div>
-      <div class = "container"><Cover /></div>
-    </div>
+      <div className="cover">
+        <div style={{ background: "white" }}>
+          <Navbar />
+        </div>
+        <div className="container">
+          <Cover />
+        </div>
+      </div>
     </>
   );
 }
 
-function Cover () {
+
+function Cover() {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    setIsVisible(true); 
+  }, []);
+
+  const handleClick = (event) => {
+    event.preventDefault();
+  };
+
   return (
-    <div class="cover">
-  <h1>Welcome to SmartTracker <img src = "./src/assets/food-dish-svgrepo-com.svg"></img></h1>
-  <h2>Your ultimate tool in the journey towards a healthier, happier you.</h2>
-  <button type = "button" class="btn">Get Started</button>
-  <button type = "button" class="btn">Sign In</button>
-  </div>
-  )
+    <div className={`cover fade-in ${isVisible ? 'show' : ''}`}>
+      <h1 className="fade-in">Welcome to SmartTracker <img src="./src/assets/food-dish-svgrepo-com.svg" alt="food dish" /></h1>
+      <h2 className="fade-in">Your ultimate tool in the journey towards a healthier, happier you.</h2>
+      <a href="/get-started" className="btn fade-in" onClick={handleClick}>Get Started</a>
+      <a href="/sign-in" className="btn fade-in"onClick={handleClick}>Sign In</a>
+    </div>
+  );
 }
 
 function Navbar() {
   return (
     <ul className="nav justify-content-center">
-    <li className="nav-item">
-      <a className="nav-link" aria-current="page" href="/">Home</a>
-    </li>
-    <li className="nav-item">
-      <a className="nav-link" href="#">Log Food</a>
-    </li>
-    <li className="nav-item">
-      <a className="nav-link" href="#">View Entries</a>
-    </li>
-    <li className="nav-item">
-      <a className="nav-link" href="#">Settings</a>
-    </li>
-  </ul>
+      <li className="nav-item">
+        <a className="nav-link" aria-current="page" href="/">
+          Home
+        </a>
+      </li>
+      <li className="nav-item">
+        <a className="nav-link" href="/food">
+          Log Food
+        </a>
+      </li>
+      <li className="nav-item">
+        <a className="nav-link" href="/view">
+          View Entries
+        </a>
+      </li>
+      <li className="nav-item">
+        <a className="nav-link" href="/settings">
+          Settings
+        </a>
+      </li>
+    </ul>
   );
 }
 
