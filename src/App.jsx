@@ -1,9 +1,24 @@
-// App.js
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import "./App.css";
+import "../src/components/navbar.css"
+
+import Navbar from "./components/navbar"
+import Food from "./components/food";
 
 function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Main />} />
+        <Route path="/food" element={<Food />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+function Main() {
   return (
     <>
       <div className="cover">
@@ -18,53 +33,31 @@ function App() {
   );
 }
 
-
 function Cover() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    setIsVisible(true); 
+    setIsVisible(true);
   }, []);
 
-  const handleClick = (event) => {
-    event.preventDefault();
-  };
-
   return (
-    <div className={`cover fade-in ${isVisible ? 'show' : ''}`}>
-      <h1 className="fade-in">Welcome to SmartTracker <img src="./src/assets/food-dish-svgrepo-com.svg" alt="food dish" /></h1>
-      <h2 className="fade-in">Your ultimate tool in the journey towards a healthier, happier you.</h2>
-      <a href="/get-started" className="btn fade-in" onClick={handleClick}>Get Started</a>
-      <a href="/sign-in" className="btn fade-in"onClick={handleClick}>Sign In</a>
+    <div className={`cover fade-in ${isVisible ? "show" : ""}`}>
+      <h1 className="fade-in">
+        Welcome to SmartTracker{" "}
+        <img src="./src/assets/food-dish-svgrepo-com.svg" alt="food dish" />
+      </h1>
+      <h2 className="fade-in">
+        Your ultimate tool in the journey towards a healthier, happier you.
+      </h2>
+      <Link to="/get-started" className="btn fade-in">
+        Get Started
+      </Link>
+      <Link to="/sign-in" className="btn fade-in">
+        Sign In
+      </Link>
     </div>
   );
 }
 
-function Navbar() {
-  return (
-    <ul className="nav justify-content-center">
-      <li className="nav-item">
-        <a className="nav-link" aria-current="page" href="/">
-          Home
-        </a>
-      </li>
-      <li className="nav-item">
-        <a className="nav-link" href="/food">
-          Log Food
-        </a>
-      </li>
-      <li className="nav-item">
-        <a className="nav-link" href="/view">
-          View Entries
-        </a>
-      </li>
-      <li className="nav-item">
-        <a className="nav-link" href="/settings">
-          Settings
-        </a>
-      </li>
-    </ul>
-  );
-}
 
 export default App;

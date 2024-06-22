@@ -1,0 +1,36 @@
+.nav-item {
+    font-weight: bold;
+}
+.nav-item a:hover {
+    color: black;
+}
+.nav {
+    animation: fadeIn 2.5s ease-in-out forwards;
+    opacity: 0;
+  }
+.nav-item a {
+    color: black;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 0.15em;
+    display: inline-block;
+    padding: 15px 20px;
+    position: relative;
+  }
+.nav-item a:after {
+    background: none repeat scroll 0 0 transparent;
+    bottom: 0;
+    content: "";
+    display: block;
+    height: 2px;
+    left: 50%;
+    position: absolute;
+    background: black;
+    transition: width 0.3s ease 0s, left 0.3s ease 0s;
+    width: 0;
+}
+ 
+.nav-item a:hover:after {
+  width: 100%;
+  left: 0;
+ }
