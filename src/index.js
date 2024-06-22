@@ -9,16 +9,16 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
 
-const api_url = process.env.API_URL;
-const api_key = process.env.API_KEY;
-const app_key = process.env.app_key;
-const app_id = process.env.app_id;
+const api_url = `${process.env.API_URL}`;
+const api_key = `${process.env.API_KEY}`;
+const app_key = `${process.env.app_key}`;
+const app_id = `${process.env.app_id}`;
 
 const db = new pg.Client({
-    user: process.env.DB_USER,
-    host: process.env.DB_HOST,
-    database: process.env.DB_DATABASE,
-    password: process.env.DB_PASSWORD,
+    user: `${process.env.DB_USER}`,
+    host: `${process.env.DB_HOST}`,
+    database: `${process.env.DB_DATABASE}`,
+    password: `${process.env.DB_PASSWORD}`,
     port: process.env.DB_PORT,
 });
 
@@ -31,4 +31,8 @@ app.use(express.static("public"));
 
 app.get("/nutrition", async (req, res) => {
     const foodText = req.query.foodText;
+});
+
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
 });
