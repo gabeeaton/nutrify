@@ -2,9 +2,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import "./App.css";
-import "../src/components/navbar.css"
+import "../src/components/navbar.css";
 
-import Navbar from "./components/navbar"
+import Navbar from "./components/navbar";
 import Food from "./components/food";
 
 function App() {
@@ -22,7 +22,7 @@ function Main() {
   return (
     <>
       <div className="cover">
-        <div style={{ background: "white" }}>
+        <div className = "nav-area">
           <Navbar />
         </div>
         <div className="container">
@@ -58,6 +58,5 @@ function Cover() {
     </div>
   );
 }
-
 
 export default App;

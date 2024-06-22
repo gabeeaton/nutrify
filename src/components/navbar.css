@@ -29,8 +29,12 @@
     transition: width 0.3s ease 0s, left 0.3s ease 0s;
     width: 0;
 }
- 
 .nav-item a:hover:after {
   width: 100%;
   left: 0;
+ }
+ .nav-area{
+    background: white;
+    border-radius: 10px;
+    margin: 20px;
  }

@@ -1,13 +1,17 @@
 import React from "react";
-import "../food.css";
+import "./food.css";
+import Navbar from "./navbar";
 
 function Food() {
   return (
-    <div class="container">
-      <div className="main">
-        <h1>Hello</h1>
+    <>
+      <Navbar />
+      <div class="food-container">
+        <div className="main">
+          <div class = "search-container"><h3>Search a food to log</h3><input type="text"></input></div>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

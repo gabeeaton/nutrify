@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./navbar.css"
+import "./navbar.css";
 
 function Navbar() {
   return (
-    <ul className="nav justify-content-center">
+    <ul className="nav justify-content-center nav-area">
       <li className="nav-item">
         <Link className="nav-link" to="/">
           Home
