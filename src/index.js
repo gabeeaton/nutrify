@@ -3,26 +3,24 @@ import bodyParser from "body-parser";
 import pg from "pg";
 import dotenv from "dotenv";
 import axios from 'axios';
-import dotenv from 'dotenv'
 
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = 3000;
 
-const app_id = process.env.APP_ID;
-const app_key = process.env.APP_KEY;
+const app_key = '4f6ba1ac291cb9d9f5fced4ea3378e3b';
+const app_id = '2553f5e4';
 const API_URL = `https://api.edamam.com/api/food-database/v2/parser?app_id=${app_id}&app_key=${app_key}`;
-const api_key = process.env.API_KEY;
+const api_key = 'd3e40ed6';
 
 const db = new pg.Client({
-    user: process.env.DB_USER,
-    host: process.env.DB_HOST,
-    database: process.env.DB_DATABASE,
-    password: process.env.DB_PASSWORD,
-    port: process.env.DB_PORT,
+    user: 'postgres',
+    host: 'localhost',
+    database: 'nutrition_tracker',
+    password: 'sheckwes0',
+    port: 5432,
 });
-
 
 db.connect()
     .then(() => console.log('Connected to the database'))
@@ -33,6 +31,22 @@ app.use(express.static("public"));
 
 app.get("/nutrition", async (req, res) => {
     const foodText = req.query.foodText;
+    if (!foodText) {
+        return res.status(400).json({ error: "foodText query parameter is required" });
+    }
+
+    try {
+        const response = await axios.get(API_URL, {
+            params: {
+                ingr: foodText
+            }
+        });
+
+        res.json(response.data);
+    } catch (error) {
+        console.error('Error fetching data from Edamam API', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
 });
 
 

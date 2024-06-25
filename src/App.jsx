@@ -3,27 +3,11 @@ import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import "../src/components/navbar.css";
-import axios from 'axios';
-import dotenv from 'dotenv'
-
-dotenv.config();
+import { fetchAPI } from "./api";
 
 import Navbar from "./components/navbar";
 import Food from "./components/food";
 
-const app_id = process.env.APP_ID;
-const app_key = process.env.APP_KEY;
-const API_URL = `https://api.edamam.com/api/food-database/v2/parser?app_id=${app_id}&app_key=${app_key}`;
-
-export const fetchAPI = async () => {
-    try {
-        const response = await axios.get(API_URL)
-        return response.data;
-    } catch (error) {
-        console.error('Error fetching data', error);
-        throw error;
-    } 
-};
 function App() {
   const [message, setMessage] = useState('');
 
