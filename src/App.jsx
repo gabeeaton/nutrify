@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import "../src/components/navbar.css";
-import { fetchAPI } from "./api";
+import { fetchAPI } from "./api.js";
 
 import Navbar from "./components/navbar";
 import Food from "./components/food";

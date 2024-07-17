@@ -1,10 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import pg from "pg";
-import dotenv from "dotenv";
-import axios from 'axios';
-
-dotenv.config();
+import { fetchAPI } from "./api.js";
 
 const app = express();
 const port = 3000;
@@ -29,26 +26,18 @@ db.connect()
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-app.get("/nutrition", async (req, res) => {
-    const foodText = req.query.foodText;
-    if (!foodText) {
-        return res.status(400).json({ error: "foodText query parameter is required" });
+app.get("/search", async(req, res) => {
+    const { query } = req.query;
+    if(!query){
+        console.log("No input detected")
     }
-
-    try {
-        const response = await axios.get(API_URL, {
-            params: {
-                ingr: foodText
-            }
-        });
-
-        res.json(response.data);
-    } catch (error) {
-        console.error('Error fetching data from Edamam API', error);
-        res.status(500).json({ error: 'Internal server error' });
+    try{ 
+        const data = await fetchAPI(query);
+        res.json(data);
+    } catch(err) {
+        console.error(err.message);
     }
 });
-
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
