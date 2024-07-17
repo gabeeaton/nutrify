@@ -50,3 +50,38 @@ div h3{
 input{
     padding: 7.5px;
 }
+
+.food-block {
+    margin-top: 10px;
+    border-radius: 10%;
+    margin-left: 20px;
+}
+
+.parent-food-block {
+    display: flex;
+    margin: 20px;
+    border: 1px solid black;
+    border-radius: 15px ;
+    background-color: white;
+    position: relative;
+}
+
+.add-button {
+    border-radius: 6px;
+    background-color: #4BB543;
+    color: white;
+    border: none;
+    height: 2rem;
+    width: 2.5rem;
+    position: absolute;
+    left: 37rem;
+    top: .5rem;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.add-button:hover {
+    transform: scale(1.15);
+    transition: transform 0.3s ease-in-out;
+  }
