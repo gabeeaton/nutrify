@@ -17,11 +17,11 @@ function Food() {
     try {
       const response = await axios.get(API_URL, {
         params: {
-          query: search,
+          'ingr': search,
         }
       });
       const data = response.data;
-      setResults(data.hints || []);
+      setResults(data.hints);
     } catch (err) {
       console.error(err.message);
     }
@@ -37,7 +37,6 @@ function Food() {
             <form onSubmit ={submitForm}>
               <input
                 type="text"
-                value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 autoFocus
               ></input>
@@ -58,9 +57,8 @@ function Food() {
                 <div key={index} className="result-item">
                   <div className="parent-food-block">
                     <div className="food-block">
-                      <p className="food-item">{result.food.label}: {result.food.nutrients.ENERC_KCAL} cal</p>
+                   <p className="food-item">{result.food.label}: {result.food.nutrients.ENERC_KCAL} cal</p><button className="add-button">+</button>
                     </div>
-                    <button className="add-button">+</button>
                   </div>
                 </div>
               ))}
@@ -68,6 +66,7 @@ function Food() {
           </div>
         </div>
       </div>
+      
     </>
   );
 }

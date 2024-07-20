@@ -37,7 +37,7 @@ div .btn {
   background-color: white;
   margin: 30px;
   min-width: 120px;
-  border-radius: 10%;
+  border-radius: 5%;
   font-weight: bold;
   transition: transform 0.3s ease-in-out;
   margin-top: 80px;

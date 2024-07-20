@@ -59,7 +59,7 @@ function Cover() {
   return (
     <div className={`cover fade-in ${isVisible ? "show" : ""}`}>
       <h1 className="fade-in">
-        Welcome to SmartTracker{" "}
+        Welcome to SmartSnack{" "}
         <img src="./src/assets/food-dish-svgrepo-com.svg" alt="food dish" />
       </h1>
       <h2 className="fade-in">
