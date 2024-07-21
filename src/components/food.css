@@ -84,6 +84,7 @@ div h3 {
     padding-bottom: 0px;
     position: relative;
     margin-bottom: 10px;
+    animation: fadeIn 1.5s ease-in-out forwards;
 }
 .results{
     margin-top: 20px;
