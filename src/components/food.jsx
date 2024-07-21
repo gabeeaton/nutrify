@@ -3,70 +3,103 @@ import "./food.css";
 import Navbar from "./navbar";
 import axios from "axios";
 
-export const app_key = '4f6ba1ac291cb9d9f5fced4ea3378e3b';
-export const app_id = '2553f5e4';
+export const app_key = "4f6ba1ac291cb9d9f5fced4ea3378e3b";
+export const app_id = "2553f5e4";
 export const API_URL = `https://api.edamam.com/api/food-database/v2/parser?app_id=${app_id}&app_key=${app_key}`;
 
 function Food() {
-  
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const [results, setResults] = useState([]);
 
-  const submitForm = async(e) => {
+  const submitForm = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.get(API_URL, {
         params: {
-          'ingr': search,
-        }
+          ingr: search,
+        },
       });
       const data = response.data;
       setResults(data.hints);
     } catch (err) {
       console.error(err.message);
     }
-  }
+  };
 
   return (
     <>
       <Navbar />
-      <div className="food-container">
-        <div className="main">
-          <div className="search-container">
-            <h3>Search a food to log</h3>
-            <form onSubmit ={submitForm}>
-              <input
-                type="text"
-                onChange={(e) => setSearch(e.target.value)}
-                autoFocus
-              ></input>
-              <button type="submit" className="search">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  className="bi bi-search"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                </svg>
-              </button>
-            </form>
-            <div className="results">
-              {results.map((result, index) => (
-                <div key={index} className="result-item">
-                  <div className="parent-food-block">
-                    <div className="food-block">
-                   <p className="food-item">{result.food.label}: {result.food.nutrients.ENERC_KCAL} cal</p><button className="add-button">+</button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+      <div>
+        <h3 style={{ color: "white" }}>SEARCH A FOOD TO LOG OR <button class ="custom-food">ADD A CUSTOM FOOD</button></h3>
+      </div>
+      <div className="search-container">
+        <div class="group">
+          <svg class="icon" aria-hidden="true" viewBox="0 0 24 24">
+            <g>
+              <path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path>
+            </g>
+          </svg>
+          <form onSubmit={submitForm}>
+            <input
+              placeholder="Search"
+              type="search"
+              class="input"
+              onChange={(e) => setSearch(e.target.value)}
+              autoFocus
+            />
+          </form>
         </div>
       </div>
-      
+      <div></div>
+      <div className = "parent-container">
+      <div className="results">
+        {results.map((result, index) => (
+          <div key={index} className="result-item">
+            <div className="parent-food-block">
+              <div className="food-block">
+                <div>
+                  <p className="food-item">
+                    {result.food.label}:{" "}
+                    {result.food.nutrients.ENERC_KCAL.toFixed(0)} calories per serving
+                    <div>
+                      <button className="add-button">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="21"
+                          height="21"
+                          fill="currentColor"
+                          class="bi bi-plus-lg"
+                          viewBox="0 0 16 16"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            stroke="white"
+                            strokeWidth="1.05"
+                            d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"
+                          />
+                        </svg>
+                      </button>
+                      <button className="info-button">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="21"
+                          height="21"
+                          fill="currentColor"
+                          class="bi bi-info-lg"
+                          viewBox="0 0 16 16"
+                        >
+                          <path d="m9.708 6.075-3.024.379-.108.502.595.108c.387.093.464.232.38.619l-.975 4.577c-.255 1.183.14 1.74 1.067 1.74.72 0 1.554-.332 1.933-.789l.116-.549c-.263.232-.65.325-.905.325-.363 0-.494-.255-.402-.704zm.091-2.755a1.32 1.32 0 1 1-2.64 0 1.32 1.32 0 0 1 2.64 0" />
+                        </svg>
+                      </button>
+                    </div>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+      </div>
     </>
   );
 }

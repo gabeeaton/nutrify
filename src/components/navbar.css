@@ -39,8 +39,11 @@
     background: white;
     border-radius: 10px;
     margin: 20px;
-    animation: fadeIn 2s ease-in-out forwards;
+    animation: fadeIn 2.5s ease-in-out forwards;
  }
  .food-item{
   font-weight: bold;
  }
+ .custom:hover{
+  color: white;
+ }  
