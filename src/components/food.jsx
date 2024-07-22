@@ -30,7 +30,7 @@ function Food() {
     <>
       <Navbar />
       <div>
-        <h3 style={{ color: "white" }}>SEARCH A FOOD TO LOG OR <button class ="custom-food">ADD A CUSTOM FOOD</button></h3>
+        <h3 style={{ color: "white" }}>SEARCH A FOOD TO LOG</h3>
       </div>
       <div className="search-container">
         <div class="group">
@@ -48,57 +48,76 @@ function Food() {
               autoFocus
             />
           </form>
+          <button class="custom-food">
+            Add a custom food
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="21"
+              height="21"
+              fill="currentColor"
+              className="bi bi-plus-lg cust"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fill-rule="evenodd"
+                stroke="white"
+                strokeWidth="1.05"
+                d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"
+              />
+            </svg>
+          </button>
         </div>
       </div>
       <div></div>
-      <div className = "parent-container">
-      <div className="results">
-        {results.map((result, index) => (
-          <div key={index} className="result-item">
-            <div className="parent-food-block">
-              <div className="food-block">
-                <div>
-                  <p className="food-item">
-                    {result.food.label}:{" "}
-                    {result.food.nutrients.ENERC_KCAL.toFixed(0)} calories per serving
-                    <div>
-                      <button className="add-button">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="21"
-                          height="21"
-                          fill="currentColor"
-                          class="bi bi-plus-lg"
-                          viewBox="0 0 16 16"
-                        >
-                          <path
-                            fill-rule="evenodd"
-                            stroke="white"
-                            strokeWidth="1.05"
-                            d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"
-                          />
-                        </svg>
-                      </button>
-                      <button className="info-button">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="21"
-                          height="21"
-                          fill="currentColor"
-                          class="bi bi-info-lg"
-                          viewBox="0 0 16 16"
-                        >
-                          <path d="m9.708 6.075-3.024.379-.108.502.595.108c.387.093.464.232.38.619l-.975 4.577c-.255 1.183.14 1.74 1.067 1.74.72 0 1.554-.332 1.933-.789l.116-.549c-.263.232-.65.325-.905.325-.363 0-.494-.255-.402-.704zm.091-2.755a1.32 1.32 0 1 1-2.64 0 1.32 1.32 0 0 1 2.64 0" />
-                        </svg>
-                      </button>
-                    </div>
-                  </p>
+      <div className="parent-container">
+        <div className="results">
+          {results.map((result, index) => (
+            <div key={index} className="result-item">
+              <div className="parent-food-block">
+                <div className="food-block">
+                  <div>
+                    <p className="food-item">
+                      {result.food.label}:{" "}
+                      {result.food.nutrients.ENERC_KCAL.toFixed(0)} calories per
+                      serving
+                      <div>
+                        <button className="add-button">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="21"
+                            height="21"
+                            fill="currentColor"
+                            class="bi bi-plus-lg"
+                            viewBox="0 0 16 16"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              stroke="white"
+                              strokeWidth="1.05"
+                              d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"
+                            />
+                          </svg>
+                        </button>
+                        <button className="info-button">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="21"
+                            height="21"
+                            fill="currentColor"
+                            class="bi bi-info-lg"
+                            viewBox="0 0 16 16"
+                          >
+                            <path d="m9.708 6.075-3.024.379-.108.502.595.108c.387.093.464.232.38.619l-.975 4.577c-.255 1.183.14 1.74 1.067 1.74.72 0 1.554-.332 1.933-.789l.116-.549c-.263.232-.65.325-.905.325-.363 0-.494-.255-.402-.704zm.091-2.755a1.32 1.32 0 1 1-2.64 0 1.32 1.32 0 0 1 2.64 0" />
+                          </svg>
+                        </button>
+                      </div>
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
       </div>
     </>
   );
