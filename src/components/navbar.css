@@ -5,10 +5,15 @@
     color: black;
     transform: translateY(-10px);
 }
+@media(max-width: 600px) {
+  .nav-item{
+    font-size: 0.8rem;
+  }
+}
 .nav {
     animation: fadeIn 1.5s ease-in-out forwards;
     opacity: 0;
-  }
+}
 .nav-item a {
     color: black;
     text-transform: uppercase;
