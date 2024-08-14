@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import "../src/components/navbar.css";
 import { fetchAPI } from "./api.js";
+import Foodinfo from "./components/food-info"
 
 import Navbar from "./components/navbar";
 import Food from "./components/food";
@@ -29,6 +30,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/food" element={<Food />} />
+        <Route path="/food-info" element={<Foodinfo/>} />
       </Routes>
     </BrowserRouter>
   );
@@ -65,10 +67,10 @@ function Cover() {
       <h2 className="fade-in">
         Your ultimate tool in the journey towards a healthier, happier you.
       </h2>
-      <Link to="/get-started" className="btn fade-in">
+      <Link to="/get-started" className="btn fade-in but">
         Get Started
       </Link>
-      <Link to="/sign-in" className="btn fade-in">
+      <Link to="/sign-in" className="btn fade-in but">
         Sign In
       </Link>
     </div>

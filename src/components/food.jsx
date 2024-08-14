@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, createContext } from "react";
 import "./food.css";
 import Navbar from "./navbar";
 import axios from "axios";
@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 export const app_key = "4f6ba1ac291cb9d9f5fced4ea3378e3b";
 export const app_id = "2553f5e4";
 export const API_URL = `https://api.edamam.com/api/food-database/v2/parser?app_id=${app_id}&app_key=${app_key}`;
-
+export const ApiContext = createContext();
 function Food() {
   const [search, setSearch] = useState("");
   const [results, setResults] = useState([]);
@@ -27,6 +27,26 @@ function Food() {
       console.error(err.message);
     }
   };
+
+  function convertGrams(grams) {
+    const oz = (grams / 28).toFixed(1);
+    return oz;
+  }
+  useEffect(() => {
+    const fetchData = async () => {
+    try {
+      const response = await axios.get(API_URL, {
+        params: {
+          ingr: search,
+        },
+      });
+      const data = response.data;
+      setResults(data.hints);
+      console.log(data);
+    } catch (err) {
+      console.error(err.message);
+    }
+  }}, [data]);
 
   return (
     <>
@@ -82,7 +102,7 @@ function Food() {
                       <div className="food-name">
                         {result.food.label}:{" "}
                         {result.food.nutrients.ENERC_KCAL.toFixed(0)} cal per{" "}
-                        {result.measures[0].weight.toFixed(0)} g
+                        {result.measures[0].weight.toFixed(0)}g{" (" + convertGrams(result.food.nutrients.ENERC_KCAL.toFixed(1))+" oz)"}
                       </div>
                       <div className="buttons">
                         <button className="add-button">
