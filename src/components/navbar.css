@@ -11,7 +11,7 @@
   }
 }
 .nav {
-    animation: fadeIn 0.5s ease-in-out forwards;
+    animation: fadeIn 1s ease-in-out forwards;
     opacity: 0;
 }
 .nav-item a {
@@ -44,7 +44,7 @@
     background: white;
     border-radius: 10px;
     margin: 20px;
-    animation: fadeIn 0.5s ease-in-out forwards;
+    animation: fadeIn 1s ease-in-out forwards;
     margin-bottom: 80px;
  }
  .food-item{

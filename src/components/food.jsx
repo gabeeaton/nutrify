@@ -3,14 +3,17 @@ import "./food.css";
 import Navbar from "./navbar";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Foodinfo from "./food-info";
 
 export const app_key = "4f6ba1ac291cb9d9f5fced4ea3378e3b";
 export const app_id = "2553f5e4";
 export const API_URL = `https://api.edamam.com/api/food-database/v2/parser?app_id=${app_id}&app_key=${app_key}`;
-export const ApiContext = createContext();
+
+export const ApiContext = createContext(null);
 function Food() {
   const [search, setSearch] = useState("");
   const [results, setResults] = useState([]);
+  const [selection, setSelection] = useState(null);
 
   const submitForm = async (e) => {
     e.preventDefault();
@@ -22,7 +25,6 @@ function Food() {
       });
       const data = response.data;
       setResults(data.hints);
-      console.log(data);
     } catch (err) {
       console.error(err.message);
     }
@@ -32,24 +34,13 @@ function Food() {
     const oz = (grams / 28).toFixed(1);
     return oz;
   }
-  useEffect(() => {
-    const fetchData = async () => {
-    try {
-      const response = await axios.get(API_URL, {
-        params: {
-          ingr: search,
-        },
-      });
-      const data = response.data;
-      setResults(data.hints);
-      console.log(data);
-    } catch (err) {
-      console.error(err.message);
-    }
-  }}, [data]);
+
+  function handleInfoClick(food){
+    setSelection(food);
+  }
 
   return (
-    <>
+    <ApiContext.Provider value={selection}>
       <Navbar />
       <div>
         <h3 style={{ color: "white" }}>SEARCH A FOOD TO LOG</h3>
@@ -123,7 +114,7 @@ function Food() {
                           </svg>
                         </button>
                         <Link to="/food-info">
-                          <button className="info-button">
+                          <button className="info-button" onClick={() => handleInfoClick(result.food)}>
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="21"
@@ -142,10 +133,12 @@ function Food() {
                 </div>
               </div>
             </div>
+            
           ))}
         </div>
       </div>
-    </>
+      <Foodinfo />
+    </ApiContext.Provider>
   );
 }
 

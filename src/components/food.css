@@ -62,7 +62,7 @@ input:hover {
 div h3 {
   margin-top: 25px;
   margin-bottom: 20px;
-  animation: fadeIn 2.5s ease-in-out forwards;
+  animation: fadeIn 1.5s ease-in-out forwards;
 }
 .food-item{
     color: black;
