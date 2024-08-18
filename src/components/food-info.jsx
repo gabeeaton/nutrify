@@ -3,7 +3,7 @@ import "./food-info.css";
 import Navbar from "./navbar";
 import { ApiContext } from "./food";
 
-function  Foodinfo() {
+function Foodinfo({results}) {
 
     const info = useContext(ApiContext);
     
@@ -14,8 +14,11 @@ function  Foodinfo() {
     }
 
     return (
+    
+    (
         <>
        <Navbar />
+   
        <div className = "container">
         <div className = "child">
             <h1>
@@ -25,6 +28,7 @@ function  Foodinfo() {
        </div>
        </>
     )
-}
+    )
 
+}
 export default Foodinfo

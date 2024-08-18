@@ -71,7 +71,7 @@ function Cover() {
         Get Started
       </Link>
       <Link to="/sign-in" className="btn fade-in but">
-        Sign In
+      Sign In
       </Link>
     </div>
   );
