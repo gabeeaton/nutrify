@@ -3,32 +3,41 @@ import "./food-info.css";
 import Navbar from "./navbar";
 import { ApiContext } from "./food";
 
-function Foodinfo({results}) {
+export function Foodinfo() {
+  const info = useContext(ApiContext);
+  var image_url = "";
+  if (info) {
+    image_url = info.image;
+  }
 
-    const info = useContext(ApiContext);
-    
-    if (info) {   
-        console.log("data", info);
-    } else {
-        console.log("data is null or undefined");
-    }
+  if (info) {
+    console.log("data", info);
+  } else {
+    console.log("data is null or undefined");
+  }
 
-    return (
-    
-    (
-        <>
-       <Navbar />
-   
-       <div className = "container">
-        <div className = "child">
-            <h1>
-
-            </h1>
+  return (
+    <>
+      <Navbar />
+      <div className="container">
+        <div className="child">
+          <h1 style={{ color: "black", marginTop: "50px" }}>
+            {info ? info.label : null}
+          </h1>
+          <div className="img-container">
+            <img
+              src={image_url}
+              style={{ borderRadius: "10px" }}
+              className="img-fluid"
+            />
+          </div>
+          <div style = {{color: "green", fontWeight: "bold"}}>Calories: {info.nutrients.ENERC_KCAL}</div>
+          <div style = {{color: "red"}}>Protein: {info.nutrients.PROCNT}</div>
+          <div style = {{color: "blue"}}>Carbohydrates: {info.nutrients.CHOCDF}</div>
+          <div style = {{color: "orange"}}>Fat: {info.nutrients.FAT}</div>
         </div>
-       </div>
-       </>
-    )
-    )
-
+      </div>
+    </>
+  );
 }
-export default Foodinfo
+export default Foodinfo;

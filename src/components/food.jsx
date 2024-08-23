@@ -3,17 +3,16 @@ import "./food.css";
 import Navbar from "./navbar";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import Foodinfo from "./food-info";
 
 export const app_key = import.meta.env.VITE_API_KEY;
 export const app_id = import.meta.env.VITE_APP_ID
 export const API_URL = `https://api.edamam.com/api/food-database/v2/parser?app_id=${app_id}&app_key=${app_key}`;
 
 export const ApiContext = createContext(null);
-function Food() {
+
+function Food({setSelection}) {
   const [search, setSearch] = useState("");
   const [results, setResults] = useState([]);
-  const [selection, setSelection] = useState(null);
 
   const submitForm = async (e) => {
     e.preventDefault();
@@ -40,7 +39,7 @@ function Food() {
   }
 
   return (
-    <ApiContext.Provider value={selection}>
+    <>
       <Navbar />
       <div>
         <h3 style={{ color: "white" }}>SEARCH A FOOD TO LOG</h3>
@@ -137,8 +136,7 @@ function Food() {
           ))}
         </div>
       </div>
-       {selection ? <Foodinfo /> : null}
-    </ApiContext.Provider>
+      </>
   );
 }
 

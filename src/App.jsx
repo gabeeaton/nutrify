@@ -4,13 +4,15 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import "../src/components/navbar.css";
 import { fetchAPI } from "./api.js";
-import Foodinfo from "./components/food-info"
+import {Foodinfo }from "./components/food-info"
+import { ApiContext } from "./components/food";
 
 import Navbar from "./components/navbar";
 import Food from "./components/food";
 
 function App() {
   const [message, setMessage] = useState('');
+  const [selection, setSelection] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -27,11 +29,13 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/food" element={<Food />} />
-        <Route path="/food-info" element={<Foodinfo/>} />
-      </Routes>
+      <ApiContext.Provider value={selection}>
+        <Routes>
+          <Route path="/" element={<Main />} />
+          <Route path="/food" element={<Food setSelection={setSelection} />} />
+          <Route path="/food-info" element={<Foodinfo />} />
+        </Routes>
+      </ApiContext.Provider>
     </BrowserRouter>
   );
 }
