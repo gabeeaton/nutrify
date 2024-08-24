@@ -11,7 +11,7 @@
 }
 .child{
     height: 100%;
-    width: 50%;
+    width: 80%;
     background-color: white;
     border-radius: 50px;
     display: flex;
@@ -23,5 +23,21 @@
     display: flex;
     justify-content: center;
     height: 50%;
-    width: 80%;
+    width: 70%;
+}
+.maincontainer{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+}
+.nutrient-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    justify-content: space-around;
+    gap: 20px;
+    font-size: 25px;
 }

@@ -6,6 +6,7 @@ import "../src/components/navbar.css";
 import { fetchAPI } from "./api.js";
 import {Foodinfo }from "./components/food-info"
 import { ApiContext } from "./components/food";
+import {Login} from "./components/login.jsx"
 
 import Navbar from "./components/navbar";
 import Food from "./components/food";
@@ -34,6 +35,7 @@ function App() {
           <Route path="/" element={<Main />} />
           <Route path="/food" element={<Food setSelection={setSelection} />} />
           <Route path="/food-info" element={<Foodinfo />} />
+          <Route path = "/login" element={<Login />} />
         </Routes>
       </ApiContext.Provider>
     </BrowserRouter>
@@ -71,10 +73,10 @@ function Cover() {
       <h2 className="fade-in">
         Your ultimate tool in the journey towards a healthier, happier you.
       </h2>
-      <Link to="/get-started" className="btn fade-in but">
+      <Link to="/sign-up" className="btn fade-in but">
         Get Started
       </Link>
-      <Link to="/sign-in" className="btn fade-in but">
+      <Link to="/login" className="btn fade-in but">
       Sign In
       </Link>
     </div>

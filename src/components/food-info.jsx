@@ -24,19 +24,20 @@ export function Foodinfo() {
           <h1 style={{ color: "black", marginTop: "50px" }}>
             {info ? info.label : null}
           </h1>
-          <div className="img-container">
-            <img
-              src={image_url}
-              style={{ borderRadius: "10px" }}
-              className="img-fluid"
-            />
+            <div className="nutrient-container">
+              <div style={{ color: "green", fontWeight: "bold" }}>
+                Calories: {info.nutrients.ENERC_KCAL}
+              </div>
+              <div style={{ color: "red" }}>
+                Protein: {info.nutrients.PROCNT}
+              </div>
+              <div style={{ color: "blue" }}>
+                Carbohydrates: {info.nutrients.CHOCDF}
+              </div>
+              <div style={{ color: "orange" }}>Fat: {info.nutrients.FAT}</div>
+            </div>
           </div>
-          <div style = {{color: "green", fontWeight: "bold"}}>Calories: {info.nutrients.ENERC_KCAL}</div>
-          <div style = {{color: "red"}}>Protein: {info.nutrients.PROCNT}</div>
-          <div style = {{color: "blue"}}>Carbohydrates: {info.nutrients.CHOCDF}</div>
-          <div style = {{color: "orange"}}>Fat: {info.nutrients.FAT}</div>
         </div>
-      </div>
     </>
   );
 }
