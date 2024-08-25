@@ -102,6 +102,6 @@ body {
 .login-container{
     background-color: white;
     border-radius: 20px;
-    height: 70vh;
-    width: 50vw;
+    display: flex;
+    justify-content: center;
 }

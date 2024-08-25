@@ -18,7 +18,7 @@ export function Foodinfo() {
 
   return (
     <>
-      <Navbar />
+
       <div className="container">
         <div className="child">
           <h1 style={{ color: "black", marginTop: "50px" }}>
