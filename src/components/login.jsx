@@ -14,23 +14,30 @@ export function Login() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    axios.post("")
+    axios
+      .post("http://localhost:5173/login", { email, password })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   }
 
   return (
     <>
       <Navbar />
       <div class="login-container">
-        <form class="form" onSubmit = {handleSubmit}>
+        <form class="form" onSubmit={handleSubmit}>
           <p class="form-title">Sign in to your account</p>
           <div class="input-container">
-            <input placeholder="Enter email" type="email" onChange = {e => setEmail(e.target.value)}/>
+            <input
+              placeholder="Enter email"
+              type="email"
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </div>
           <div class="input-container">
             <input
               placeholder="Enter password"
               type={passwordVisible ? "text" : "password"}
-              onChange = {e => setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
             />
             <span onClick={toggleVisible} style={{ cursor: "pointer" }}>
               <svg
