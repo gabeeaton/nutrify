@@ -13,6 +13,18 @@ app.use(express.json());
 
 //Add user to database
 
+app.post('/login', (req ,res) => {
+    const sql = "SELECT * FROM users WHERE email = ? AND password = ?";
+    const values = [
+        req.body.email,
+        req.body.password
+    ]
+    pool.query(sql, [values], (err, data) => {
+        if(err) return res.json("Login failed");
+        return res.json(data);
+    })
+});
+
 //Authenticate users
 
 //POST food

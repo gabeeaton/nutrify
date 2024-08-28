@@ -1,28 +1,36 @@
 import "./login.css";
 import React, { useState } from "react";
 import Navbar from "./navbar";
+import axios from "axios";
 
 export function Login() {
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [email, setEmail] = useState(false);
+  const [password, setPassword] = useState(false);
 
   const toggleVisible = () => {
     setPasswordVisible(!passwordVisible);
   };
 
+  function handleSubmit(event) {
+    event.preventDefault();
+    axios.post("")
+  }
+
   return (
     <>
-        <Navbar />
+      <Navbar />
       <div class="login-container">
-        <form class="form">
+        <form class="form" onSubmit = {handleSubmit}>
           <p class="form-title">Sign in to your account</p>
           <div class="input-container">
-            <input placeholder="Enter 
-            email" type="email" />
+            <input placeholder="Enter email" type="email" onChange = {e => setEmail(e.target.value)}/>
           </div>
           <div class="input-container">
             <input
               placeholder="Enter password"
               type={passwordVisible ? "text" : "password"}
+              onChange = {e => setPassword(e.target.value)}
             />
             <span onClick={toggleVisible} style={{ cursor: "pointer" }}>
               <svg
@@ -51,8 +59,7 @@ export function Login() {
           </button>
 
           <p class="signup-link">
-            No account?{" "}
-            <a href="">Sign up</a>
+            No account? <a href="">Sign up</a>
           </p>
         </form>
       </div>
