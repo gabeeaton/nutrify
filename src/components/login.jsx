@@ -5,8 +5,8 @@ import axios from "axios";
 
 export function Login() {
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [email, setEmail] = useState(false);
-  const [password, setPassword] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const toggleVisible = () => {
     setPasswordVisible(!passwordVisible);
@@ -15,7 +15,7 @@ export function Login() {
   function handleSubmit(event) {
     event.preventDefault();
     axios
-      .post("http://localhost:5173/login", { email, password })
+      .post("http://localhost:3000/login", { email, password })
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
   }

@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import pool from "./db.js"
+import pool from "./db.js";
 
 const app = express();
 
@@ -9,19 +9,22 @@ app.use(express.json());
 
 //ROUTES//
 
-
 //Add user to database
 
-app.post('/login', (req ,res) => {
-    const sql = "SELECT * FROM users WHERE email = ? AND password = ?";
-    const values = [
-        req.body.email,
-        req.body.password
-    ]
-    pool.query(sql, [values], (err, data) => {
-        if(err) return res.json("Login failed");
-        return res.json(data);
-    })
+app.post("/login", (req, res) => {
+  const sql = "SELECT * FROM users WHERE email = ? AND password = ?";
+  const values = [req.body.email, req.body.password];
+  pool.query(sql, [req.body.email, req.body.password], (err, data) => {
+    if (err) {
+    console.error(err);
+      return res.json("Error");
+    }
+    if (data.length < 0) {
+      return res.json("Login successful");
+    } else {
+      res.json("No record");
+    }
+  });
 });
 
 //Authenticate users
@@ -37,5 +40,5 @@ app.post('/login', (req ,res) => {
 //GET settings
 
 app.listen(3000, () => {
-    console.log("Server is running on port 3000")
+  console.log("Server is running on port 3000");
 });
