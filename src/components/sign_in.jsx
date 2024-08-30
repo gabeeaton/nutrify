@@ -1,9 +1,9 @@
-import "./login.css";
 import React, { useState } from "react";
 import Navbar from "./navbar";
 import axios from "axios";
+import "./sign_in.css";
 
-export function Login() {
+export function SignIn() {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,7 +15,7 @@ export function Login() {
   function handleSubmit(event) {
     event.preventDefault();
     axios
-      .post("http://localhost:3000/login", { email, password })
+      .post("http://localhost:3000/sign-in", { email, password })
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
   }
@@ -25,7 +25,7 @@ export function Login() {
       <Navbar />
       <div className="login-container">
         <form className="form" onSubmit={handleSubmit}>
-          <p className="form-title">Sign in to your account</p>
+          <p className="form-title">Create an account</p>
           <div className="input-container">
             <input
               placeholder="Enter email"
@@ -62,7 +62,7 @@ export function Login() {
             </span>
           </div>
           <button className="submit" type="submit">
-            Sign in
+            Create Account
           </button>
           <p className="signup-link">
             No account? <a href="">Sign up</a>

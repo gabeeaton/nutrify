@@ -12,14 +12,14 @@ app.use(express.json());
 //Add user to database
 
 app.post("/login", (req, res) => {
-  const sql = "SELECT * FROM users WHERE email = ? AND password = ?";
+  const sql = "SELECT * FROM users WHERE email = $1 AND password = $2";
   const values = [req.body.email, req.body.password];
-  pool.query(sql, [req.body.email, req.body.password], (err, data) => {
+  pool.query(sql, values, (err, data) => {
     if (err) {
     console.error(err);
       return res.json("Error");
     }
-    if (data.length < 0) {
+    if (data.length > 0) {
       return res.json("Login successful");
     } else {
       res.json("No record");

@@ -9,4 +9,4 @@ const pool = new Pool ({
     database: "nutrition_tracker"
 })
 
-export default pool
+export default pool;
