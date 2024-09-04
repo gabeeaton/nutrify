@@ -15,7 +15,7 @@ export function SignUp() {
   function handleSubmit(event) {
     event.preventDefault();
     axios
-      .post("http://localhost:3000/sign-in", { email, password })
+      .post("http://localhost:3000/sign-up", { email, password })
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
   }
