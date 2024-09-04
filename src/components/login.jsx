@@ -23,6 +23,7 @@ export function Login() {
   return (
     <>
       <Navbar />
+      <div className="main-container">
       <div className="login-container">
         <form className="form" onSubmit={handleSubmit}>
           <p className="form-title">Sign in to your account</p>
@@ -68,6 +69,7 @@ export function Login() {
             No account? <a href="">Sign up</a>
           </p>
         </form>
+      </div>
       </div>
     </>
   );

@@ -10,7 +10,11 @@ app.use(express.json());
 //ROUTES//
 
 //Add user to database
+app.post("/sign-in", (req, res) => {
+  const sql = "INSERT INTO users (user_id, "
+})
 
+//Sign In
 app.post("/login", (req, res) => {
   const sql = "SELECT * FROM users WHERE email = $1 AND password = $2";
   const values = [req.body.email, req.body.password];
@@ -27,7 +31,6 @@ app.post("/login", (req, res) => {
   });
 });
 
-//Authenticate users
 
 //POST food
 
