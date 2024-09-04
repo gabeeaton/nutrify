@@ -7,7 +7,7 @@ import { fetchAPI } from "./api.js";
 import {Foodinfo }from "./components/food-info"
 import { ApiContext } from "./components/food";
 import {Login} from "./components/login.jsx"
-import { SignIn } from "./components/sign_in.jsx";
+import { SignUp } from "./components/sign_up.jsx";
 
 import Navbar from "./components/navbar";
 import Food from "./components/food";
@@ -37,7 +37,7 @@ function App() {
           <Route path="/food" element={<Food setSelection={setSelection} />} />
           <Route path="/food-info" element={<Foodinfo />} />
           <Route path = "/login" element={<Login />} />
-          <Route path = "/sign-up" element={<SignIn />} />
+          <Route path = "/sign-up" element={<SignUp />} />
         </Routes>
       </ApiContext.Provider>
     </BrowserRouter>
@@ -67,7 +67,7 @@ function Cover() {
   }, []);
 
   return (
-    <div className={`cover fade-in ${isVisible ? "show" : ""}`}>
+    <div className={`main-cover cover fade-in ${isVisible ? "show" : ""}`}>
       <h1 className="fade-in">
         Welcome to Nutrify{" "}
         <img src="./src/assets/food-dish-svgrepo-com.svg" alt="food dish" />

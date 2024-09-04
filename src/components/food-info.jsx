@@ -17,10 +17,9 @@ export function Foodinfo() {
   }
 
   return (
-    <>
-
+  <div className = "super-container">
       <div className="container">
-        <div className="child">
+        <div className="child  overflow-auto">
           <h1 style={{ color: "black", marginTop: "50px" }}>
             {info ? info.label : null}
           </h1>
@@ -38,7 +37,7 @@ export function Foodinfo() {
             </div>
           </div>
         </div>
-    </>
+        </div>
   );
 }
 export default Foodinfo;

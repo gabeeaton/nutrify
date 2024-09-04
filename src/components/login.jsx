@@ -66,7 +66,7 @@ export function Login() {
             Sign in
           </button>
           <p className="signup-link">
-            No account? <a href="">Sign up</a>
+            No account? <a href="/sign-up">Sign up</a>
           </p>
         </form>
       </div>

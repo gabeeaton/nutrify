@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import Navbar from "./navbar";
 import axios from "axios";
-import "./sign_in.css";
+import "./sign_up.css";
 
-export function SignIn() {
+export function SignUp() {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("")
@@ -66,7 +66,7 @@ export function SignIn() {
               Create Account
             </button>
             <p className="signup-link">
-              No account? <a href="">Sign up</a>
+              Already have an account? <a href="/login">Sign in</a>
             </p>
           </form>
         </div>
