@@ -1,56 +1,56 @@
 .nav-item {
-    font-weight: bold;
+  font-weight: bold;
 }
 .nav-item a:hover {
-    color: black;
-    transform: translateY(-10px);
+  color: black;
+  transform: translateY(-10px);
 }
-@media(max-width: 600px) {
-  .nav-item{
+@media (max-width: 600px) {
+  .nav-item {
     font-size: 0.8rem;
   }
 }
 .nav {
-    animation: fadeIn 1s ease-in-out forwards;
-    opacity: 0;
+  animation: fadeIn 1s ease-in-out forwards;
+  opacity: 0;
 }
 .nav-item a {
-    color: black;
-    text-transform: uppercase;
-    text-decoration: none;
-    letter-spacing: 0.15em;
-    display: inline-block;
-    padding: 15px 20px;
-    position: relative;
-    transition: transform 0.3s ease-in-out;
-  }
+  color: black;
+  text-transform: uppercase;
+  text-decoration: none;
+  letter-spacing: 0.15em;
+  display: inline-block;
+  padding: 15px 20px;
+  position: relative;
+  transition: transform 0.3s ease-in-out;
+}
 .nav-item a:after {
-    background: none repeat scroll 0 0 transparent;
-    bottom: 0;
-    content: "";
-    display: block;
-    height: 2px;
-    left: 50%;
-    position: absolute;
-    background: black;
-    transition: width 0.3s ease 0s, left 0.3s ease 0s;
-    width: 0;
+  background: none repeat scroll 0 0 transparent;
+  bottom: 0;
+  content: "";
+  display: block;
+  height: 2px;
+  left: 50%;
+  position: absolute;
+  background: black;
+  transition: width 0.3s ease 0s, left 0.3s ease 0s;
+  width: 0;
 }
 .nav-item a:hover:after {
   width: 100%;
   left: 0;
- }
- .nav-area{
-    background: white;
-    border-radius: 10px;
-    margin: 20px;
-    animation: fadeIn 1s ease-in-out forwards;
-    margin-bottom: 80px;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
- }
- .food-item{
+}
+.nav-area {
+  background: white;
+  border-radius: 10px;
+  margin: 20px;
+  animation: fadeIn 1s ease-in-out forwards;
+  margin-bottom: 80px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.food-item {
   font-weight: bold;
- }
- .custom:hover{
+}
+.custom:hover {
   color: white;
- }  
+}
