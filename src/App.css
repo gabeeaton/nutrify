@@ -5,7 +5,18 @@
   background-size: cover;
   height: 100vh;
   width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
+}
+.coverTitle{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
 }
 body {
   overflow: hidden;
@@ -22,30 +33,11 @@ li {
   padding: 15px 0;
 }
 
-@media screen and (max-height: 300px) {
-  ul {
-    margin-top: 40px;
-  }
-}
+
 
 div h1,
 div h2 {
   color: white;
-}
-div .btn {
-  background-color: white;
-  margin: 30px;
-  min-width: 120px;
-  border-radius: 7px;
-  font-weight: bold;
-  transition: transform 0.3s ease-in-out;
-  margin-top: 80px;
-  border: none;
-}
-div .btn:hover {
-  transform: scale(1.05);
-  background-color: white;
-  opacity: 1;
 }
 .container {
   display: flex;
@@ -64,12 +56,5 @@ div .btn:hover {
 .fade-in {
   animation: fadeIn 1.5s ease-in-out forwards;
   opacity: 0;
-  margin-top: 70px;
 }
-@media (max-width: 600px) {
-  .fade-in {
-    animation: fadeIn 1.5s ease-in-out forwards;
-    opacity: 0;
-    margin-top: 30px;
-  }
-}
+

@@ -4,7 +4,8 @@ import "./navbar.css";
 
 function Navbar() {
   return (
-    <ul className="nav justify-content-center nav-area">
+    <div className="justify-content-center nav-area">
+    <ul>
       <li className="nav-item">
         <Link className="nav-link" to="/">
           Home
@@ -26,6 +27,7 @@ function Navbar() {
         </Link>
       </li>
     </ul>
+    </div>
   );
 }
 

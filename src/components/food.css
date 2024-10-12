@@ -5,7 +5,12 @@ html {
   background-attachment: fixed;
   background-size: cover;
 }
-
+.log-btn{
+  background-color: #45a049 !important;
+}
+.log-btn:hover{
+  filter: brightness(95%);
+}
 .main {
   background-color: rgba(255, 255, 255, 0.15);
   width: 100%;
@@ -76,18 +81,22 @@ div h3 {
   align-items: center;
   justify-content: center;
 }
-.food-block{
-    background-color: white;
-    width: 80%;
-    min-height: 50px;
-    margin-top: 5px;
-    border-radius: 10px;
-    padding-top: 7px;
-    padding-bottom: 7px;
-    padding-bottom: 7px;
-    margin-bottom: 7px;
-    animation: fadeIn 1s ease-in-out forwards;
-    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+.food-block {
+  background-color: white; 
+  width: 80%; 
+  min-height: 50px; 
+  margin: 5px 0;
+  border-radius: 10px; 
+  padding: 7px 10px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; 
+  animation: fadeIn 1s ease-in-out forwards; 
+  transition: box-shadow 0.3s ease, transform 0.3s ease; 
+}
+
+.food-block:hover {
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 10px 20px; 
+  transform: translateY(-2px); 
+  cursor: pointer; 
 }
 .results{
     margin-top: 20px;
@@ -118,7 +127,7 @@ div h3 {
     z-index: 1;
     background-color: #4BB543;
     border: none;
-    border-radius: 15px;
+    border-radius: 10px;
     color: white;
     position: relative;
     padding: 15px;
@@ -127,13 +136,14 @@ div h3 {
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
 }
 .info-button{
   position: absolute;
   z-index: 1;
   background-color: #0000FF;
   border: none;
-  border-radius: 15px;
+  border-radius: 10px;
   color: white;
   position: relative;
   margin-bottom: 0px;
@@ -144,7 +154,20 @@ div h3 {
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
 }
+
+.add-button:hover{
+    background-color: #45a049; 
+    transform: translateY(-2px); 
+    transition: all 0.2s ease-in-out;
+}
+.info-button:hover {
+  background-color: #0056b3; 
+  transform: translateY(-2px); 
+  transition: all 0.2s ease-in-out;
+}
+
 .food-name{
   display: flex;
   align-items: center;
@@ -153,18 +176,28 @@ div h3 {
   line-height: 1; 
   margin: 5px; 
 }
-.custom-food{
-  border: none;
-  border-radius: 10px;
-  margin-left: 10px;
-  position: relative;
-  height: 2.5rem;
-  padding-left: 20px;
-  padding-right: 20px;
+.custom-food {
+  display: flex;
+  align-items: center; 
+  justify-content: center;
+  border: none; 
+  border-radius: 10px; 
+  margin-left: 10px; 
+  position: relative; 
+  padding-left: 20px; 
+  padding-right: 20px; 
   color: white;
-  border: 2px solid black;
-  background-color: rgba(0, 0, 0, 0.25);
-  font-display: flex;
+  background-color: rgba(0, 0, 0, 0.25); 
+  font-size: 1rem; 
+  font-weight: 500;
+  border: 2px solid rgba(255, 255, 255, 0.5); 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.custom-food:hover {
+  background-color: rgba(0, 0, 0, 0.35); 
+  transform: translateY(-2px);
 }
 .cust{
   margin-left: 5px;

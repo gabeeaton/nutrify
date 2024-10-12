@@ -10,9 +10,10 @@ export const API_URL = `https://api.edamam.com/api/food-database/v2/parser?app_i
 
 export const ApiContext = createContext(null);
 
-function Food({setSelection}) {
+function Food({ setSelection }) {
   const [search, setSearch] = useState("");
   const [results, setResults] = useState([]);
+  const [isModal, setIsModal] = useState(false);
 
   const submitForm = async (e) => {
     e.preventDefault();
@@ -34,7 +35,7 @@ function Food({setSelection}) {
     return oz;
   }
 
-  function handleInfoClick(food){
+  function handleInfoClick(food) {
     setSelection(food);
   }
 
@@ -92,10 +93,10 @@ function Food({setSelection}) {
                       <div className="food-name">
                         {result.food.label}:{" "}
                         {result.food.nutrients.ENERC_KCAL.toFixed(0)} cal per{" "}
-                        {result.measures[0].weight.toFixed(0)}g{" (" + convertGrams(result.food.nutrients.ENERC_KCAL.toFixed(1))+" oz)"}
+                        {result.measures[0].weight.toFixed(0)}g{" (" + convertGrams(result.food.nutrients.ENERC_KCAL.toFixed(1)) + " oz)"}
                       </div>
                       <div className="buttons">
-                        <button className="add-button">
+                        <button className="add-button" onClick={() => setIsModal(true)}>
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="21"
@@ -112,7 +113,7 @@ function Food({setSelection}) {
                             />
                           </svg>
                         </button>
-                        <Link to="/food-info" info={result.food}> 
+                        <Link to="/food-info" info={result.food}>
                           <button className="info-button" onClick={() => handleInfoClick(result.food)}>
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -132,11 +133,38 @@ function Food({setSelection}) {
                 </div>
               </div>
             </div>
-            
           ))}
         </div>
+        {isModal && (
+          <div className="modal fade show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }} role="dialog">
+            <div className="modal-dialog" role="document">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title">Add Food</h5>
+                  <button type="button" className="btn-close" onClick={() => setIsModal(false)} aria-label="Close"></button>
+                </div>
+                <div className="modal-body">
+                  <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Dropdown button
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="#">Action</a></li>
+                      <li><a class="dropdown-item" href="#">Another action</a></li>
+                      <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                  </div>
+                </div>
+                <div className="modal-footer">
+                  <button type="button" className="btn btn-secondary" onClick={() => setIsModal(false)}>Close</button>
+                  <button type="button" className="btn btn-success log-btn">Log Food</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
-      </>
+    </>
   );
 }
 

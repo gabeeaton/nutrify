@@ -61,15 +61,18 @@ function Cover() {
   }, []);
 
   return (
-    <div className={`main-cover cover fade-in ${isVisible ? "show" : ""}`}>
+    <>
+    <div class = "coverTitle">
       <h1 className="fade-in">
-        Welcome to Nutrify{" "}
+        Nutrify{" "}
         <img src="./src/assets/food-dish-svgrepo-com.svg" alt="food dish" />
       </h1>
       <h2 className="fade-in">
         Your ultimate tool in the journey towards a healthier, happier you.
       </h2>
-    </div>
+      </div>
+      </>
+
   );
 }
 

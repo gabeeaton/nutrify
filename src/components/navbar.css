@@ -7,7 +7,8 @@
 }
 @media (max-width: 600px) {
   .nav-item {
-    font-size: 0.8rem;
+    font-size: 0.6rem;
+
   }
 }
 .nav {
@@ -41,11 +42,10 @@
   left: 0;
 }
 .nav-area {
+  width: 100vw;
   background: white;
   border-radius: 10px;
-  margin: 20px;
   animation: fadeIn 1s ease-in-out forwards;
-  margin-bottom: 80px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 .food-item {
