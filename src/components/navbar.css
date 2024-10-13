@@ -8,9 +8,9 @@
 @media (max-width: 600px) {
   .nav-item {
     font-size: 0.6rem;
-
   }
 }
+
 .nav {
   animation: fadeIn 1s ease-in-out forwards;
   opacity: 0;

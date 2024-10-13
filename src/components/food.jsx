@@ -14,6 +14,12 @@ function Food({ setSelection }) {
   const [search, setSearch] = useState("");
   const [results, setResults] = useState([]);
   const [isModal, setIsModal] = useState(false);
+  const [selectedServing, setSelectedServing] = useState("Serving Size");
+  const [isDrop, setISDrop] = useState(false);
+
+  const handleSelect = (selectedServing) => {
+    setSelectedServing(selectedServing);
+  }
 
   const submitForm = async (e) => {
     e.preventDefault();
@@ -144,16 +150,28 @@ function Food({ setSelection }) {
                   <button type="button" className="btn-close" onClick={() => setIsModal(false)} aria-label="Close"></button>
                 </div>
                 <div className="modal-body">
-                  <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Dropdown button
+                  <div className="dropdown">
+                    <button
+                      className="btn btn-secondary dropdown-toggle"
+                      type="button"
+                      id="dropdownMenuButton"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                      onClick={() => setISDrop(!isDrop)}
+                    >
+                      {selectedServing}
                     </button>
-                    <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="#">Action</a></li>
-                      <li><a class="dropdown-item" href="#">Another action</a></li>
-                      <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
+                    {isDrop && (
+                      <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <li><a className="dropdown-item" href="#" onClick={(e) => handleSelect('Grams')}>Grams</a></li>
+                        <li><a className="dropdown-item" href="#" onClick={(e) => handleSelect('Ounces')}>Ounces</a></li>
+                        <li><a className="dropdown-item" href="#" onClick={(e) => handleSelect('Cups')}>Cups</a></li>
+                      </ul>
+                    )}
                   </div>
+                  <input type="number" className="form-control" placeholder="Number of Servings">
+
+                  </input>
                 </div>
                 <div className="modal-footer">
                   <button type="button" className="btn btn-secondary" onClick={() => setIsModal(false)}>Close</button>
@@ -168,4 +186,4 @@ function Food({ setSelection }) {
   );
 }
 
-export default Food;
+export default Food

@@ -10,7 +10,6 @@ app.use(express.json());
 
 //ROUTES//
 
-
 //POST food
 
 //GET food

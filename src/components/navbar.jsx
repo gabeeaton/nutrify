@@ -4,7 +4,7 @@ import "./navbar.css";
 
 function Navbar() {
   return (
-    <div className="justify-content-center nav-area">
+    <div className="nav-area">
     <ul>
       <li className="nav-item">
         <Link className="nav-link" to="/">
