@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Navbar from "./navbar";
 import axios from "axios";
 import "./login.css";
-export function SignIn() {
+export function Login() {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,9 +19,10 @@ export function SignIn() {
   return (
     <>
       <Navbar />
+    <div className="wrapper">
       <div className="login-container">
         <form className="form" onSubmit={handleSubmit}>
-          <p className="form-title">Create an account</p>
+          <p className="form-title">Login to Your Account</p>
           <div className="input-container">
             <input
               placeholder="Enter email"
@@ -58,13 +59,16 @@ export function SignIn() {
             </span>
           </div>
           <button className="submit" type="submit">
-            Create Account
+            Login
           </button>
           <p className="signup-link">
-            No account? <a href="">Sign up</a>
+            No account? <a href="/sign-up">Sign up</a>
           </p>
         </form>
+      </div>
       </div>
     </>
   );
 }
+
+export default Login

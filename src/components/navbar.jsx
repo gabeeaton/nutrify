@@ -29,7 +29,7 @@ function Navbar() {
           </Link>
         </li>
         <li className="nav-item">
-          <Link className="nav-link sign-in" to="/sign-in">
+          <Link className="nav-link sign-in" to="/login">
             <span>Sign In</span>
           </Link>
         </li>

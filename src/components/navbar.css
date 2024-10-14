@@ -16,7 +16,7 @@
 
 .nav-item a:hover {
   color: black;
-  transform: translateY(-10px);
+  transform: translateY(-7px);
 }
 
 .nav-item a:after {
