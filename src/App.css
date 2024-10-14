@@ -12,6 +12,17 @@
   text-align: center;
 }
 
+body {
+  overflow: hidden;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+div h1,
+div h2 {
+  color: white;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+  
+}
 .coverTitle{
   display: flex;
   flex-direction: column;

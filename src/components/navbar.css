@@ -1,20 +1,7 @@
 .nav-item {
   font-weight: bold;
 }
-.nav-item a:hover {
-  color: black;
-  transform: translateY(-10px);
-}
-@media (max-width: 600px) {
-  .nav-item {
-    font-size: 0.6rem;
-  }
-}
 
-.nav {
-  animation: fadeIn 1s ease-in-out forwards;
-  opacity: 0;
-}
 .nav-item a {
   color: black;
   text-transform: uppercase;
@@ -24,7 +11,14 @@
   padding: 15px 20px;
   position: relative;
   transition: transform 0.3s ease-in-out;
+  margin: 10px;
 }
+
+.nav-item a:hover {
+  color: black;
+  transform: translateY(-10px);
+}
+
 .nav-item a:after {
   background: none repeat scroll 0 0 transparent;
   bottom: 0;
@@ -37,9 +31,47 @@
   transition: width 0.3s ease 0s, left 0.3s ease 0s;
   width: 0;
 }
+
 .nav-item a:hover:after {
   width: 100%;
   left: 0;
+}
+
+.sign-in:after,
+.sign-up:after{
+  background: none !important;
+}
+
+.sign-in,
+.sign-up{
+  background: linear-gradient(90deg, #007BFF, #00C6FF) !important;
+  border: none;
+  border-radius: 6px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.sign-in:hover, .sign-up:hover {
+  background: linear-gradient(90deg, #0062cc, #00a7e1) !important;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+  transform: translateY(-1px);
+}
+span{
+  color: white;
+}
+.sign-in:active, .sign-up:active {
+  background: linear-gradient(90deg, #004ba0, #008bbd) !important;
+  transform: translateY(1px);
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15);
+}
+
+@media (max-width: 600px) {
+  .nav-item {
+    font-size: 0.6rem;
+  }
 }
 .nav-area {
   width: 100vw;
@@ -48,9 +80,11 @@
   animation: fadeIn 1s ease-in-out forwards;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
+
 .food-item {
   font-weight: bold;
 }
+
 .custom:hover {
   color: white;
 }
