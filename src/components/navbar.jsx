@@ -33,11 +33,6 @@ function Navbar() {
             <span>Sign In</span>
           </Link>
         </li>
-        <li className="nav-item">
-          <Link className="nav-link sign-up" to="/sign-up">
-            <span>Sign Up</span>
-          </Link>
-        </li>
       </ul>
     </div>
   );

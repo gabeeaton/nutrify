@@ -10,6 +10,7 @@
   justify-content: center;
   align-items: center;
   text-align: center;
+  overflow-y: auto;
 }
 
 body {
@@ -17,12 +18,30 @@ body {
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
 
-div h1,
-div h2 {
-  color: white;
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
-  
+h1 {
+  font-size: 3rem;
+  font-weight: bold;
 }
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+  h2 {
+    font-size: 1.2rem;
+  }
+}
+h2 {
+  font-size: 1.5rem;
+  font-weight: 300;
+}
+.coverTitle h1 {
+  margin-bottom: 20px;
+}
+
+.coverTitle h2 {
+  margin-top: 10px;
+}
+
 .coverTitle{
   display: flex;
   flex-direction: column;
@@ -49,9 +68,7 @@ div h1,
 div h2 {
   color: white;
 }
-div h2{
-  margin-top: 100px;
-}
+
 .container {
   display: flex;
   flex-direction: vertical;

@@ -8,7 +8,6 @@ import { ApiContext } from "./components/food";
 import Navbar from "./components/navbar";
 import Food from "./components/food";
 import Dashboard from "./components/view.jsx";
-import SignUp from "./components/sign_up.jsx";
 import Login from "./components/login.jsx";
 
 function App() {
@@ -36,7 +35,6 @@ function App() {
           <Route path="/food" element={<Food setSelection={setSelection} />} />
           <Route path="/food-info" element={<Foodinfo />} />
           <Route path="/view" element={<Dashboard />} />
-          <Route path="/sign-up" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
         </Routes>
       </ApiContext.Provider>
@@ -67,7 +65,7 @@ function Cover() {
 
   return (
     <>
-      <div class="coverTitle">
+      <div className="coverTitle">
         <h1 className="fade-in">
           Nutrify{" "}
           <img src="./src/assets/food-dish-svgrepo-com.svg" alt="food dish" />

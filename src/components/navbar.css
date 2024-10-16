@@ -76,9 +76,8 @@ span{
 .nav-area {
   width: 100vw;
   background: white;
-  border-radius: 10px;
   animation: fadeIn 1s ease-in-out forwards;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  box-shadow: rgba(0, 0, 0, 0.20) 0px 5px 15px;
 }
 
 .food-item {

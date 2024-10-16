@@ -117,11 +117,6 @@ div h3 {
   transition: box-shadow 0.3s ease, transform 0.3s ease; 
 }
 
-.food-block:hover {
-  box-shadow: rgba(0, 0, 0, 0.5) 0px 10px 20px; 
-  transform: translateY(-4px); 
-  cursor: pointer; 
-}
 .results{
     margin-top: 20px;
     overflow-y: auto;
@@ -129,9 +124,10 @@ div h3 {
     border-radius: 15px;
     width: 70%;
     padding-top: 5px;
+    background-color:  #d7d7d7;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; 
 }
 @media(max-height: 600px) {
-
   .results{
     height: 50vh;
   }
@@ -150,7 +146,7 @@ div h3 {
     z-index: 1;
     background-color: #4BB543;
     border: none;
-    border-radius: 10px;
+    border-radius: 5px;
     color: white;
     position: relative;
     padding: 15px;
@@ -166,7 +162,7 @@ div h3 {
   z-index: 1;
   background-color: #0000FF;
   border: none;
-  border-radius: 10px;
+  border-radius: 5px;
   color: white;
   position: relative;
   margin-bottom: 0px;
@@ -181,13 +177,13 @@ div h3 {
 }
 
 .add-button:hover{
-    background-color: #45a049; 
-    transform: translateY(-2px); 
+  filter: brightness(85%); 
+    transform: translateY(-1px); 
     transition: all 0.2s ease-in-out;
 }
 .info-button:hover {
-  background-color: #0056b3; 
-  transform: translateY(-2px); 
+  filter: brightness(85%); 
+  transform: translateY(-1px); 
   transition: all 0.2s ease-in-out;
 }
 
@@ -220,7 +216,7 @@ div h3 {
 
 .custom-food:hover {
   background-color: #338b38;
-  transform: translateY(-2px);
+  transform: translateY(-1px);
 }
 .cust{
   margin-left: 5px;

@@ -97,9 +97,9 @@ function Food({ setSelection }) {
                   <div>
                     <div className="food-item">
                       <div className="food-name">
-                        {result.food.label}:{" "}
-                        {result.food.nutrients.ENERC_KCAL.toFixed(0)} cal per{" "}
-                        {result.measures[0].weight.toFixed(0)}g{" (" + convertGrams(result.food.nutrients.ENERC_KCAL.toFixed(1)) + " oz)"}
+                        {result.food.label}: {result.food.nutrients.ENERC_KCAL.toFixed(0)} cal per{" "}
+                        {result.measures[0].weight.toFixed(0)}g{" "}
+                        ({convertGrams(result.food.nutrients.ENERC_KCAL.toFixed(1))} oz)
                       </div>
                       <div className="buttons">
                         <button className="add-button" onClick={() => setIsModal(true)}>
