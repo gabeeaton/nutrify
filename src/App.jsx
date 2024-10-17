@@ -7,6 +7,7 @@ import { ApiContext } from "./components/food";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase.js";
 import { ProtectedRoute } from "./components/protectedRoute.jsx";
+import { Link } from "react-router-dom";
 
 import Navbar from "./components/navbar";
 import Food from "./components/food";
@@ -84,16 +85,28 @@ function Cover() {
     <>
       <div className="coverTitle">
         <h1 className="fade-in">
-          Nutrify{" "}
+            NUTRIFY{" "}
           <img src="./src/assets/food-dish-svgrepo-com.svg" alt="food dish" />
         </h1>
         <h2 className="fade-in">
           Your ultimate tool in the journey towards a healthier, happier you.
         </h2>
+        <div class="first">
+      <Link to="/login" style={{ textDecoration: 'none', color: 'inherit' }}>
+        <h2>Log your first meal <span  class="arrow"><Arrow /></span></h2>
+      </Link>
+    </div>
       </div>
     </>
 
   );
 }
 
+function Arrow() {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
+</svg>
+  )
+}
 export default App;

@@ -59,7 +59,9 @@ ul {
   list-style: none;
   text-align: center;
 }
-
+h2{
+  text-decoration: none !important;
+}
 li {
   display: inline-block;
   padding: 15px 0;
@@ -85,7 +87,36 @@ div h2 {
   }
 }
 .fade-in {
-  animation: fadeIn 1.5s ease-in-out forwards;
+  animation: fadeIn 0.5s ease-in-out forwards;
   opacity: 0;
 }
 
+.first{
+  margin-top: 40px;
+  background: linear-gradient(90deg, #007BFF, #00C6FF);
+  border-radius: 50px;
+  transition: 0.3s ease;
+}
+.first:hover{
+  background: linear-gradient(90deg, #0062cc, #00a7e1);
+  transform: translateY(-2px);
+  width: auto;
+}
+h2 {
+  display: inline-block;
+  position: relative;
+  padding: 15px;
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+
+.arrow {
+  display: inline-block; 
+  transition: transform 0.3s ease; 
+  margin-left: 5px; 
+}
+
+h2:hover .arrow {
+  transform: translateX(15px); 
+}

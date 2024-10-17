@@ -2,7 +2,9 @@
   font-weight: bold;
 }
 
-
+svg{
+  margin-right: 5px;
+}
 .nav-item a{
   color: black;
   text-transform: uppercase;
