@@ -27,7 +27,7 @@ function Navbar({ user }) {
           </li>
           <li className="nav-item">
             <Link className="nav-link" to="/view">
-              <div><Chart/>View Entries</div>
+              <div><Chart/>Dashboard</div>
             </Link>
           </li>
           <li className="nav-item">
