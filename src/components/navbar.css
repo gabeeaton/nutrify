@@ -2,7 +2,8 @@
   font-weight: bold;
 }
 
-.nav-item a {
+
+.nav-item a{
   color: black;
   text-transform: uppercase;
   text-decoration: none;
@@ -12,9 +13,10 @@
   position: relative;
   transition: transform 0.3s ease-in-out;
   margin: 10px;
+
 }
 
-.nav-item a:hover {
+.nav-item a:hover{
   color: black;
   transform: translateY(-7px);
 }
@@ -42,8 +44,7 @@
   background: none !important;
 }
 
-.sign-in,
-.sign-up{
+.sign-in{
   background: linear-gradient(90deg, #007BFF, #00C6FF) !important;
   border: none;
   border-radius: 6px;
@@ -53,19 +54,57 @@
   cursor: pointer;
   transition: all 0.3s ease;
 }
-
-.sign-in:hover, .sign-up:hover {
+.sign-in:hover{
   background: linear-gradient(90deg, #0062cc, #00a7e1) !important;
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
-  transform: translateY(-1px);
+  transform: translateY(-1px) !important
 }
-span{
+.sign-in:active {
+  background: linear-gradient(90deg, #004ba0, #008bbd) !important;
+  transform: translateY(1px) !important;
+  box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15);
+}
+.signIn{
+  padding: 10px 15px !important;
+}
+.signOut {
+  font-size: inherit;
+  padding: 10px 15px;
+  background: none;
+  border: none;
   color: white;
 }
-.sign-in:active, .sign-up:active {
-  background: linear-gradient(90deg, #004ba0, #008bbd) !important;
-  transform: translateY(1px);
+
+.sign-out {
+  background: linear-gradient(90deg, #FF0000, #FF6347) !important;
+  border-radius: 6px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 10px 15px;
+}
+
+.sign-out:hover {
+  background: linear-gradient(90deg, #CC0000, #E15634) !important;
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+  transform: translateY(-1px) !important;
+}
+
+.sign-out:active {
+  background: linear-gradient(90deg, #A00000, #BD4534) !important;
+  transform: translateY(1px) !important;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15);
+}
+
+span {
+  color: white;
+  text-transform: uppercase;
+  font-size: inherit;
+  letter-spacing: 1px;
+}
+.username{
+  color: black;
+  text-transform: none;
 }
 
 @media (max-width: 600px) {
@@ -73,17 +112,30 @@ span{
     font-size: 0.6rem;
   }
 }
-.nav-area {
+.nav-section {
   width: 100vw;
   background: white;
   animation: fadeIn 1s ease-in-out forwards;
   box-shadow: rgba(0, 0, 0, 0.20) 0px 5px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
 }
 
 .food-item {
   font-weight: bold;
 }
-
+.username, .sign-out {
+  margin-right: 10px;
+}
 .custom:hover {
   color: white;
+}
+
+
+li {
+  padding-bottom: 0;
 }

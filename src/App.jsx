@@ -4,6 +4,9 @@ import "./App.css";
 import { fetchAPI } from "./api.js";
 import { Foodinfo } from "./components/food-info"
 import { ApiContext } from "./components/food";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./firebase.js";
+import { ProtectedRoute } from "./components/protectedRoute.jsx";
 
 import Navbar from "./components/navbar";
 import Food from "./components/food";
@@ -13,6 +16,7 @@ import Login from "./components/login.jsx";
 function App() {
   const [message, setMessage] = useState('');
   const [selection, setSelection] = useState(null);
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,15 +31,31 @@ function App() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
+
+        return;
+      }
+      setUser(null);
+    });
+    return () => unsubscribe();
+  }, [])
+
   return (
     <BrowserRouter>
       <ApiContext.Provider value={selection}>
         <Routes>
-          <Route path="/" element={<Main />} />
-          <Route path="/food" element={<Food setSelection={setSelection} />} />
-          <Route path="/food-info" element={<Foodinfo />} />
-          <Route path="/view" element={<Dashboard />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<><Navbar user={user} /> <Main/></>} />
+          <Route path="/food" element={<><Navbar user={user} /><Food setSelection={setSelection} /></>} />
+          <Route path="/food-info" element={<><Navbar user={user} /><Foodinfo /></>} />
+          <Route path="/view" element={
+            <ProtectedRoute user={user}>
+              <Dashboard user={user}></Dashboard>
+            </ProtectedRoute>
+          } />
+          <Route path="/login" element={<Login user={user}/>} />
         </Routes>
       </ApiContext.Provider>
     </BrowserRouter>
@@ -46,9 +66,6 @@ function Main() {
   return (
     <>
 
-      <div className="nav-area">
-        <Navbar />
-      </div>
       <div className="container">
         <Cover />
       </div>

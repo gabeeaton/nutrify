@@ -47,7 +47,6 @@ function Food({ setSelection }) {
 
   return (
     <>
-      <Navbar />
       <div>
         <h3 style={{ color: "white" }}>SEARCH A FOOD TO LOG</h3>
       </div>

@@ -2,12 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./view.css";
 
-function Dashboard() {
+function Dashboard({user}) {
     return (
         <div className="wrap">
             <div className="main-container">
                 <div className="grid-item grid-item-header">
-                    <h1>Your Dashboard</h1>
+                    {user && <h1>Welcome, {user.email}</h1>}
                     <Link className="nav-link" to="/">
                         <button className="home-btn">Home</button>
                     </Link>
