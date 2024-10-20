@@ -93,7 +93,7 @@ function Cover() {
         </h2>
         <div class="first">
       <Link to="/login" style={{ textDecoration: 'none', color: 'inherit' }}>
-        <h2>Log your first meal <span  class="arrow"><Arrow /></span></h2>
+        <h2 style={{fontSize: "25px"}}>Log your first meal <span  class="arrow"><Arrow /></span></h2>
       </Link>
     </div>
       </div>

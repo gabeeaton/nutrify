@@ -16,6 +16,7 @@ function Food({ setSelection }) {
   const [isModal, setIsModal] = useState(false);
   const [selectedServing, setSelectedServing] = useState("Serving Size");
   const [isDrop, setISDrop] = useState(false);
+  const [addSelect, setAddSelect] = useState(null);
 
   const handleSelect = (selectedServing) => {
     setSelectedServing(selectedServing);
@@ -45,10 +46,11 @@ function Food({ setSelection }) {
     setSelection(food);
   }
 
+
   return (
     <>
       <div>
-        <h3 style={{ color: "white" }}>SEARCH A FOOD TO LOG</h3>
+        <h3 style={{ color: "white" }}>Log Your Food</h3>
       </div>
       <div className="search-container">
         <div className="group">
@@ -101,7 +103,11 @@ function Food({ setSelection }) {
                         ({convertGrams(result.food.nutrients.ENERC_KCAL.toFixed(1))} oz)
                       </div>
                       <div className="buttons">
-                        <button className="add-button" onClick={() => setIsModal(true)}>
+                        <button className="add-button" onClick={() => {
+                          setIsModal(true);
+                          handleInfoClick(result.food);
+                        }}
+                        >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="21"

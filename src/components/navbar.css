@@ -2,10 +2,10 @@
   font-weight: bold;
 }
 
-svg{
+svg {
   margin-right: 5px;
 }
-.nav-item a{
+.nav-item a {
   color: black;
   text-transform: uppercase;
   text-decoration: none;
@@ -15,10 +15,9 @@ svg{
   position: relative;
   transition: transform 0.3s ease-in-out;
   margin: 10px;
-
 }
 
-.nav-item a:hover{
+.nav-item a:hover {
   color: black;
   transform: translateY(-7px);
 }
@@ -35,38 +34,37 @@ svg{
   transition: width 0.3s ease 0s, left 0.3s ease 0s;
   width: 0;
 }
-
 .nav-item a:hover:after {
   width: 100%;
   left: 0;
 }
 
 .sign-in:after,
-.sign-up:after{
+.sign-up:after {
   background: none !important;
 }
 
-.sign-in{
-  background: linear-gradient(90deg, #007BFF, #00C6FF) !important;
+.sign-in {
+  background: linear-gradient(90deg, #007bff, #00c6ff) !important;
   border: none;
-  border-radius: 6px;
+  border-radius: 50px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   text-transform: uppercase;
   letter-spacing: 1px;
   cursor: pointer;
   transition: all 0.3s ease;
 }
-.sign-in:hover{
+.sign-in:hover {
   background: linear-gradient(90deg, #0062cc, #00a7e1) !important;
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
-  transform: translateY(-1px) !important
+  transform: translateY(-1px) !important;
 }
 .sign-in:active {
   background: linear-gradient(90deg, #004ba0, #008bbd) !important;
   transform: translateY(1px) !important;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15);
 }
-.signIn{
+.signIn {
   padding: 10px 15px !important;
 }
 .signOut {
@@ -78,8 +76,8 @@ svg{
 }
 
 .sign-out {
-  background: linear-gradient(90deg, #FF0000, #FF6347) !important;
-  border-radius: 6px;
+  background: linear-gradient(90deg, #ff0000, #ff6347) !important;
+  border-radius: 50px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: all 0.3s ease;
@@ -87,13 +85,13 @@ svg{
 }
 
 .sign-out:hover {
-  background: linear-gradient(90deg, #CC0000, #E15634) !important;
+  background: linear-gradient(90deg, #cc0000, #e15634) !important;
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
   transform: translateY(-1px) !important;
 }
 
 .sign-out:active {
-  background: linear-gradient(90deg, #A00000, #BD4534) !important;
+  background: linear-gradient(90deg, #a00000, #bd4534) !important;
   transform: translateY(1px) !important;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15);
 }
@@ -104,9 +102,10 @@ span {
   font-size: inherit;
   letter-spacing: 1px;
 }
-.username{
+.username {
   color: black;
   text-transform: none;
+  font-weight: 500;
 }
 
 @media (max-width: 600px) {
@@ -118,7 +117,7 @@ span {
   width: 100vw;
   background: white;
   animation: fadeIn 1s ease-in-out forwards;
-  box-shadow: rgba(0, 0, 0, 0.20) 0px 5px 15px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 15px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -130,13 +129,24 @@ span {
 .food-item {
   font-weight: bold;
 }
-.username, .sign-out {
+.username,
+.sign-out {
   margin-right: 10px;
 }
 .custom:hover {
   color: white;
 }
 
+.nav-area2 {
+  height: 100%;
+}
+ul {
+  padding: 0px;
+  margin: 0px !important;
+}
+.ul1 {
+  margin-bottom: 10px !important;
+}
 
 li {
   padding-bottom: 0;
