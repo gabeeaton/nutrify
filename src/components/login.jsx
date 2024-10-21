@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Navbar from "./navbar";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase.js";
 import "./login.css";

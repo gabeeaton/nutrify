@@ -1,6 +1,5 @@
 import React, { useState, createContext } from "react";
 import "./food.css";
-import Navbar from "./navbar";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
@@ -16,7 +15,20 @@ function Food({ setSelection }) {
   const [isModal, setIsModal] = useState(false);
   const [selectedServing, setSelectedServing] = useState("Serving Size");
   const [isDrop, setISDrop] = useState(false);
-  const [addSelect, setAddSelect] = useState(null);
+  const [servingType, setServingType] = useState("");
+  const [dropData, setDropData] = useState("");
+  const [addSelect, setAddSelect] = useState("");
+  const [index, setIndex] = useState("");
+
+  function calcServingNutrition(servingType) {
+    if (servingType === "ounces") {
+
+    }
+    else if (servingType === "grams") {
+
+    }
+  }
+
 
   const handleSelect = (selectedServing) => {
     setSelectedServing(selectedServing);
@@ -44,6 +56,10 @@ function Food({ setSelection }) {
 
   function handleInfoClick(food) {
     setSelection(food);
+  }
+
+  function handleIndex(index) {
+    setIndex(index);
   }
 
 
@@ -106,6 +122,7 @@ function Food({ setSelection }) {
                         <button className="add-button" onClick={() => {
                           setIsModal(true);
                           handleInfoClick(result.food);
+                          handleIndex(index);
                         }}
                         >
                           <svg
@@ -168,10 +185,30 @@ function Food({ setSelection }) {
                     </button>
                     {isDrop && (
                       <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <li><a className="dropdown-item" href="#" onClick={(e) => handleSelect('Grams')}>Grams</a></li>
-                        <li><a className="dropdown-item" href="#" onClick={(e) => handleSelect('Ounces')}>Ounces</a></li>
-                        <li><a className="dropdown-item" href="#" onClick={(e) => handleSelect('Cups')}>Cups</a></li>
+                        <li><a className="dropdown-item" href="#" onClick={() => {
+                          handleSelect(`${(results[index].measures[0].weight.toFixed(0))} g`)
+                          setServingType("grams")
+                          console.log(results[index].food);
+                        }}>{(results[index].measures[0].weight.toFixed(0))} g</a></li>
+
+                        <li><a className="dropdown-item" href="#" onClick={() => {
+                          handleSelect(`${convertGrams(results[index].food.nutrients.ENERC_KCAL.toFixed(1))} oz`)
+                          setServingType("ounces")
+                        }}>{convertGrams(results[index].food.nutrients.ENERC_KCAL.toFixed(1))} oz</a></li>
+
+                        <li><a className="dropdown-item" href="#" onClick={() => {
+                          handleSelect('1 oz')
+                          setServingType("grams")
+                          console.log(results[index].food);
+                        }}>1 oz</a></li>
+
+                         <li><a className="dropdown-item" href="#" onClick={() => {
+                          handleSelect('1 g')
+                          setServingType("grams")
+                          console.log(results[index].food);
+                        }}>1 g</a></li>
                       </ul>
+
                     )}
                   </div>
                   <input type="number" className="form-control" placeholder="Number of Servings">

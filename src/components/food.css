@@ -36,14 +36,13 @@ html {
   justify-content: space-between !important;
 }
 .dropdown-item {
-  border-radius: 10px !important;
   padding: 10px !important;
   z-index: 1000 !important;
 }
 .dropdown-item:hover {
-  background-color: rgb(168, 168, 168) !important;
-  transition: ease-in 0.25s !important;
+  background-color: rgb(225, 225, 225) !important;
 }
+
 .dropdown-menu {
   z-index: 1000 !important;
   display: flex !important;
@@ -221,7 +220,6 @@ div h3 {
 }
 .cust {
   margin-left: 5px;
-  margin-bottom: 3px;
 }
 @media (max-width: 600px) {
   .buttons {
