@@ -1,4 +1,4 @@
-import React, { useState, createContext } from "react";
+import React, { useState, createContext, useEffect } from "react";
 import "./food.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -15,20 +15,31 @@ function Food({ setSelection }) {
   const [isModal, setIsModal] = useState(false);
   const [selectedServing, setSelectedServing] = useState("Serving Size");
   const [isDrop, setISDrop] = useState(false);
-  const [servingType, setServingType] = useState("");
-  const [dropData, setDropData] = useState("");
-  const [addSelect, setAddSelect] = useState("");
   const [index, setIndex] = useState("");
+  const [servings, setServings] = useState(0);
+  const [weight, setWeight] = useState(0);
+  const [total, setTotal] = useState(0);
+  const [cals, setCals] = useState(0);
+  const [type, setType] = useState("");
+  const [protein, setProtein] = useState(0);
+  const [carbs, setCarbs] = useState(0);
+  const [fat, setFat] = useState(0);
 
-  function calcServingNutrition(servingType) {
-    if (servingType === "ounces") {
+  function calcSingleServingNutrition(cals, weight, servings, type) {
+    var caloriesPerWeight = 0;
+    var totalCalories = 0;
 
+ 
+
+    if (type === "oz") {
+      caloriesPerWeight = cals / weight;
+      totalCalories = caloriesPerWeight * servings;
     }
-    else if (servingType === "grams") {
-
+    else if (type === "g") {
+      caloriesPerWeight = (cals / 28.35);
+      totalCalories = caloriesPerWeight * servings;
     }
   }
-
 
   const handleSelect = (selectedServing) => {
     setSelectedServing(selectedServing);
@@ -61,6 +72,11 @@ function Food({ setSelection }) {
   function handleIndex(index) {
     setIndex(index);
   }
+
+  useEffect(() => {
+    calcSingleServingNutrition(cals, weight, servings, type);
+    console.log("Calories: ", cals, " Weight: ", weight, " Servings: ", servings, " Type: ", type)
+  }, [cals, weight, servings, type])
 
 
   return (
@@ -106,6 +122,7 @@ function Food({ setSelection }) {
       </div>
       <div></div>
       <div className="parent-container">
+        {results ? null : <p>No search results found</p>}
         <div className="results">
           {results.map((result, index) => (
             <div key={index} className="result-item">
@@ -116,13 +133,14 @@ function Food({ setSelection }) {
                       <div className="food-name">
                         {result.food.label}: {result.food.nutrients.ENERC_KCAL.toFixed(0)} cal per{" "}
                         {result.measures[0].weight.toFixed(0)}g{" "}
-                        ({convertGrams(result.food.nutrients.ENERC_KCAL.toFixed(1))} oz)
+                        ({convertGrams(result.measures[0].weight.toFixed(0))} oz)
                       </div>
                       <div className="buttons">
                         <button className="add-button" onClick={() => {
                           setIsModal(true);
                           handleInfoClick(result.food);
                           handleIndex(index);
+                          setSelectedServing("Serving Size")
                         }}
                         >
                           <svg
@@ -171,49 +189,50 @@ function Food({ setSelection }) {
                   <h5 className="modal-title">Add Food</h5>
                   <button type="button" className="btn-close" onClick={() => setIsModal(false)} aria-label="Close"></button>
                 </div>
-                <div className="modal-body">
-                  <div className="dropdown">
-                    <button
-                      className="btn btn-secondary dropdown-toggle"
-                      type="button"
-                      id="dropdownMenuButton"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                      onClick={() => setISDrop(!isDrop)}
-                    >
-                      {selectedServing}
-                    </button>
-                    {isDrop && (
-                      <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <li><a className="dropdown-item" href="#" onClick={() => {
-                          handleSelect(`${(results[index].measures[0].weight.toFixed(0))} g`)
-                          setServingType("grams")
-                          console.log(results[index].food);
-                        }}>{(results[index].measures[0].weight.toFixed(0))} g</a></li>
+                <div className="body-container">
+                  <div className="bodyrow1">
+                    <div className="modal-body">
+                      <div className="dropdown">
+                        <button
+                          className="btn btn-secondary dropdown-toggle"
+                          type="button"
+                          id="dropdownMenuButton"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                          onClick={() => setISDrop(!isDrop)}
+                        >
+                          {selectedServing}
+                        </button>
+                        {isDrop && (
+                          <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li><a className="dropdown-item" href="#" onClick={() => {
+                              handleSelect('1 oz')
+                              setWeight(convertGrams(results[index].measures[0].weight.toFixed(0)))
+                              setCals(results[index].food.nutrients.ENERC_KCAL.toFixed(0))
+                              setType("oz")
+                              calcSingleServingNutrition(results[index].food.nutrients.ENERC_KCAL.toFixed(0), results[index].measures[0].weight.toFixed(0), servings, type)
+                            }}>1 oz</a></li>
 
-                        <li><a className="dropdown-item" href="#" onClick={() => {
-                          handleSelect(`${convertGrams(results[index].food.nutrients.ENERC_KCAL.toFixed(1))} oz`)
-                          setServingType("ounces")
-                        }}>{convertGrams(results[index].food.nutrients.ENERC_KCAL.toFixed(1))} oz</a></li>
-
-                        <li><a className="dropdown-item" href="#" onClick={() => {
-                          handleSelect('1 oz')
-                          setServingType("grams")
-                          console.log(results[index].food);
-                        }}>1 oz</a></li>
-
-                         <li><a className="dropdown-item" href="#" onClick={() => {
-                          handleSelect('1 g')
-                          setServingType("grams")
-                          console.log(results[index].food);
-                        }}>1 g</a></li>
-                      </ul>
-
-                    )}
+                            <li><a className="dropdown-item" href="#" onClick={() => {
+                              handleSelect('1 g')
+                              setWeight(results[index].measures[0].weight.toFixed(0))
+                              setCals(results[index].food.nutrients.ENERC_KCAL.toFixed(0))
+                              setType('g')
+                              calcSingleServingNutrition(results[index].food.nutrients.ENERC_KCAL.toFixed(0), results[index].measures[0].weight.toFixed(0), servings, type)
+                            }}>1 g</a></li>
+                          </ul>
+                        )}
+                      </div>
+                      <input type="number" className="form-control" placeholder="Number of Servings" onChange={(e) => (setServings(e.target.value))}>
+                      </input>
+                    </div>
+                    <div className="bodyrow2">
+                      {cals && servings && selectedServing ? `${total.toFixed(0)} Calories` : null}
+                      {cals && servings && selectedServing ? `${protein.toFixed(0)} Protein` : null}
+                      {cals && servings && selectedServing ? `${carbs.toFixed(0)} Carbs` : null}
+                      {cals && servings && selectedServing ? `${fat.toFixed(0)} Fat` : null}
+                    </div>
                   </div>
-                  <input type="number" className="form-control" placeholder="Number of Servings">
-
-                  </input>
                 </div>
                 <div className="modal-footer">
                   <button type="button" className="btn btn-secondary" onClick={() => setIsModal(false)}>Close</button>
