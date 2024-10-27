@@ -15,30 +15,62 @@ function Food({ setSelection }) {
   const [isModal, setIsModal] = useState(false);
   const [selectedServing, setSelectedServing] = useState("Serving Size");
   const [isDrop, setISDrop] = useState(false);
+  const [ISDrop, setIsDrop] = useState(false);
   const [index, setIndex] = useState("");
   const [servings, setServings] = useState(0);
   const [weight, setWeight] = useState(0);
-  const [total, setTotal] = useState(0);
+  const [totalP, setTotalP] = useState(0);
+  const [totalC, setTotalC] = useState(0);
+  const [totalF, setTotalF] = useState(0);
   const [cals, setCals] = useState(0);
   const [type, setType] = useState("");
   const [protein, setProtein] = useState(0);
   const [carbs, setCarbs] = useState(0);
   const [fat, setFat] = useState(0);
+  const [total, setTotal] = useState(0);
 
-  function calcSingleServingNutrition(cals, weight, servings, type) {
+
+  function calcSingleServingNutrition(cals, weight, servings, type, protein, carbs, fat) {
     var caloriesPerWeight = 0;
+    var proteinPerWeight = 0;
+    var carbsPerWeight = 0;
+    var fatPerWeight = 0;
     var totalCalories = 0;
-
- 
+    var totalProtein = 0;
+    var totalCarbs = 0;
+    var totalFat = 0;
 
     if (type === "oz") {
       caloriesPerWeight = cals / weight;
       totalCalories = caloriesPerWeight * servings;
+
+      proteinPerWeight = protein / weight;
+      totalProtein = proteinPerWeight * servings;
+
+      carbsPerWeight = carbs / weight;
+      totalCarbs = carbsPerWeight * servings;
+
+      fatPerWeight = fat / weight;
+      totalFat = fatPerWeight * servings;
     }
     else if (type === "g") {
       caloriesPerWeight = (cals / 28.35);
       totalCalories = caloriesPerWeight * servings;
+
+      proteinPerWeight = protein / 28.35;
+      totalProtein = proteinPerWeight * servings;
+
+      carbsPerWeight = carbs / 28.35;
+      totalCarbs = carbsPerWeight * servings;
+
+      fatPerWeight = fat / 28.35;
+      totalFat = fatPerWeight * servings;
     }
+
+    setTotal(totalCalories);
+    setTotalP(totalProtein);
+    setTotalC(totalCarbs);
+    setTotalF(totalFat);
   }
 
   const handleSelect = (selectedServing) => {
@@ -74,9 +106,9 @@ function Food({ setSelection }) {
   }
 
   useEffect(() => {
-    calcSingleServingNutrition(cals, weight, servings, type);
-    console.log("Calories: ", cals, " Weight: ", weight, " Servings: ", servings, " Type: ", type)
-  }, [cals, weight, servings, type])
+    calcSingleServingNutrition(cals, weight, servings, type, protein, carbs, fat);
+    console.log("Calories: ", cals, " Weight: ", weight, " Servings: ", servings, " Type: ", type, " Protein: ", protein, " Carbs: ", carbs, " Fat: ", fat)
+  }, [cals, weight, servings, type, protein, carbs, fat])
 
 
   return (
@@ -96,11 +128,15 @@ function Food({ setSelection }) {
               placeholder="Search"
               type="search"
               className="input"
-              onChange={(e) => setSearch(e.target.value)}
               autoFocus
             />
           </form>
-          <button className="custom-food">
+          <button
+            className="custom-food"
+            onChange={(e) => setSearch(e.target.value)}
+            data-toggle="modal"
+            data-target="#exampleModal"
+             onClick={() => setIsDrop(!ISDrop)}>
             Add a custom food
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -118,6 +154,27 @@ function Food({ setSelection }) {
               />
             </svg>
           </button>
+          {ISDrop ? <div>
+            <div class="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    ...
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> : null}
         </div>
       </div>
       <div></div>
@@ -209,16 +266,23 @@ function Food({ setSelection }) {
                               handleSelect('1 oz')
                               setWeight(convertGrams(results[index].measures[0].weight.toFixed(0)))
                               setCals(results[index].food.nutrients.ENERC_KCAL.toFixed(0))
+                              setCals(results[index].food.nutrients.ENERC_KCAL.toFixed(0))
+                              setProtein(results[index].food.nutrients.PROCNT.toFixed(0))
+                              setCarbs(results[index].food.nutrients.CHOCDF.toFixed(0))
+                              setFat(results[index].food.nutrients.FAT.toFixed(0))
                               setType("oz")
-                              calcSingleServingNutrition(results[index].food.nutrients.ENERC_KCAL.toFixed(0), results[index].measures[0].weight.toFixed(0), servings, type)
+                              calcSingleServingNutrition(results[index].food.nutrients.ENERC_KCAL.toFixed(0), results[index].measures[0].weight.toFixed(0), servings, type, results[index].food.nutrients.PROCNT.toFixed(0), results[index].food.nutrients.CHOCDF.toFixed(0), results[index].food.nutrients.FAT.toFixed(0))
                             }}>1 oz</a></li>
 
                             <li><a className="dropdown-item" href="#" onClick={() => {
                               handleSelect('1 g')
                               setWeight(results[index].measures[0].weight.toFixed(0))
                               setCals(results[index].food.nutrients.ENERC_KCAL.toFixed(0))
+                              setProtein(results[index].food.nutrients.PROCNT.toFixed(0))
+                              setCarbs(results[index].food.nutrients.CHOCDF.toFixed(0))
+                              setFat(results[index].food.nutrients.FAT.toFixed(0))
                               setType('g')
-                              calcSingleServingNutrition(results[index].food.nutrients.ENERC_KCAL.toFixed(0), results[index].measures[0].weight.toFixed(0), servings, type)
+                              calcSingleServingNutrition(results[index].food.nutrients.ENERC_KCAL.toFixed(0), results[index].measures[0].weight.toFixed(0), servings, type, results[index].food.nutrients.PROCNT.toFixed(0), results[index].food.nutrients.CHOCDF.toFixed(0), results[index].food.nutrients.FAT.toFixed(0))
                             }}>1 g</a></li>
                           </ul>
                         )}
@@ -226,11 +290,22 @@ function Food({ setSelection }) {
                       <input type="number" className="form-control" placeholder="Number of Servings" onChange={(e) => (setServings(e.target.value))}>
                       </input>
                     </div>
-                    <div className="bodyrow2">
-                      {cals && servings && selectedServing ? `${total.toFixed(0)} Calories` : null}
-                      {cals && servings && selectedServing ? `${protein.toFixed(0)} Protein` : null}
-                      {cals && servings && selectedServing ? `${carbs.toFixed(0)} Carbs` : null}
-                      {cals && servings && selectedServing ? `${fat.toFixed(0)} Fat` : null}
+                  </div>
+                  <div className="bodyrow2">
+                    <div>
+                      {cals && servings && selectedServing ? <Calories /> : null}
+                      {cals && servings && selectedServing ? <span class="mac">{total.toFixed(0)} Cal</span> : null}
+                    </div>
+                    <div>
+                      {cals && servings && selectedServing ? <Protein /> : null}
+                      {cals && servings && selectedServing ? <span class="mac">{totalP.toFixed(0)}g Protein</span> : null}</div>
+                    <div>
+                      {cals && servings && selectedServing ? <Carbs /> : null}
+                      {cals && servings && selectedServing ? <span class="mac">{totalC.toFixed(0)}g Carbs</span> : null}
+                    </div>
+                    <div>
+                      {cals && servings && selectedServing ? <Fat /> : null}
+                      {cals && servings && selectedServing ? <span class="mac">{totalF.toFixed(0)}g Fat</span> : null}
                     </div>
                   </div>
                 </div>
@@ -245,6 +320,32 @@ function Food({ setSelection }) {
       </div>
     </>
   );
+}
+
+
+function Calories() {
+  return (
+    <img className="calories" src="./src/assets/fire-svgrepo-com.svg"></img>
+  )
+}
+
+function Protein() {
+  return (
+    <img className="protein" src="./src/assets/meat-on-bone-svgrepo-com.svg"></img>
+  )
+}
+
+
+function Carbs() {
+  return (
+    <img className="carb" src="./src/assets/bread-svgrepo-com.svg"></img>
+  )
+}
+
+function Fat() {
+  return (
+    <img className="fat" src="./src/assets/butter-svgrepo-com.svg"></img>
+  )
 }
 
 export default Food

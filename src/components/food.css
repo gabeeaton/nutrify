@@ -239,7 +239,36 @@ div h3 {
 }
 
 .bodyrow2{
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(25%, 1fr));
   padding: 20px;
   justify-content: space-evenly;
+  z-index: -100 !important;
 }
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.mac{
+  animation: fadeIn 1.5s ease-in-out forwards;
+  color: black;
+  font-size: 13px;
+  text-transform: none;
+}
+
+.bodyrow2 > div {
+  font-weight: bold;
+  animation: fadeIn 1.5s ease-in-out forwards;
+}
+
+
+.protein, .carb, .fat, .calories{
+  height: 25px;
+}
+
