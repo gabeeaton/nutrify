@@ -15,7 +15,7 @@ function Food({ setSelection }) {
   const [isModal, setIsModal] = useState(false);
   const [selectedServing, setSelectedServing] = useState("Serving Size");
   const [isDrop, setISDrop] = useState(false);
-  const [ISDrop, setIsDrop] = useState(false);
+  const [isDrop2, setIsDrop2] = useState(false);
   const [index, setIndex] = useState("");
   const [servings, setServings] = useState(0);
   const [weight, setWeight] = useState(0);
@@ -123,24 +123,24 @@ function Food({ setSelection }) {
               <path d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"></path>
             </g>
           </svg>
-          <form onSubmit={submitForm}>
+          <form
+            onSubmit={submitForm}>
             <input
               placeholder="Search"
               type="search"
               className="input"
+              onChange={(e) => setSearch(e.target.value)}
               autoFocus
             />
           </form>
           <button
             className="custom-food"
-            onChange={(e) => setSearch(e.target.value)}
             data-toggle="modal"
             data-target="#exampleModal"
-             onClick={() => setIsDrop(!ISDrop)}>
+            onClick={() => setIsDrop2(!isDrop2)}>
             Add a custom food
             <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="21"
+              xmlns="http://www.w3.org/200"
               height="21"
               fill="currentColor"
               className="bi bi-plus-lg cust"
@@ -154,27 +154,6 @@ function Food({ setSelection }) {
               />
             </svg>
           </button>
-          {ISDrop ? <div>
-            <div class="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">&times;</span>
-                    </button>
-                  </div>
-                  <div class="modal-body">
-                    ...
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div> : null}
         </div>
       </div>
       <div></div>
@@ -238,6 +217,45 @@ function Food({ setSelection }) {
             </div>
           ))}
         </div>
+        {isDrop2 && (
+          <div className="modal fade show" tabIndex="-1" role="dialog" style={{ display: 'block' }}>
+            <div className="modal-dialog" role="document">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title">Custom Food</h5>
+                </div>
+                <div className="modal-body">
+                  <form className="hihi">
+                    <div className="form-group">
+                      <input type="text" className="form-control" id="foodName" placeholder="Enter food name" />
+                    </div>
+                    <div className="form-group">
+                      <input type="number" className="form-control" id="foodCalories" placeholder="Enter calories" />
+                    </div>
+                    <div className="form-group">
+                      <input type="number" className="form-control" id="foodProtein" placeholder="Enter protein" />
+                    </div>
+                    <div className="form-group">
+                      <input type="number" className="form-control" id="foodCarbs" placeholder="Enter carbs" />
+                    </div>
+                    <div className="form-group">
+                      <input type="number" className="form-control" id="foodFat" placeholder="Enter fat" />
+                    </div>
+                  </form>
+                </div>
+                <div className="modal-footer">
+                  <button type="button" className="btn btn-secondary" onClick={() => setIsDrop2(false)}>
+                    Close
+                  </button>
+                  <button type="button" className="btn btn-primary" onClick={() => {/* Add save logic here */ }}>
+                    Save changes
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         {isModal && (
           <div className="modal fade show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }} role="dialog">
             <div className="modal-dialog" role="document">
@@ -294,18 +312,18 @@ function Food({ setSelection }) {
                   <div className="bodyrow2">
                     <div>
                       {cals && servings && selectedServing ? <Calories /> : null}
-                      {cals && servings && selectedServing ? <span class="mac">{total.toFixed(0)} Cal</span> : null}
+                      {cals && servings && selectedServing ? <span className="mac">{total.toFixed(0)} Cal</span> : null}
                     </div>
                     <div>
                       {cals && servings && selectedServing ? <Protein /> : null}
-                      {cals && servings && selectedServing ? <span class="mac">{totalP.toFixed(0)}g Protein</span> : null}</div>
+                      {cals && servings && selectedServing ? <span className="mac">{totalP.toFixed(0)}g Protein</span> : null}</div>
                     <div>
                       {cals && servings && selectedServing ? <Carbs /> : null}
-                      {cals && servings && selectedServing ? <span class="mac">{totalC.toFixed(0)}g Carbs</span> : null}
+                      {cals && servings && selectedServing ? <span className="mac">{totalC.toFixed(0)}g Carbs</span> : null}
                     </div>
                     <div>
                       {cals && servings && selectedServing ? <Fat /> : null}
-                      {cals && servings && selectedServing ? <span class="mac">{totalF.toFixed(0)}g Fat</span> : null}
+                      {cals && servings && selectedServing ? <span className="mac">{totalF.toFixed(0)}g Fat</span> : null}
                     </div>
                   </div>
                 </div>

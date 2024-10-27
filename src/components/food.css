@@ -272,3 +272,46 @@ div h3 {
   height: 25px;
 }
 
+.hihi{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.hihi {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Increased gap for better spacing */
+}
+
+.form-group {
+  position: relative;
+}
+
+.form-control {
+  border-radius: 5px; /* Slightly round the corners */
+  border: 1px solid #ccc; /* Light border */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transition */
+}
+
+.form-control:focus {
+  border-color: #007bff; /* Highlight border on focus */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Shadow effect on focus */
+}
+
+.modal-header {
+  background-color: #f8f9fa; /* Light background for header */
+  border-bottom: 1px solid #dee2e6; /* Border to separate header */
+}
+
+.modal-title {
+  margin: 0; /* Remove margin */
+  font-weight: bold; /* Make title bold */
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: space-between; /* Distribute space between buttons */
+}
+
