@@ -11,6 +11,12 @@ app.use(express.json());
 //ROUTES//
 
 //POST food
+app.post("/log-food", async(req, res) => {
+  try{
+    const {total, totalP, totalC, totalF} = req.body;
+    const newEntry = await pool.query("INSERT INTO ")
+  }
+})
 
 //GET food
 

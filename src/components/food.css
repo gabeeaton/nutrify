@@ -22,7 +22,7 @@ html {
   justify-content: center;
 }
 * {
-  animation: fadeIn 1.5s ease-in-out forwards;
+  animation: fadeIn 0.5s ease-in-out forwards;
 }
 .group {
   display: flex;
@@ -272,7 +272,7 @@ div h3 {
   height: 25px;
 }
 
-.hihi{
+.customForm{
   display: flex;
   flex-direction: column;
   gap: 10px;

@@ -28,6 +28,12 @@ function Food({ setSelection }) {
   const [carbs, setCarbs] = useState(0);
   const [fat, setFat] = useState(0);
   const [total, setTotal] = useState(0);
+  const [customName, setCustomName] = useState("");
+  const [customCalories, setCustomCalories] = useState("");
+  const [customProtein, setCustomProtein] = useState("");
+  const [customCarbs, setCustomCarbs] = useState("");
+  const [customFat, setCustomFat] = useState("");
+  const [nutritionData, setNutritionData] = useState({});
 
 
   function calcSingleServingNutrition(cals, weight, servings, type, protein, carbs, fat) {
@@ -54,16 +60,16 @@ function Food({ setSelection }) {
       totalFat = fatPerWeight * servings;
     }
     else if (type === "g") {
-      caloriesPerWeight = (cals / 28.35);
+      caloriesPerWeight = (cals / 28.35) / (weight / 28.35);
       totalCalories = caloriesPerWeight * servings;
 
-      proteinPerWeight = protein / 28.35;
+      proteinPerWeight = (protein / 28.35) / (weight / 28.35);
       totalProtein = proteinPerWeight * servings;
 
-      carbsPerWeight = carbs / 28.35;
+      carbsPerWeight = (carbs / 28.35) / (weight / 28.35);
       totalCarbs = carbsPerWeight * servings;
 
-      fatPerWeight = fat / 28.35;
+      fatPerWeight = (fat / 28.35) / (weight / 28.35);
       totalFat = fatPerWeight * servings;
     }
 
@@ -71,6 +77,25 @@ function Food({ setSelection }) {
     setTotalP(totalProtein);
     setTotalC(totalCarbs);
     setTotalF(totalFat);
+  }
+
+  const onSubmitNutritionData = async (e) => {
+    e.preventDefault();
+
+    const nutritionData = {
+      total,
+      totalP,
+      totalC,
+      totalF,
+    };
+
+    try {
+      const response = axios.post("http://localhost:3000/log-food", nutritionData);
+      console.log("Success: ", response.data);
+    }
+    catch(error) {
+      console.error(error);
+    }
   }
 
   const handleSelect = (selectedServing) => {
@@ -103,6 +128,17 @@ function Food({ setSelection }) {
 
   function handleIndex(index) {
     setIndex(index);
+  }
+
+  const onSubmitForm = async (e) => {
+    e.preventDefault();
+    try {
+      const body = { customName, customCalories, customProtein, customCarbs, customFat }
+      const response = await axios.post("http://localhost:3000/log-custom", body);
+    }
+    catch (error) {
+      console.error(error);
+    }
   }
 
   useEffect(() => {
@@ -225,21 +261,28 @@ function Food({ setSelection }) {
                   <h5 className="modal-title">Custom Food</h5>
                 </div>
                 <div className="modal-body">
-                  <form className="hihi">
+                  <form className="customForm"
+                    onSubmit={onSubmitForm}>
                     <div className="form-group">
-                      <input type="text" className="form-control" id="foodName" placeholder="Enter food name" />
+                      <input value={customName} type="text" className="form-control" id="foodName" placeholder="Enter food name"
+                        onChange={(e) => setCustomName(e.target.value)} />
                     </div>
                     <div className="form-group">
-                      <input type="number" className="form-control" id="foodCalories" placeholder="Enter calories" />
+                      <input value={customCalories} type="number" className="form-control" id="foodCalories" placeholder="Enter calories"
+                        onChange={(e) => setCustomCalories(e.target.value)} />
                     </div>
                     <div className="form-group">
-                      <input type="number" className="form-control" id="foodProtein" placeholder="Enter protein" />
+                      <input value={customProtein} type="number" className="form-control" id="foodProtein" placeholder="Enter protein"
+                        onChange={(e) => setCustomProtein(e.target.value)} />
                     </div>
                     <div className="form-group">
-                      <input type="number" className="form-control" id="foodCarbs" placeholder="Enter carbs" />
+                      <input value={customCarbs} type="number" className="form-control" id="foodCarbs" placeholder="Enter carbs"
+                        onChange={(e) => setCustomCarbs(e.target.value)} />
                     </div>
                     <div className="form-group">
-                      <input type="number" className="form-control" id="foodFat" placeholder="Enter fat" />
+                      <input value={customFat}
+                        type="number" className="form-control" id="foodFat" placeholder="Enter fat"
+                        onChange={(e) => setCustomFat(e.target.value)} />
                     </div>
                   </form>
                 </div>
@@ -247,8 +290,8 @@ function Food({ setSelection }) {
                   <button type="button" className="btn btn-secondary" onClick={() => setIsDrop2(false)}>
                     Close
                   </button>
-                  <button type="button" className="btn btn-primary" onClick={() => {/* Add save logic here */ }}>
-                    Save changes
+                  <button type="submit" className="btn btn-primary" onClick={onSubmitForm}>
+                    Log Food
                   </button>
                 </div>
               </div>
@@ -305,7 +348,10 @@ function Food({ setSelection }) {
                           </ul>
                         )}
                       </div>
-                      <input type="number" className="form-control" placeholder="Number of Servings" onChange={(e) => (setServings(e.target.value))}>
+                      <input type="number" className="form-control" placeholder="Number of Servings" onChange={(e) => {
+                        setServings(e.target.value);
+                        setISDrop(false);
+                      }}>
                       </input>
                     </div>
                   </div>
@@ -329,7 +375,7 @@ function Food({ setSelection }) {
                 </div>
                 <div className="modal-footer">
                   <button type="button" className="btn btn-secondary" onClick={() => setIsModal(false)}>Close</button>
-                  <button type="button" className="btn btn-success log-btn">Log Food</button>
+                  <button type="submit" className="btn btn-success log-btn" onClick={onSubmitNutritionData}>Log Food</button>
                 </div>
               </div>
             </div>

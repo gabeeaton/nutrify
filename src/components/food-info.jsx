@@ -25,15 +25,15 @@ export function Foodinfo() {
           </h1>
             <div className="nutrient-container">
               <div style={{ color: "green", fontWeight: "bold" }}>
-                Calories: {info.nutrients.ENERC_KCAL}
+                Calories: {info.nutrients.ENERC_KCAL.toFixed(0)}
               </div>
               <div style={{ color: "red" }}>
-                Protein: {info.nutrients.PROCNT}
+                Protein: {info.nutrients.PROCNT.toFixed(0)}
               </div>
               <div style={{ color: "blue" }}>
-                Carbohydrates: {info.nutrients.CHOCDF}
+                Carbohydrates: {info.nutrients.CHOCDF.toFixed(0)}
               </div>
-              <div style={{ color: "orange" }}>Fat: {info.nutrients.FAT}</div>
+              <div style={{ color: "orange" }}>Fat: {info.nutrients.FAT.toFixed(0)}</div>
             </div>
           </div>
         </div>
