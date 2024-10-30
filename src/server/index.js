@@ -14,7 +14,10 @@ app.use(express.json());
 app.post("/log-food", async(req, res) => {
   try{
     const {total, totalP, totalC, totalF} = req.body;
-    const newEntry = await pool.query("INSERT INTO ")
+    const newEntry = await pool.query("INSERT INTO foods");
+  }
+  catch(err) {
+    console.error(err);
   }
 })
 

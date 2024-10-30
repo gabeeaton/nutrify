@@ -33,7 +33,8 @@ function Food({ setSelection }) {
   const [customProtein, setCustomProtein] = useState("");
   const [customCarbs, setCustomCarbs] = useState("");
   const [customFat, setCustomFat] = useState("");
-  const [nutritionData, setNutritionData] = useState({});
+  const [foodName, setFoodName] = useState("");
+  const [servingSize, setServingSize] = useState(null);
 
 
   function calcSingleServingNutrition(cals, weight, servings, type, protein, carbs, fat) {
@@ -83,17 +84,19 @@ function Food({ setSelection }) {
     e.preventDefault();
 
     const nutritionData = {
-      total,
-      totalP,
-      totalC,
-      totalF,
+      name: foodName,
+      calories: total,
+      protein: totalP,
+      carbs: totalC,
+      fat: totalF,
+      // serving_size: 
     };
 
     try {
       const response = axios.post("http://localhost:3000/log-food", nutritionData);
       console.log("Success: ", response.data);
     }
-    catch(error) {
+    catch (error) {
       console.error(error);
     }
   }
@@ -116,6 +119,29 @@ function Food({ setSelection }) {
       console.error(err.message);
     }
   };
+
+  function calcGrams() {
+    setWeight(results[index].measures[0].weight.toFixed(0))
+    setCals(results[index].food.nutrients.ENERC_KCAL.toFixed(0))
+    setProtein(results[index].food.nutrients.PROCNT.toFixed(0))
+    setCarbs(results[index].food.nutrients.CHOCDF.toFixed(0))
+    setFat(results[index].food.nutrients.FAT.toFixed(0))
+    setType('g')
+    calcSingleServingNutrition(results[index].food.nutrients.ENERC_KCAL.toFixed(0), results[index].measures[0].weight.toFixed(0), servings, type, results[index].food.nutrients.PROCNT.toFixed(0), results[index].food.nutrients.CHOCDF.toFixed(0), results[index].food.nutrients.FAT.toFixed(0))
+    setServingSize(weight);
+  }
+
+  function calcOunces() {
+    setWeight(convertGrams(results[index].measures[0].weight.toFixed(0)))
+    setCals(results[index].food.nutrients.ENERC_KCAL.toFixed(0))
+    setCals(results[index].food.nutrients.ENERC_KCAL.toFixed(0))
+    setProtein(results[index].food.nutrients.PROCNT.toFixed(0))
+    setCarbs(results[index].food.nutrients.CHOCDF.toFixed(0))
+    setFat(results[index].food.nutrients.FAT.toFixed(0))
+    setType("oz")
+    calcSingleServingNutrition(results[index].food.nutrients.ENERC_KCAL.toFixed(0), results[index].measures[0].weight.toFixed(0), servings, type, results[index].food.nutrients.PROCNT.toFixed(0), results[index].food.nutrients.CHOCDF.toFixed(0), results[index].food.nutrients.FAT.toFixed(0))
+    setServingSize(weight);
+  }
 
   function convertGrams(grams) {
     const oz = (grams / 28).toFixed(1);
@@ -212,7 +238,8 @@ function Food({ setSelection }) {
                           setIsModal(true);
                           handleInfoClick(result.food);
                           handleIndex(index);
-                          setSelectedServing("Serving Size")
+                          setSelectedServing("Serving Size");
+                          setFoodName(result.food.label);
                         }}
                         >
                           <svg
@@ -272,22 +299,22 @@ function Food({ setSelection }) {
                         onChange={(e) => setCustomCalories(e.target.value)} />
                     </div>
                     <div className="form-group">
-                      <input value={customProtein} type="number" className="form-control" id="foodProtein" placeholder="Enter protein"
+                      <input value={customProtein} type="number" className="form-control" id="foodProtein" placeholder="Enter protein (g)"
                         onChange={(e) => setCustomProtein(e.target.value)} />
                     </div>
                     <div className="form-group">
-                      <input value={customCarbs} type="number" className="form-control" id="foodCarbs" placeholder="Enter carbs"
+                      <input value={customCarbs} type="number" className="form-control" id="foodCarbs" placeholder="Enter carbs (g)"
                         onChange={(e) => setCustomCarbs(e.target.value)} />
                     </div>
                     <div className="form-group">
                       <input value={customFat}
-                        type="number" className="form-control" id="foodFat" placeholder="Enter fat"
+                        type="number" className="form-control" id="foodFat" placeholder="Enter fat (g)"
                         onChange={(e) => setCustomFat(e.target.value)} />
                     </div>
                   </form>
                 </div>
                 <div className="modal-footer">
-                  <button type="button" className="btn btn-secondary" onClick={() => setIsDrop2(false)}>
+                  <button type="button" className="btn btn-secondary" onClick={() => {setIsDrop2(false), setFoodName("")}}>
                     Close
                   </button>
                   <button type="submit" className="btn btn-primary" onClick={onSubmitForm}>
@@ -305,7 +332,7 @@ function Food({ setSelection }) {
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title">Add Food</h5>
-                  <button type="button" className="btn-close" onClick={() => setIsModal(false)} aria-label="Close"></button>
+                  <button type="button" className="btn-close" onClick={() => {setIsModal(false), setFoodName("")}} aria-label="Close"></button>
                 </div>
                 <div className="body-container">
                   <div className="bodyrow1">
@@ -325,25 +352,13 @@ function Food({ setSelection }) {
                           <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <li><a className="dropdown-item" href="#" onClick={() => {
                               handleSelect('1 oz')
-                              setWeight(convertGrams(results[index].measures[0].weight.toFixed(0)))
-                              setCals(results[index].food.nutrients.ENERC_KCAL.toFixed(0))
-                              setCals(results[index].food.nutrients.ENERC_KCAL.toFixed(0))
-                              setProtein(results[index].food.nutrients.PROCNT.toFixed(0))
-                              setCarbs(results[index].food.nutrients.CHOCDF.toFixed(0))
-                              setFat(results[index].food.nutrients.FAT.toFixed(0))
-                              setType("oz")
-                              calcSingleServingNutrition(results[index].food.nutrients.ENERC_KCAL.toFixed(0), results[index].measures[0].weight.toFixed(0), servings, type, results[index].food.nutrients.PROCNT.toFixed(0), results[index].food.nutrients.CHOCDF.toFixed(0), results[index].food.nutrients.FAT.toFixed(0))
+
+                              {results ? calcOunces() : null};
                             }}>1 oz</a></li>
 
                             <li><a className="dropdown-item" href="#" onClick={() => {
                               handleSelect('1 g')
-                              setWeight(results[index].measures[0].weight.toFixed(0))
-                              setCals(results[index].food.nutrients.ENERC_KCAL.toFixed(0))
-                              setProtein(results[index].food.nutrients.PROCNT.toFixed(0))
-                              setCarbs(results[index].food.nutrients.CHOCDF.toFixed(0))
-                              setFat(results[index].food.nutrients.FAT.toFixed(0))
-                              setType('g')
-                              calcSingleServingNutrition(results[index].food.nutrients.ENERC_KCAL.toFixed(0), results[index].measures[0].weight.toFixed(0), servings, type, results[index].food.nutrients.PROCNT.toFixed(0), results[index].food.nutrients.CHOCDF.toFixed(0), results[index].food.nutrients.FAT.toFixed(0))
+                              {results ? calcGrams() : null };
                             }}>1 g</a></li>
                           </ul>
                         )}
@@ -374,7 +389,7 @@ function Food({ setSelection }) {
                   </div>
                 </div>
                 <div className="modal-footer">
-                  <button type="button" className="btn btn-secondary" onClick={() => setIsModal(false)}>Close</button>
+                  <button type="button" className="btn btn-secondary" onClick={() => {setIsModal(false); setFoodName("")}}>Close</button>
                   <button type="submit" className="btn btn-success log-btn" onClick={onSubmitNutritionData}>Log Food</button>
                 </div>
               </div>

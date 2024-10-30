@@ -39,7 +39,7 @@ CREATE TABLE goals (
     calories_goal INT NOT NULL,
     protein_goal INT NOT NULL,
     carbs_goal INT NOT NULL,
-    fats_goal INT NOT NULL,
+    fats_goal INT NOT NULL
 );
 
 CREATE TABLE daily_logs (
