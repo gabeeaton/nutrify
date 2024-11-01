@@ -125,6 +125,7 @@ div h3 {
   padding-top: 5px;
   background-color: #d7d7d7;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  min-width: 300px;
 }
 @media (max-height: 600px) {
   .results {
@@ -314,4 +315,3 @@ div h3 {
   display: flex;
   justify-content: space-between; /* Distribute space between buttons */
 }
-

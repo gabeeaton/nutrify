@@ -67,7 +67,7 @@
   padding-bottom: 0.75rem;
   padding-left: 1.25rem;
   padding-right: 1.25rem;
-  background-color: #4f46e5;
+  background: linear-gradient(90deg, #007bff, #00c6ff);
   color: #ffffff;
   font-size: 0.875rem;
   line-height: 1.25rem;
@@ -109,4 +109,8 @@
   font-size: 12px;
   margin-top: 5px;
   display: block;
+}
+
+a{
+  color: linear-gradient(90deg, #007bff, #00c6ff);
 }

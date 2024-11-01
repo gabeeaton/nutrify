@@ -35,6 +35,7 @@ function Food({ setSelection }) {
   const [customFat, setCustomFat] = useState("");
   const [foodName, setFoodName] = useState("");
   const [servingSize, setServingSize] = useState(null);
+  const [servingType, setServingType] = useState("");
 
 
   function calcSingleServingNutrition(cals, weight, servings, type, protein, carbs, fat) {
@@ -79,21 +80,26 @@ function Food({ setSelection }) {
     setTotalC(totalCarbs);
     setTotalF(totalFat);
   }
-
-  const onSubmitNutritionData = async (e) => {
+  
+  const handleClick = (e) => {
     e.preventDefault();
+    onSubmitNutritionData(); 
+    setIsModal(false);
+};
+  const onSubmitNutritionData = async () => {
 
     const nutritionData = {
       name: foodName,
-      calories: total,
-      protein: totalP,
-      carbs: totalC,
-      fat: totalF,
-      // serving_size: 
+      calories: total.toFixed(0),
+      protein: totalP.toFixed(0),
+      carbs: totalC.toFixed(0),
+      fat: totalF.toFixed(0),
+      servingType: servingType,
+      serving_size: servingSize
     };
 
     try {
-      const response = axios.post("http://localhost:3000/log-food", nutritionData);
+      const response = await axios.post("http://localhost:3000/log-food", nutritionData);
       console.log("Success: ", response.data);
     }
     catch (error) {
@@ -128,7 +134,7 @@ function Food({ setSelection }) {
     setFat(results[index].food.nutrients.FAT.toFixed(0))
     setType('g')
     calcSingleServingNutrition(results[index].food.nutrients.ENERC_KCAL.toFixed(0), results[index].measures[0].weight.toFixed(0), servings, type, results[index].food.nutrients.PROCNT.toFixed(0), results[index].food.nutrients.CHOCDF.toFixed(0), results[index].food.nutrients.FAT.toFixed(0))
-    setServingSize(weight);
+    setServingType("1g")
   }
 
   function calcOunces() {
@@ -140,7 +146,7 @@ function Food({ setSelection }) {
     setFat(results[index].food.nutrients.FAT.toFixed(0))
     setType("oz")
     calcSingleServingNutrition(results[index].food.nutrients.ENERC_KCAL.toFixed(0), results[index].measures[0].weight.toFixed(0), servings, type, results[index].food.nutrients.PROCNT.toFixed(0), results[index].food.nutrients.CHOCDF.toFixed(0), results[index].food.nutrients.FAT.toFixed(0))
-    setServingSize(weight);
+    setServingType("1oz")
   }
 
   function convertGrams(grams) {
@@ -314,7 +320,7 @@ function Food({ setSelection }) {
                   </form>
                 </div>
                 <div className="modal-footer">
-                  <button type="button" className="btn btn-secondary" onClick={() => {setIsDrop2(false), setFoodName("")}}>
+                  <button type="button" className="btn btn-secondary" onClick={() => { setIsDrop2(false), setFoodName("") }}>
                     Close
                   </button>
                   <button type="submit" className="btn btn-primary" onClick={onSubmitForm}>
@@ -332,7 +338,7 @@ function Food({ setSelection }) {
               <div className="modal-content">
                 <div className="modal-header">
                   <h5 className="modal-title">Add Food</h5>
-                  <button type="button" className="btn-close" onClick={() => {setIsModal(false), setFoodName("")}} aria-label="Close"></button>
+                  <button type="button" className="btn-close" onClick={() => { setIsModal(false), setFoodName("") }} aria-label="Close"></button>
                 </div>
                 <div className="body-container">
                   <div className="bodyrow1">
@@ -353,18 +359,19 @@ function Food({ setSelection }) {
                             <li><a className="dropdown-item" href="#" onClick={() => {
                               handleSelect('1 oz')
 
-                              {results ? calcOunces() : null};
+                              { results ? calcOunces() : null };
                             }}>1 oz</a></li>
 
                             <li><a className="dropdown-item" href="#" onClick={() => {
                               handleSelect('1 g')
-                              {results ? calcGrams() : null };
+                              { results ? calcGrams() : null };
                             }}>1 g</a></li>
                           </ul>
                         )}
                       </div>
                       <input type="number" className="form-control" placeholder="Number of Servings" onChange={(e) => {
                         setServings(e.target.value);
+                        setServingSize(e.target.value)
                         setISDrop(false);
                       }}>
                       </input>
@@ -389,8 +396,8 @@ function Food({ setSelection }) {
                   </div>
                 </div>
                 <div className="modal-footer">
-                  <button type="button" className="btn btn-secondary" onClick={() => {setIsModal(false); setFoodName("")}}>Close</button>
-                  <button type="submit" className="btn btn-success log-btn" onClick={onSubmitNutritionData}>Log Food</button>
+                  <button type="button" className="btn btn-secondary" onClick={() => { setIsModal(false); setFoodName("") }}>Close</button>
+                  <button type="submit" className="btn btn-success log-btn" onClick={handleClick}>Log Food</button>
                 </div>
               </div>
             </div>

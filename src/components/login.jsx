@@ -32,10 +32,10 @@ export function Login({user}) {
                 const errorMessage = error.message;
                 console.log(errorCode, errorMessage);
                 if (errorMessage.includes("auth/invalid-email")) {
-                    setErrorMessage("Please enter a valid email.");
+                    setErrorMessage("Email not found.");
                 }
                 else if (errorMessage.includes("auth/invalid-credential")) {
-                    setErrorMessage("Invalid login.");
+                    setErrorMessage("Incorrect password");
                 }
             })
     }
@@ -53,10 +53,10 @@ export function Login({user}) {
             const errorMessage = error.message;
             console.log(errorCode, errorMessage);
             if (errorMessage.includes("auth/invalid-email")) {
-                setErrorMessage("Please enter a valid email.");
+                setErrorMessage("Email not found.");
             }
             else if (errorMessage.includes("auth/invalid-credential")) {
-                setErrorMessage("Invalid login.");
+                setErrorMessage("Incorrect password.");
             }
         });
     }
@@ -91,6 +91,9 @@ export function Login({user}) {
                             placeholder="Password"
                             type={passwordVisible ? "text" : "password"}
                             onChange={handlePasswordChange}
+                            style={{
+                                outline: errorMessage ? "2px solid red" : "none",
+                              }}
                         />
                         <span onClick={toggleVisible} style={{ cursor: "pointer" }}>
                             <svg
