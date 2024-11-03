@@ -49,7 +49,7 @@ function App() {
       <ApiContext.Provider value={selection}>
         <Routes>
           <Route path="/" element={<><Navbar user={user} /> <Main/></>} />
-          <Route path="/food" element={<><Navbar user={user} /><Food setSelection={setSelection} /></>} />
+          <Route path="/food" element={<><Navbar user={user} /><Food setSelection={setSelection} user={user}/></>} />
           <Route path="/food-info" element={<><Navbar user={user} /><Foodinfo /></>} />
           <Route path="/view" element={
             <ProtectedRoute user={user}>

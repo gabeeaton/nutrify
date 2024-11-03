@@ -13,18 +13,18 @@ app.use(express.json());
 //POST food
 app.post("/log-food", async(req, res) => {
   try{
-    const {name, calories, protein, carbs, fat, servingType, serving_size} = req.body;
+    const {user, email, name, calories, protein, carbs, fat, servingType, serving_size} = req.body;
 
     if( !servingType || !serving_size ) {
       return res.status(400).json({error: "All fields are requried."})
     }
 
-    console.log(name, calories, protein, carbs, fat, servingType, serving_size );
+    console.log(user, email, name, calories, protein, carbs, fat, servingType, serving_size );
     const newEntry = await pool.query(
-      `INSERT INTO foods (name, calories, protein, carbs, fats, serving_type, servings) 
-       VALUES ($1, $2, $3, $4, $5, $6, $7) 
+      `INSERT INTO foods (firebase_id, email, food_name, calories, protein, carbs, fats, serving_type, servings) 
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) 
        RETURNING *;`, 
-      [name, calories, protein, carbs, fat, serving_size, servingType]
+      [user, email, name, calories, protein, carbs, fat, servingType, serving_size]
   );
   }
   catch(err) {

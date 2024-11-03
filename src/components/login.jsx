@@ -9,7 +9,7 @@ export function Login({user}) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isSignUpActive, setIsSignUpActive] = useState(false);
-    const [errorMessage, setErrorMessage] = useState("")
+    const [errorMessage, setErrorMessage] = useState("");
 
     if(user) {
         return <Navigate to='/view'></Navigate>
@@ -25,6 +25,7 @@ export function Login({user}) {
             .then((userCredential) => {
                 const user = userCredential.user;
                 console.log(user);
+                setUser(user);
                 setErrorMessage("");
             })
             .catch((error) => {
@@ -46,6 +47,7 @@ export function Login({user}) {
         .then((userCredential) => {
             const user = userCredential.user;
             console.log(user);
+            setUser(user);
             setErrorMessage("");
         })
         .catch((error) => {

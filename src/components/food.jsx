@@ -1,6 +1,7 @@
 import React, { useState, createContext, useEffect } from "react";
 import "./food.css";
 import axios from "axios";
+
 import { Link } from "react-router-dom";
 
 export const app_key = import.meta.env.VITE_API_KEY;
@@ -9,7 +10,7 @@ export const API_URL = `https://api.edamam.com/api/food-database/v2/parser?app_i
 
 export const ApiContext = createContext(null);
 
-function Food({ setSelection }) {
+function Food({ setSelection, user }) {
   const [search, setSearch] = useState("");
   const [results, setResults] = useState([]);
   const [isModal, setIsModal] = useState(false);
@@ -95,7 +96,9 @@ function Food({ setSelection }) {
       carbs: totalC.toFixed(0),
       fat: totalF.toFixed(0),
       servingType: servingType,
-      serving_size: servingSize
+      serving_size: servingSize,
+      user: user.uid,
+      email: user.email
     };
 
     try {
