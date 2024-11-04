@@ -13,6 +13,7 @@ import Navbar from "./components/navbar";
 import Food from "./components/food";
 import Dashboard from "./components/view.jsx";
 import Login from "./components/login.jsx";
+import SettingsPage from "./components/settings.jsx";
 
 function App() {
   const [message, setMessage] = useState('');
@@ -48,15 +49,25 @@ function App() {
     <BrowserRouter>
       <ApiContext.Provider value={selection}>
         <Routes>
-          <Route path="/" element={<><Navbar user={user} /> <Main/></>} />
-          <Route path="/food" element={<><Navbar user={user} /><Food setSelection={setSelection} user={user}/></>} />
+          
+          <Route path="/" element={<><Navbar user={user} /> <Main /></>} />
+          <Route path="/food" element={<>
+            <ProtectedRoute user={user}>
+              <Navbar user={user} /><Food setSelection={setSelection} user={user} />
+            </ProtectedRoute>
+          </>} />
           <Route path="/food-info" element={<><Navbar user={user} /><Foodinfo /></>} />
           <Route path="/view" element={
             <ProtectedRoute user={user}>
               <Dashboard user={user}></Dashboard>
             </ProtectedRoute>
           } />
-          <Route path="/login" element={<Login user={user}/>} />
+             <Route path="/settings" element={
+            <ProtectedRoute user={user}>
+              <SettingsPage user={user}></SettingsPage>
+            </ProtectedRoute>
+          } />
+          <Route path="/login" element={<Login user={user} />} />
         </Routes>
       </ApiContext.Provider>
     </BrowserRouter>
@@ -85,17 +96,17 @@ function Cover() {
     <>
       <div className="coverTitle">
         <h1 className="fade-in">
-            NUTRIFY{" "}
+          NUTRIFY{" "}
           <img src="./src/assets/food-dish-svgrepo-com.svg" alt="food dish" />
         </h1>
         <h2 className="fade-in">
           Your ultimate tool in the journey towards a healthier, happier you.
         </h2>
         <div className="first">
-      <Link to="/login" style={{ textDecoration: 'none', color: 'inherit' }}>
-        <h2 style={{fontSize: "25px"}}>Log your first meal <span  className="arrow"><Arrow /></span></h2>
-      </Link>
-    </div>
+          <Link to="/login" style={{ textDecoration: 'none', color: 'inherit' }}>
+            <h2 style={{ fontSize: "25px" }}>Log your first meal <span className="arrow"><Arrow /></span></h2>
+          </Link>
+        </div>
       </div>
     </>
 
@@ -104,9 +115,9 @@ function Cover() {
 
 function Arrow() {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" className="bi bi-arrow-right" viewBox="0 0 16 16">
-  <path fillRule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
-</svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="white" className="bi bi-arrow-right" viewBox="0 0 16 16">
+      <path fillRule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8" />
+    </svg>
   )
 }
 export default App;

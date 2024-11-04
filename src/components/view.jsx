@@ -16,6 +16,7 @@ function Dashboard({user}) {
                 <div className="grid-item grid-item2"></div>
                 <div className="grid-item grid-item3"></div>
                 <div className="grid-item grid-item4"></div>
+                <div className="grid-item"></div>
                 <div className="grid-item grid-item-large"></div>
             </div>
         </div>

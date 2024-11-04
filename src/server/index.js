@@ -33,7 +33,14 @@ app.post("/log-food", async(req, res) => {
 })
 
 //POST custom food
+app.post("/log-custom", async(req, res) => {
+  try{
 
+  }
+  catch(err){
+    console.error(err);
+  }
+})
 
 
 //GET food
@@ -42,7 +49,11 @@ app.post("/log-food", async(req, res) => {
 
 //REMOVE food
 
-//GET settings
+// GET settings
+
+// POST settings
+
+// EDIT settings
 
 app.listen(3000, () => {
   console.log("Server is running on port 3000");

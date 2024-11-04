@@ -110,6 +110,10 @@ function Food({ setSelection, user }) {
     }
   }
 
+  const onSubmitCustomNutritionData = async () => {
+    
+  }
+
   const handleSelect = (selectedServing) => {
     setSelectedServing(selectedServing);
   }
