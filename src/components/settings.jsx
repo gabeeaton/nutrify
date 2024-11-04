@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Fat, Carbs, Protein } from './food';
 import './settings.css';
 
 const SettingsPage = () => {
@@ -22,7 +23,7 @@ const SettingsPage = () => {
     return (
         <div className="main-cont">
             <div className="settings-container">
-                <h2 style={{ color: "black" }}>Set Your Daily Nutrition Goals</h2>
+                <h2 style={{ color: "black", fontWeight: "bold"}}>Set Your Daily Nutrition Goals</h2>
                 <form onSubmit={handleSubmit} className="settings-form">
                     <div className="form-group">
                         <label>Calories (kcal)</label>
@@ -63,6 +64,17 @@ const SettingsPage = () => {
                     <p className={totalPercentage === 100 ? "valid" : "error"}>
                         Total: {totalPercentage}% (should equal 100%)
                     </p>
+                    <div class = "macros">
+                    <p>
+                        <Protein /> Protein: {protein * calories * .01 / 4}g
+                    </p>
+                    <p>
+                        <Carbs /> Carbs: {carbs * calories * .01 / 4}g
+                    </p>
+                    <p>
+                        <Fat /> Fat: {fat * calories * .01 / 4}g
+                    </p>
+                    </div>
                     <button type="submit" className="save-button" disabled={totalPercentage !== 100}>Save Goals</button>
                 </form>
             </div>

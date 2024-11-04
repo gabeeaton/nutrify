@@ -42,7 +42,10 @@ p {
 .save-button:disabled:hover {
   background-color: #ddd;
 }
-
+.macros{
+    display: flex;
+    justify-content: space-evenly;
+}
 .valid {
   color: green;
 }

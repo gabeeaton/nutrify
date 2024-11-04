@@ -422,23 +422,24 @@ function Calories() {
   )
 }
 
-function Protein() {
+export function Protein() {
   return (
     <img className="protein" src="./src/assets/meat-on-bone-svgrepo-com.svg"></img>
   )
 }
 
 
-function Carbs() {
+export function Carbs() {
   return (
     <img className="carb" src="./src/assets/bread-svgrepo-com.svg"></img>
   )
 }
 
-function Fat() {
+export function Fat() {
   return (
     <img className="fat" src="./src/assets/butter-svgrepo-com.svg"></img>
   )
 }
+
 
 export default Food
