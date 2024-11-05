@@ -3,25 +3,91 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "fire
 import { auth } from "../firebase.js";
 import "./login.css";
 import { Navigate } from "react-router-dom";
+import axios from "axios";
 
-export function Login({user}) {
+export function Login({ user }) {
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isSignUpActive, setIsSignUpActive] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
-    if(user) {
-        return <Navigate to='/view'></Navigate>
-      }
+    if (user) {
+        return <Navigate to='/'></Navigate>
+    }
 
     const handleMethodChange = (event) => {
         event.preventDefault();
         setIsSignUpActive(!isSignUpActive);
     };
 
-    const handleSignUp = () => {
-        createUserWithEmailAndPassword(auth, email, password)
+    const handleSignUp = async () => {
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+            console.log(user);
+            setErrorMessage("");
+
+            if (user) {
+                await setSettings(user);
+            }
+
+        } catch (error) {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode, errorMessage);
+
+            if (errorCode === "auth/invalid-email") {
+                setErrorMessage("Email address is not valid.");
+            }
+            else if (errorCode === "auth/user-not-found") {
+                setErrorMessage("No user found with this email.");
+            }
+            else if (errorCode === "auth/wrong-password") {
+                setErrorMessage("Incorrect password.");
+            }
+            else if (errorCode === "auth/email-already-in-use") {
+                setErrorMessage("Email is already in use. Please use a different email.");
+            }
+            else if (errorCode === "auth/weak-password") {
+                setErrorMessage("Password must be at least 6 characters.");
+            }
+            else if (errorCode === "auth/operation-not-allowed") {
+                setErrorMessage("This operation is not allowed.");
+            }
+            else if (errorCode === "auth/too-many-requests") {
+                setErrorMessage("Too many requests. Please try again later.");
+            }
+            else {
+                setErrorMessage("Error signing up. Please try again.");
+            }
+        }
+    };
+
+    const setSettings = async (user) => {
+        try {
+            const firebaseId = user.uid;
+            const settingsData = {
+                firebase_id: firebaseId,
+                email: email,
+                calories_goal: 0,
+                protein_goal: 0,
+                fat_goal: 0,
+                carbs_goal: 0
+            };
+
+            const response = await axios.post("http://localhost:3000/sign-up", settingsData);
+            console.log("Success: ", response.data);
+
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+
+    const handleSignIn = () => {
+        if (!email || !password) return;
+        signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
                 console.log(user);
@@ -36,31 +102,9 @@ export function Login({user}) {
                     setErrorMessage("Email not found.");
                 }
                 else if (errorMessage.includes("auth/invalid-credential")) {
-                    setErrorMessage("Incorrect password");
+                    setErrorMessage("Incorrect password.");
                 }
-            })
-    }
-
-    const handleSignIn = () => {
-        if(!email || !password) return;
-        signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            const user = userCredential.user;
-            console.log(user);
-            setUser(user);
-            setErrorMessage("");
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(errorCode, errorMessage);
-            if (errorMessage.includes("auth/invalid-email")) {
-                setErrorMessage("Email not found.");
-            }
-            else if (errorMessage.includes("auth/invalid-credential")) {
-                setErrorMessage("Incorrect password.");
-            }
-        });
+            });
     }
 
     const handleEmailChange = (event) => setEmail(event.target.value);
@@ -76,7 +120,7 @@ export function Login({user}) {
                 <form className="form">
                     {isSignUpActive && <p className="form-title">Create an account</p>}
                     {!isSignUpActive && <p className="form-title">Login to your account</p>}
-                    {errorMessage && <p className="error-message" style={{color: "red"}}>{errorMessage}</p>}
+                    {errorMessage && <p className="error-message" style={{ color: "red" }}>{errorMessage}</p>}
                     <div className="input-container">
                         <input
                             placeholder="Email"
@@ -84,7 +128,7 @@ export function Login({user}) {
                             onChange={handleEmailChange}
                             style={{
                                 outline: errorMessage ? "2px solid red" : "none",
-                              }}
+                            }}
                         />
 
                     </div>
@@ -95,7 +139,7 @@ export function Login({user}) {
                             onChange={handlePasswordChange}
                             style={{
                                 outline: errorMessage ? "2px solid red" : "none",
-                              }}
+                            }}
                         />
                         <span onClick={toggleVisible} style={{ cursor: "pointer" }}>
                             <svg
@@ -120,7 +164,10 @@ export function Login({user}) {
                         </span>
                     </div>
                     {isSignUpActive ? (
-                        <button className="submit" onClick={handleSignUp} type="button">Sign Up</button>
+                        <button className="submit" onClick={() => {
+                            handleSignUp();
+                        }}
+                            type="button">Sign Up</button>
                     ) : (
                         <button className="submit" type="button" onClick={handleSignIn}>Sign In</button>
                     )}

@@ -10,6 +10,28 @@ app.use(express.json());
 
 //ROUTES//
 
+//SIGN UP(INSERT SETTINGS)
+app.post("/sign-up", async(req, res) => {
+  try{
+    const {firebase_id, email, calories_goal, protein_goal, fat_goal, carbs_goal} = req.body;
+
+    console.log(firebase_id, email, calories_goal, protein_goal, fat_goal, carbs_goal);
+
+    if (!firebase_id || !email) {
+      return res.status(400).json({error: "Must have id and email. "})
+    }
+    const newSettings = await pool.query(
+      `INSERT INTO settings (firebase_id, email, calorie_goal, protein_goal, carb_goal, fat_goal) 
+       VALUES ($1, $2, $3, $4, $5, $6)
+       RETURNING *;`,
+       [firebase_id, email, calories_goal, protein_goal, fat_goal, carbs_goal]
+    );
+
+  } catch(err) {
+    console.error(err);
+  }
+})
+
 //POST food
 app.post("/log-food", async(req, res) => {
   try{
@@ -21,7 +43,7 @@ app.post("/log-food", async(req, res) => {
 
     console.log(user, email, name, calories, protein, carbs, fat, servingType, serving_size );
     const newEntry = await pool.query(
-      `INSERT INTO foods (firebase_id, email, food_name, calories, protein, carbs, fats, serving_type, servings) 
+      `INSERT INTO entries (firebase_id, email, food_name, calories, protein, carbs, fats, serving_type, servings) 
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) 
        RETURNING *;`, 
       [user, email, name, calories, protein, carbs, fat, servingType, serving_size]
