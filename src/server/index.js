@@ -7,7 +7,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-
 //ROUTES//
 
 //SIGN UP(INSERT SETTINGS)
@@ -54,7 +53,7 @@ app.post("/log-food", async(req, res) => {
   }
 })
 
-//POST custom food
+//POST custom entry
 app.post("/log-custom", async(req, res) => {
   try{
 
@@ -64,10 +63,21 @@ app.post("/log-custom", async(req, res) => {
   }
 })
 
+//GET entries
+app.get("/entries/:firebaseid", async (req, res) => {
+  const { firebaseid } = req.params; 
+  try {
+    const result = await pool.query(`SELECT * FROM entries WHERE firebase_id = $1`, [firebaseid]);
+    res.json(result.rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "An error occurred while fetching entries." })
+  }
+});
 
-//GET food
 
 //EDIT Food
+
 
 //REMOVE food
 

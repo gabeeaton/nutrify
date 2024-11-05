@@ -81,12 +81,12 @@ function Food({ setSelection, user }) {
     setTotalC(totalCarbs);
     setTotalF(totalFat);
   }
-  
+
   const handleClick = (e) => {
     e.preventDefault();
-    onSubmitNutritionData(); 
+    onSubmitNutritionData();
     setIsModal(false);
-};
+  };
   const onSubmitNutritionData = async () => {
 
     const nutritionData = {
@@ -113,7 +113,7 @@ function Food({ setSelection, user }) {
   }
 
   const onSubmitCustomNutritionData = async () => {
-    
+
   }
 
   const handleSelect = (selectedServing) => {
@@ -211,7 +211,7 @@ function Food({ setSelection, user }) {
             />
           </form>
           <button
-            className="custom-food"
+            className="custom-food-button"
             data-toggle="modal"
             data-target="#exampleModal"
             onClick={() => setIsDrop2(!isDrop2)}>

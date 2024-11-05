@@ -1,4 +1,4 @@
-create TABLE foods (
+create TABLE entries (
     id SERIAL PRIMARY KEY,
     firebase_id VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL,

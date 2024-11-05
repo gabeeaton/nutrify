@@ -63,6 +63,7 @@ html {
   outline: none;
   background-color: #f3f3f4;
   color: #0d0c22;
+  margin-right: 10px;
   transition: 0.3s ease;
 }
 .input::placeholder {
@@ -314,4 +315,34 @@ div h3 {
 .modal-footer {
   display: flex;
   justify-content: space-between; /* Distribute space between buttons */
+}
+
+.custom-food-button {
+  background-color: #ff6347; /* Tomato color */
+  color: white; /* White text */
+  border: none; /* Remove default border */
+  border-radius: 12px; /* Rounded corners */
+  padding: 12px 24px; /* Ample padding for comfort */
+  font-size: 18px; /* Larger, easy-to-read font size */
+  font-weight: bold; /* Bold text for emphasis */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition effects */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  margin-left: 10px;
+  height: 100% !important;
+}
+
+.custom-food-button:hover {
+  background-color: #e55b45; /* Darker shade on hover */
+  transform: translateY(-2px); /* Lift effect on hover */
+}
+
+.custom-food-button:active {
+  background-color: #c54b3b; /* Even darker shade when pressed */
+  transform: translateY(0); /* Reset lift effect */
+}
+
+.custom-food-button:focus {
+  outline: none; /* Remove focus outline */
+  box-shadow: 0 0 0 3px rgba(255, 99, 71, 0.5); /* Add a glowing effect when focused */
 }
