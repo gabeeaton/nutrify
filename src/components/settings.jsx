@@ -1,22 +1,23 @@
 import React, { useState } from 'react';
 import { Fat, Carbs, Protein } from './food';
 import './settings.css';
+import axios from 'axios';
 
 const SettingsPage = ({user}) => {
-    const [calories, setCalories] = useState('');
-    const [protein, setProtein] = useState('');
-    const [fat, setFat] = useState('');
-    const [carbs, setCarbs] = useState('');
+    const [calories, setCalories] = useState(0);
+    const [protein, setProtein] = useState(0);
+    const [fat, setFat] = useState(0);
+    const [carbs, setCarbs] = useState(0);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         const goals = {
             firebase_id: user.uid,
             email: user.email,
-            calories_goal: calories,
-            protein_goal: protein,
-            fat_goal: fat,
-            carbs_goal: carbs
+            calorie_goal: calories,
+            protein_goal: protein  * (calories * .01 / 4).toFixed(0),
+            fat_goal: fat  * (calories * .01 / 4).toFixed(0),
+            carbs_goal: carbs  * (calories * .01 / 4).toFixed(0),
         };
         const result = await axios.put("http://localhost:3000/settings", goals);
 
@@ -84,7 +85,7 @@ const SettingsPage = ({user}) => {
                         <Fat /> Fat: {(fat * calories * 0.01 / 4).toFixed(0)}g
                         </p>
                     </div>
-                    <button type="submit" className="save-button" disabled={totalPercentage !== 100}>Save Goals</button>
+                    <button type="submit" className="save-button" disabled={totalPercentage !== 100} onClick={handleSubmit}>Save Goals</button>
                 </form>
             </div>
         </div>

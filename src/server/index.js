@@ -19,7 +19,7 @@ app.post("/sign-up", async(req, res) => {
     if (!firebase_id || !email) {
       return res.status(400).json({error: "Must have id and email. "})
     }
-    const newSettings = await pool.query(
+    const defaultSettings = await pool.query(
       `INSERT INTO settings (firebase_id, email, calorie_goal, protein_goal, carb_goal, fat_goal) 
        VALUES ($1, $2, $3, $4, $5, $6)
        RETURNING *;`,
@@ -68,7 +68,6 @@ app.get("/entries/:firebaseid/:date", async (req, res) => {
 
 //EDIT Food
 
-
 //REMOVE food
 
 // GET settings
@@ -76,9 +75,22 @@ app.get("/entries/:firebaseid/:date", async (req, res) => {
 // POST settings
 
 // EDIT settings
-app.put("/settings", (req, res) => {
-  const { firebase_id, email, calories_goal, protein_goal, fat_goal, carbs_goal} = req.body;
-  
+app.put("/settings", async(req, res) => {
+  const { firebase_id, email, calorie_goal, protein_goal, fat_goal, carbs_goal} = req.body;
+  try{
+    const updatedSettings = await pool.query(`UPDATE settings 
+    SET email = COALESCE($2, email),
+        calorie_goal = COALESCE($3, calories_goal),
+        protein_goal = COALESCE($4, protein_goal),
+        fat_goal = COALESCE($5, fat_goal),
+        carbs_goal = COALESCE($6, carbs_goal)
+    WHERE firebase_id = $1
+    RETURNING *;
+  `, [firebase_id, email, calorie_goal, protein_goal, fat_goal, carbs_goal]);
+  } catch(error) {
+    console.error(error);
+  }
+
 })
 
 app.listen(3000, () => {
