@@ -113,7 +113,24 @@ function Food({ setSelection, user }) {
   }
 
   const onSubmitCustomNutritionData = async () => {
+    const customNutritionData = {
+      name: customName,
+      calories: customCalories,
+      protein: customProtein,
+      carbs: customCarbs,
+      fat: customFat,
+      servingType: 'custom',
+      serving_size: 1,
+      user: user.uid,
+      email: user.email
+    }
 
+    try{
+      const response = await axios.post("http://localhost:3000/log-food", customNutritionData);
+      console.log("Success: ", response.data);
+    } catch(error) {
+      console.error(error);
+    }
   }
 
   const handleSelect = (selectedServing) => {

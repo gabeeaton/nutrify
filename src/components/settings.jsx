@@ -2,15 +2,24 @@ import React, { useState } from 'react';
 import { Fat, Carbs, Protein } from './food';
 import './settings.css';
 
-const SettingsPage = () => {
+const SettingsPage = ({user}) => {
     const [calories, setCalories] = useState('');
     const [protein, setProtein] = useState('');
     const [fat, setFat] = useState('');
     const [carbs, setCarbs] = useState('');
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Goals Saved:', { calories, protein, fat, carbs });
+        const goals = {
+            firebase_id: user.uid,
+            email: user.email,
+            calories_goal: calories,
+            protein_goal: protein,
+            fat_goal: fat,
+            carbs_goal: carbs
+        };
+        const result = await axios.put("http://localhost:3000/settings", goals);
+
     };
 
     const handleInputChange = (setter) => (e) => {
@@ -40,7 +49,7 @@ const SettingsPage = () => {
                             type="number"
                             value={protein}
                             onChange={handleInputChange(setProtein)}
-                            placeholder="e.g., 150"
+                            placeholder="e.g., 40"
                         />
                     </div>
                     <div className="form-group">
@@ -49,7 +58,7 @@ const SettingsPage = () => {
                             type="number"
                             value={fat}
                             onChange={handleInputChange(setFat)}
-                            placeholder="e.g., 70"
+                            placeholder="e.g., 20"
                         />
                     </div>
                     <div className="form-group">
@@ -58,7 +67,7 @@ const SettingsPage = () => {
                             type="number"
                             value={carbs}
                             onChange={handleInputChange(setCarbs)}
-                            placeholder="e.g., 250"
+                            placeholder="e.g., 40"
                         />
                     </div>
                     <p className={totalPercentage === 100 ? "valid" : "error"}>
@@ -66,13 +75,13 @@ const SettingsPage = () => {
                     </p>
                     <div class="macros">
                         <p>
-                            <Protein /> Protein: {protein * calories * .01 / 4}g
+                            <Protein /> Protein: {(protein * calories * .01 / 4).toFixed(0)}g
                         </p>
                         <p>
-                            <Carbs /> Carbs: {carbs * calories * .01 / 4}g
+                            <Carbs /> Carbs: {(carbs * calories * .01 / 4).toFixed(0)}g
                         </p>
                         <p>
-                            <Fat /> Fat: {fat * calories * .01 / 4}g
+                        <Fat /> Fat: {(fat * calories * 0.01 / 4).toFixed(0)}g
                         </p>
                     </div>
                     <button type="submit" className="save-button" disabled={totalPercentage !== 100}>Save Goals</button>

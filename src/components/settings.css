@@ -6,7 +6,7 @@
 .main-cont {
   display: flex;
   align-items: center;
-  height: 100vh;
+  height: 87vh;
 }
 .settings-container {
   display: flex;
@@ -22,7 +22,6 @@
 
 h2 {
   color: #333;
-  margin-bottom: 20px;
   font-weight: 600;
 }
 
@@ -53,7 +52,6 @@ p {
 .form-group {
   display: flex;
   flex-direction: column;
-  margin-bottom: 20px;
 }
 
 label {
@@ -95,3 +93,4 @@ input[type="number"]:focus {
 .save-button:active {
   transform: translateY(2px);
 }
+

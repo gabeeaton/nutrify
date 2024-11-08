@@ -8,21 +8,65 @@ import "./view.css";
 function Dashboard({ user }) {
 
     const [entries, setEntries] = useState([]);
+    const [currentDate, setCurrentDate] = useState("");
+    const [formattedDate, setFormattedDate] = useState("");
+    const [year, setYear] = useState("");
 
     const getEntries = async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/entries/${user.uid}`);
+            console.log(currentDate);
+            const response = await axios.get(`http://localhost:3000/entries/${user.uid}/${currentDate}`);
             const jsonData = response.data;
 
             setEntries(jsonData);
         } catch (err) {
-            console.error(err.message);
+            console.error(err.response.data);
+        }
+
+    };
+
+
+    const getDate = () => {
+        let datenow = new Date();
+
+        setCurrentDate(generateDatabaseDateTime(datenow));
+
+        const options = {
+            weekday: 'long',
+            month: 'long',
+            day: 'numeric',
+        };
+        setFormattedDate(datenow.toLocaleDateString('en-US', options));
+
+        const year = {
+            year: 'numeric',
+        };
+        setYear(datenow.toLocaleDateString('en-US', year))
+
+        function generateDatabaseDateTime(date) {
+            const p = new Intl.DateTimeFormat('en', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            }).formatToParts(date).reduce((acc, part) => {
+                acc[part.type] = part.value;
+                return acc;
+            }, {});
+
+            return `${p.year}-${p.month}-${p.day}`;
         }
     }
 
     useEffect(() => {
-        getEntries();
-    }, [])
+        getDate();
+        if (currentDate) {
+            getEntries();
+        }
+    }, [currentDate, formattedDate])
 
     return (
         <div className="wrap">
@@ -33,18 +77,21 @@ function Dashboard({ user }) {
                         <button className="home-btn">Home</button>
                     </Link>
                 </div>
-                <div className="grid-item grid-item-main"></div>
-                <div className="grid-item grid-item2"></div>
-                <div className="grid-item grid-item3"></div>
-                <div className="grid-item grid-item4">
+                <div className="grid-item grid-item-main shadow"></div>
+                <div className="grid-item grid-item2 shadow">
+                    <h3 className="date">{formattedDate}</h3>
+                    <h1 className="year">{year}</h1>
+                </div>
+                <div className="grid-item grid-item3 shadow"></div>
+                <div className="grid-item grid-item4 shadow">
                     {entries.length === 0 ? (
                         <p className="none">No entries found.</p>
                     ) : (
-                        <ul className = "entry-list">
+                        <ul className="entry-list">
                             {entries.map((entry) => (
                                 <li key={entry.id} style={{ display: "block" }} className="entry-item">
                                     <h5>{entry.food_name}</h5>
-                                    <p><span style={{fontWeight: "normal", color: "black", textTransform: "none"}}>Servings:</span> {entry.servings}</p>
+                                    <p><span style={{ fontWeight: "normal", color: "black", textTransform: "none" }}>Servings:</span> {entry.servings}</p>
                                     <div className="macros">
                                         <p><Protein /> {entry.protein}g</p>
                                         <p><Carbs /> {entry.carbs}g</p>

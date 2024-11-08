@@ -53,21 +53,11 @@ app.post("/log-food", async(req, res) => {
   }
 })
 
-//POST custom entry
-app.post("/log-custom", async(req, res) => {
-  try{
-
-  }
-  catch(err){
-    console.error(err);
-  }
-})
-
 //GET entries
-app.get("/entries/:firebaseid", async (req, res) => {
-  const { firebaseid } = req.params; 
+app.get("/entries/:firebaseid/:date", async (req, res) => {
+  const { firebaseid, date } = req.params; 
   try {
-    const result = await pool.query(`SELECT * FROM entries WHERE firebase_id = $1`, [firebaseid]);
+    const result = await pool.query(`SELECT * FROM entries WHERE firebase_id = $1 AND created_at::date = $2`, [firebaseid, date]);
     res.json(result.rows);
   } catch (error) {
     console.error(error);
@@ -86,6 +76,10 @@ app.get("/entries/:firebaseid", async (req, res) => {
 // POST settings
 
 // EDIT settings
+app.put("/settings", (req, res) => {
+  const { firebase_id, email, calories_goal, protein_goal, fat_goal, carbs_goal} = req.body;
+  
+})
 
 app.listen(3000, () => {
   console.log("Server is running on port 3000");

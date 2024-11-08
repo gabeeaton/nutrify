@@ -64,7 +64,7 @@ function App() {
           } />
              <Route path="/settings" element={
             <ProtectedRoute user={user}>
-              <SettingsPage user={user}></SettingsPage>
+              <Navbar user={user}/><SettingsPage user={user} />
             </ProtectedRoute>
           } />
           <Route path="/login" element={<Login user={user} />} />
@@ -74,18 +74,18 @@ function App() {
   );
 }
 
-function Main() {
+function Main({user}) {
   return (
     <>
 
       <div className="container">
-        <Cover />
+        <Cover user={user}/>
       </div>
     </>
   );
 }
 
-function Cover() {
+function Cover({user}) {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -103,7 +103,7 @@ function Cover() {
           Your ultimate tool in the journey towards a healthier, happier you.
         </h2>
         <div className="first">
-          <Link to="/login" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <Link to={user ? "/food" : "/login"} style={{ textDecoration: 'none', color: 'inherit' }}> 
             <h2 style={{ fontSize: "25px" }}>Log your first meal <span className="arrow"><Arrow /></span></h2>
           </Link>
         </div>

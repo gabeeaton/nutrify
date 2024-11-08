@@ -23,6 +23,7 @@
     border-radius: 50px;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     align-items: center;
     gap: 20px;
     overflow: auto; 
@@ -45,10 +46,14 @@
 
 .nutrient-container {
     display: flex;
-    flex-direction: column;
-    width: 100vw;
+    flex-direction: row;
+    width: 100%;
     height: 100%;
-    justify-content: space-around;
+    justify-content: space-evenly;
     gap: 20px;
     font-size: 25px;
+}
+
+img{
+    border-radius: 10px;
 }
