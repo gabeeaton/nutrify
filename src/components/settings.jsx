@@ -8,6 +8,7 @@ const SettingsPage = ({user}) => {
     const [protein, setProtein] = useState(0);
     const [fat, setFat] = useState(0);
     const [carbs, setCarbs] = useState(0);
+    const [isNegative, setIsNegative] = useState(0);
 
     const handleSubmit = async (e) => {
         e.preventDefault();

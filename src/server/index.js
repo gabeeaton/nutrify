@@ -80,10 +80,10 @@ app.put("/settings", async(req, res) => {
   try{
     const updatedSettings = await pool.query(`UPDATE settings 
     SET email = COALESCE($2, email),
-        calorie_goal = COALESCE($3, calories_goal),
+        calorie_goal = COALESCE($3, calorie_goal),
         protein_goal = COALESCE($4, protein_goal),
         fat_goal = COALESCE($5, fat_goal),
-        carbs_goal = COALESCE($6, carbs_goal)
+        carb_goal = COALESCE($6, carb_goal)
     WHERE firebase_id = $1
     RETURNING *;
   `, [firebase_id, email, calorie_goal, protein_goal, fat_goal, carbs_goal]);
