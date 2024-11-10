@@ -2,8 +2,19 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Protein, Carbs, Fat } from "./food";
 import { Link } from "react-router-dom";
+import { Pie } from 'react-chartjs-2';
+import {
+    Chart as ChartJS,
+    Title,
+    Tooltip,
+    Legend,
+    ArcElement,
+    CategoryScale,
+    LinearScale,
+  } from 'chart.js';
 import "./view.css";
 
+ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale, LinearScale);
 
 function Dashboard({ user }) {
 
@@ -20,12 +31,12 @@ function Dashboard({ user }) {
 
             setEntries(jsonData);
         } catch (err) {
-            console.error(err.response.data);
+            console.error(err);
         }
 
     };
 
-
+  
     const getDate = () => {
         let datenow = new Date();
 
@@ -61,11 +72,23 @@ function Dashboard({ user }) {
         }
     }
 
+    const fetchSettings = async() => {
+        try{
+            const response = await axios.get(`http://localhost:3000/settings/${user.uid}`);
+            console.log(response.data);
+        }
+        catch(err) {
+            console.error(err);
+        }
+        
+    }
+
     useEffect(() => {
         getDate();
         if (currentDate) {
             getEntries();
         }
+        fetchSettings();
     }, [currentDate, formattedDate])
 
     return (
@@ -82,7 +105,9 @@ function Dashboard({ user }) {
                     <h3 className="date">{formattedDate}</h3>
                     <h1 className="year">{year}</h1>
                 </div>
-                <div className="grid-item grid-item3 shadow"></div>
+                <div className="grid-item grid-item3 shadow">
+                    
+                </div>
                 <div className="grid-item grid-item4 shadow">
                     {entries.length === 0 ? (
                         <p className="none">No entries found.</p>

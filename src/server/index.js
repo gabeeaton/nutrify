@@ -71,6 +71,16 @@ app.get("/entries/:firebaseid/:date", async (req, res) => {
 //REMOVE food
 
 // GET settings
+app.get("/settings/:firebaseid", async (req, res) => {
+  const {firebaseid} = req.params;
+  try{
+    const result = (await pool.query(`SELECT carb_goal, protein_goal, fat_goal FROM settings WHERE firebase_id = $1`, [firebaseid]));
+    res.json(result.rows);
+  } catch(err) {
+    console.error(err);
+    res.status(500).json({ error: "An error occurred while fetching settings."})
+  }
+})
 
 // POST settings
 
