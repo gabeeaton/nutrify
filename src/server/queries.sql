@@ -9,8 +9,8 @@ create TABLE entries (
     fats INT NOT NULL,
     serving_type VARCHAR(100) NOT NULL,
     servings INT NOT NULL,
-    created_at TIMESTAMP DEFAULT date_trunc('second', CURRENT_TIMESTAMP),
-    updated_at TIMESTAMP DEFAULT date_trunc('second', CURRENT_TIMESTAMP),
+    created_at TIMESTAMP DEFAULT date_trunc('day', CURRENT_TIMESTAMP),
+    updated_at TIMESTAMP DEFAULT date_trunc('day', CURRENT_TIMESTAMP),
     FOREIGN KEY (firebase_id) REFERENCES settings(firebase_id)
 );
 

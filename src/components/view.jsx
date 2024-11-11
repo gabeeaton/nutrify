@@ -75,6 +75,7 @@ const Dashboard = ({ user }) => {
         try {
             const response = await axios.get(`http://localhost:3000/entries/${user.uid}/${currentDate}`);
             setEntries(response.data);
+            console.log(response.data);
         } catch (err) {
             console.error(err);
         }
@@ -127,6 +128,7 @@ const Dashboard = ({ user }) => {
         }
     }
 
+    
     // Fetch all necessary data
     useEffect(() => {
         getDate();

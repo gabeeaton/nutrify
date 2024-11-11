@@ -29,7 +29,7 @@ app.post("/sign-up", async (req, res) => {
       fat_goal,
       carbs_goal
     );
-
+    
     if (!firebase_id || !email) {
       return res.status(400).json({ error: "Must have id and email. " });
     }
@@ -39,6 +39,7 @@ app.post("/sign-up", async (req, res) => {
        RETURNING *;`,
       [firebase_id, email, calories_goal, protein_goal, fat_goal, carbs_goal]
     );
+    res.json(defaultSettings.rows)
   } catch (err) {
     console.error(err);
   }
@@ -146,15 +147,12 @@ app.get("/macros/:firebaseid", async (req, res) => {
   try {
     const result = await pool.query(`
     SELECT
-    SUM(calories) AS total_calories,
-    SUM(carbs) AS total_carbs,
-    SUM(protein) AS total_protein,
-    SUM(fats) AS total_fat
+    SUM(calories) AS total_calories
 FROM
     entries
 WHERE
     firebase_id = $1 AND
-    AND DATE(created_at) = CURRENT_DATE;
+    DATE(created_at) = CURRENT_DATE;
     `, [firebaseid]);
     if (result.rows.length > 0) {
       res.status(200).json(result.rows[0]); // Send the data back to the client
