@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Protein, Carbs, Fat } from "./food";
 import { Link } from "react-router-dom";
-import { Pie, Line } from 'react-chartjs-2';
+import { Pie, Line, Doughnut } from 'react-chartjs-2';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import {
     Chart as ChartJS,
@@ -28,6 +28,17 @@ const Dashboard = ({ user }) => {
     const [formattedDate, setFormattedDate] = useState("");
     const [year, setYear] = useState("");
     const [settings, setSettings] = useState({ carb_goal: 0, protein_goal: 0, fat_goal: 0 });
+
+
+    const [chartData, setChartData] = useState({
+        labels: [], // Start with an empty array
+        datasets: [{
+            data: [],
+            backgroundColor: ['#FF6384', '#36A2EB'],
+            borderColor: ['#FF6384', '#36A2EB'],
+            borderWidth: 1
+        }]
+    });
 
     const [calorieChartData, setCalorieChartData] = useState({
         labels: [],
@@ -75,7 +86,6 @@ const Dashboard = ({ user }) => {
         try {
             const response = await axios.get(`http://localhost:3000/entries/${user.uid}/${currentDate}`);
             setEntries(response.data);
-            console.log(response.data);
         } catch (err) {
             console.error(err);
         }
@@ -118,27 +128,99 @@ const Dashboard = ({ user }) => {
             console.error(err);
         }
     };
+    const getCurrentCals = async () => {
+        try {
+            const currentCals = await axios.get(`http://localhost:3000/cals/${user.uid}`);
+            const calorieGoal = await axios.get(`http://localhost:3000/calgoal/${user.uid}`);
 
-    const getMacros = async () => {
-        try{
-            const response = await axios.get(`http://localhost:3000/macros/${user.uid}`);
-            console.log(response.data);
-        } catch(err) {
+            // Assuming the response structure is { total_calories: '263' } for currentCals
+            const consumedCalories = parseInt(currentCals.data.total_calories);
+
+            // Assuming the response structure is [{ calorie_goal: 2700 }] for calorieGoal
+            const goalCalories = calorieGoal.data[0]?.calorie_goal || 0;
+
+            // Calculate the remaining calories
+            const remainingCalories = goalCalories - consumedCalories;
+
+            // Update the chart data state
+            setChartData({
+                labels: ['Consumed Calories', 'Remaining Calories'],
+                datasets: [
+                    {
+                        label: 'Calories',
+                        data: [consumedCalories, remainingCalories],
+                        backgroundColor: ['#FF6347', '#00BFFF'],  // Bright red and blue
+        hoverBackgroundColor: ['#FF4500', '#1E90FF'], 
+                    }
+                ]
+            });
+        } catch (err) {
             console.error(err);
         }
-    }
+    };
 
-    
+    const doughnutChartOptions = {
+        responsive: true,  // Ensures the chart is responsive to window size changes
+        maintainAspectRatio: false,  // Allows the chart to take up the full container space
+        cutout: '45%',  // Controls the "hole" size inside the donut
+        plugins: {
+            datalabels: {
+                color: '#fff',
+                font: { weight: 'normal', size: 13 },
+                formatter: (value) => `${value}`,
+            },
+            legend: {
+                position: 'top',  // Position the legend at the top of the chart
+                labels: {
+                    font: {
+                        size: 12,  // Font size for the legend
+                    },
+                },
+            },
+            title: {
+                display: true,  // Display a title for the chart
+                text: 'Calories for Today',  // Title text
+                font: {
+                    size: 16,  // Font size for the title
+                },
+            },
+            tooltip: {
+                enabled: true,  // Enable tooltips on hover
+                callbacks: {
+                    label: function (tooltipItem) {
+                        return `${tooltipItem.label}: ${tooltipItem.raw} kcal`;  // Custom label formatting for tooltips
+                    },
+                },
+            },
+        },
+        animation: {
+            animateScale: true,  // Enable scale animation when the chart loads
+            animateRotate: true,  // Enable rotation animation when the chart loads
+        },
+        layout: {
+            padding: {
+                top: 10,  // Padding around the chart's top edge
+                left: 15,  // Padding around the chart's left edge
+                right: 15,  // Padding around the chart's right edge
+                bottom: 10,  // Padding around the chart's bottom edge
+            },
+        },
+    };
+
+
     // Fetch all necessary data
     useEffect(() => {
         getDate();
         if (currentDate) {
             getEntries();
         }
+    }, [currentDate]);
+
+    useEffect(() => {
         fetchSettings();
         getCalories();
-        getMacros();
-    }, [currentDate]);
+        getCurrentCals();
+    }, [])
 
     // Chart data for macronutrients
     const macronutrientChartData = {
@@ -253,7 +335,8 @@ const Dashboard = ({ user }) => {
                             {entries.map((entry) => (
                                 <li key={entry.id} className="entry-item">
                                     <h5>{entry.food_name}</h5>
-                                    <p><span style={{ fontWeight: "normal", color: "black", textTransform: "none" }}>Servings:</span> {entry.servings}</p>
+                                    <p><span style={{ fontWeight: "normal", color: "black", textTransform: "none" }}>Serving:</span> {entry.servings} {entry.serving_type.split("1")[1]}
+                                    </p>
                                     <div className="macros">
                                         <p><Protein /> {entry.protein}g</p>
                                         <p><Carbs /> {entry.carbs}g</p>
@@ -268,7 +351,11 @@ const Dashboard = ({ user }) => {
                         </ul>
                     )}
                 </div>
-                <div className="grid-item"></div>
+
+                <div className="grid-item grid-item3 shadow">
+
+                    <Doughnut data={chartData} options={doughnutChartOptions} />
+                </div>
             </div>
         </div>
     );

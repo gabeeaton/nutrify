@@ -142,7 +142,7 @@ app.get("/entries/:firebaseid", async (req, res) => {
 });
 
 //get macros for the day
-app.get("/macros/:firebaseid", async (req, res) => {
+app.get("/cals/:firebaseid", async (req, res) => {
   const { firebaseid } = req.params;
   try {
     const result = await pool.query(`
@@ -164,6 +164,15 @@ WHERE
   }
 });
 
+app.get("/calgoal/:firebaseid", async (req, res) => {
+  const {firebaseid} = req.params;
+  try{
+    const result = await pool.query(`SELECT calorie_goal FROM settings WHERE firebase_id = $1`, [firebaseid]);
+    res.json(result.rows);
+  } catch(error) {
+    console.error(error);
+  }
+});
 //EDIT Food
 
 //REMOVE food
