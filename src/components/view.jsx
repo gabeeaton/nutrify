@@ -30,6 +30,7 @@ const Dashboard = ({ user }) => {
     const [settings, setSettings] = useState({ carb_goal: 0, protein_goal: 0, fat_goal: 0 });
 
 
+
     const [chartData, setChartData] = useState({
         labels: [], // Start with an empty array
         datasets: [{
@@ -150,7 +151,7 @@ const Dashboard = ({ user }) => {
                         label: 'Calories',
                         data: [consumedCalories, remainingCalories],
                         backgroundColor: ['#FF6347', '#00BFFF'],  // Bright red and blue
-        hoverBackgroundColor: ['#FF4500', '#1E90FF'], 
+                        hoverBackgroundColor: ['#FF4500', '#1E90FF'],
                     }
                 ]
             });
@@ -160,9 +161,9 @@ const Dashboard = ({ user }) => {
     };
 
     const doughnutChartOptions = {
-        responsive: true,  // Ensures the chart is responsive to window size changes
-        maintainAspectRatio: false,  // Allows the chart to take up the full container space
-        cutout: '45%',  // Controls the "hole" size inside the donut
+        responsive: true,
+        maintainAspectRatio: false,
+        cutout: '45%',
         plugins: {
             datalabels: {
                 color: '#fff',
@@ -170,39 +171,39 @@ const Dashboard = ({ user }) => {
                 formatter: (value) => `${value}`,
             },
             legend: {
-                position: 'top',  // Position the legend at the top of the chart
+                position: 'top',
                 labels: {
                     font: {
-                        size: 12,  // Font size for the legend
+                        size: 12,
                     },
                 },
             },
             title: {
-                display: true,  // Display a title for the chart
-                text: 'Calories for Today',  // Title text
+                display: true,
+                text: 'Calories for Today',
                 font: {
-                    size: 16,  // Font size for the title
+                    size: 16,
                 },
             },
             tooltip: {
-                enabled: true,  // Enable tooltips on hover
+                enabled: true,
                 callbacks: {
                     label: function (tooltipItem) {
-                        return `${tooltipItem.label}: ${tooltipItem.raw} kcal`;  // Custom label formatting for tooltips
+                        return `${tooltipItem.label}: ${tooltipItem.raw} kcal`;
                     },
                 },
             },
         },
         animation: {
-            animateScale: true,  // Enable scale animation when the chart loads
-            animateRotate: true,  // Enable rotation animation when the chart loads
+            animateScale: true,
+            animateRotate: true,
         },
         layout: {
             padding: {
-                top: 10,  // Padding around the chart's top edge
-                left: 15,  // Padding around the chart's left edge
-                right: 15,  // Padding around the chart's right edge
-                bottom: 10,  // Padding around the chart's bottom edge
+                top: 10,
+                left: 15,
+                right: 15,
+                bottom: 10,
             },
         },
     };
@@ -220,7 +221,7 @@ const Dashboard = ({ user }) => {
         fetchSettings();
         getCalories();
         getCurrentCals();
-    }, [])
+    }, [entries])
 
     // Chart data for macronutrients
     const macronutrientChartData = {
@@ -280,7 +281,7 @@ const Dashboard = ({ user }) => {
         scales: {
             x: {
                 grid: {
-                    color: '#ddd', // Light grid lines
+                    color: '#ddd',
                     borderColor: '#ccc',
                     borderWidth: 1,
                 },
@@ -288,12 +289,12 @@ const Dashboard = ({ user }) => {
                     font: {
                         size: 12,
                     },
-                    color: '#000', // Set x-axis labels to black
+                    color: '#000',
                 },
             },
             y: {
                 grid: {
-                    color: '#ddd', // Light grid lines
+                    color: '#ddd',
                     borderColor: '#ccc',
                     borderWidth: 1,
                 },
@@ -301,12 +302,23 @@ const Dashboard = ({ user }) => {
                     font: {
                         size: 12,
                     },
-                    color: '#000', // Set y-axis labels to black
-                    beginAtZero: true, // Ensure y-axis starts from 0
+                    color: '#000',
+                    beginAtZero: true,
                 },
             },
         },
     };
+
+    const deleteEntry = async (id) => {
+        const deleteEntry = await axios.delete(`http://localhost:3000/entries/${user.uid}/${id}`);
+        console.log(user.uid, " ", id)
+        console.log(deleteEntry.data);
+        setEntries(entries.filter(entry => entry.id !== id));
+    }
+
+    const editEntry = () => {
+
+    }
 
     return (
         <div className="wrap">
@@ -343,8 +355,9 @@ const Dashboard = ({ user }) => {
                                         <p><Fat /> {entry.fats}g</p>
                                     </div>
                                     <div className="buttons">
-                                        <button className="edit-button"><Edit /></button>
-                                        <button className="delete-button"><Delete /></button>
+                                        <button 
+                                        className="edit-button"><Edit /></button>
+                                        <button onClick={()=>deleteEntry(entry.id)}className="delete-button"><Delete /></button>
                                     </div>
                                 </li>
                             ))}
@@ -353,7 +366,6 @@ const Dashboard = ({ user }) => {
                 </div>
 
                 <div className="grid-item grid-item3 shadow">
-
                     <Doughnut data={chartData} options={doughnutChartOptions} />
                 </div>
             </div>

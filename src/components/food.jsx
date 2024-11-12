@@ -125,10 +125,10 @@ function Food({ setSelection, user }) {
       email: user.email
     }
 
-    try{
+    try {
       const response = await axios.post("http://localhost:3000/log-food", customNutritionData);
       console.log("Success: ", response.data);
-    } catch(error) {
+    } catch (error) {
       console.error(error);
     }
   }
@@ -422,8 +422,20 @@ function Food({ setSelection, user }) {
                   </div>
                 </div>
                 <div className="modal-footer">
-                  <button type="button" className="btn btn-secondary" onClick={() => { setIsModal(false); setFoodName("") }}>Close</button>
-                  <button type="submit" className="btn btn-success log-btn" onClick={handleClick}>Log Food</button>
+                  <button type="button" className="btn btn-secondary" onClick={() => { setIsModal(false); setFoodName(""); }}>Close</button>
+                  <button
+                    type="submit"
+                    className="btn btn-success log-btn"
+                    onClick={() => {
+                      if (servings && selectedServing !== "Serving Size") {
+                        handleClick();
+                      } else {
+                        alert("Please select a serving and serving size");
+                      }
+                    }}
+                  >
+                    Log Food
+                  </button>
                 </div>
               </div>
             </div>

@@ -173,9 +173,22 @@ app.get("/calgoal/:firebaseid", async (req, res) => {
     console.error(error);
   }
 });
+
 //EDIT Food
 
+
 //REMOVE food
+app.delete("/entries/:firebaseid/:entryid", async (req, res) => {
+  const { firebaseid, entryid} = req.params;
+  try{
+    const deleteEntry = await pool.query(
+      `DELETE FROM entries WHERE firebase_id = $1 AND id = $2`,[firebaseid, entryid]
+    )
+    res.json("Successfully deleted");
+  } catch(error) {
+    console.error(error.message);
+  }
+});
 
 // GET settings
 app.get("/settings/:firebaseid", async (req, res) => {

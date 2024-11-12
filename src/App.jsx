@@ -97,7 +97,7 @@ function Cover({user}) {
       <div className="coverTitle">
         <h1 className="fade-in">
           NUTRIFY{" "}
-          <img src="./src/assets/food-dish-svgrepo-com.svg" alt="food dish" />
+          <img className = "apple"src="./src/assets/apple-svgrepo-com.svg" alt="food dish" />
         </h1>
         <h2 className="fade-in">
           Your ultimate tool in the journey towards a healthier, happier you.
