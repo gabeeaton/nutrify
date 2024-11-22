@@ -39,6 +39,7 @@ function Food({ setSelection, user }) {
   const [servingType, setServingType] = useState("");
 
 
+
   function calcSingleServingNutrition(cals, weight, servings, type, protein, carbs, fat) {
     var caloriesPerWeight = 0;
     var proteinPerWeight = 0;
@@ -82,13 +83,12 @@ function Food({ setSelection, user }) {
     setTotalF(totalFat);
   }
 
-  const handleClick = (e) => {
-    e.preventDefault();
-    onSubmitNutritionData();
+  const handleClick = () => {
     setIsModal(false);
+    onSubmitNutritionData();
   };
-  const onSubmitNutritionData = async () => {
 
+  const onSubmitNutritionData = async () => {
     const nutritionData = {
       name: foodName,
       calories: total.toFixed(0),
@@ -100,8 +100,6 @@ function Food({ setSelection, user }) {
       user: user.uid,
       email: user.email
     };
-
-
 
     try {
       const response = await axios.post("http://localhost:3000/log-food", nutritionData);
@@ -146,6 +144,7 @@ function Food({ setSelection, user }) {
         },
       });
       const data = response.data;
+      console.log(data);
       setResults(data.hints);
     } catch (err) {
       console.error(err.message);
@@ -165,7 +164,6 @@ function Food({ setSelection, user }) {
 
   function calcOunces() {
     setWeight(convertGrams(results[index].measures[0].weight.toFixed(0)))
-    setCals(results[index].food.nutrients.ENERC_KCAL.toFixed(0))
     setCals(results[index].food.nutrients.ENERC_KCAL.toFixed(0))
     setProtein(results[index].food.nutrients.PROCNT.toFixed(0))
     setCarbs(results[index].food.nutrients.CHOCDF.toFixed(0))
@@ -261,9 +259,9 @@ function Food({ setSelection, user }) {
                   <div>
                     <div className="food-item">
                       <div className="food-name">
-                        {result.food.label}: {result.food.nutrients.ENERC_KCAL.toFixed(0)} cal per{" "}
-                        {result.measures[0].weight.toFixed(0)}g{" "}
-                        ({convertGrams(result.measures[0].weight.toFixed(0))} oz)
+                        {result.food.label}: {result.food.nutrients.ENERC_KCAL.toFixed(0)} cal per 
+                        100g{" "}
+                        (approx. 3.5 oz)
                       </div>
                       <div className="buttons">
                         <button className="add-button" onClick={() => {
@@ -447,7 +445,7 @@ function Food({ setSelection, user }) {
 }
 
 
-function Calories() {
+export function Calories() {
   return (
     <img className="calories" src="./src/assets/fire-svgrepo-com.svg"></img>
   )

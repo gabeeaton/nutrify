@@ -312,36 +312,55 @@ div h3 {
   font-weight: bold; /* Make title bold */
 }
 
-
 .custom-food-button {
-  background-color: #ff6347; /* Tomato color */
-  color: white; /* White text */
-  border: none; /* Remove default border */
-  border-radius: 12px; /* Rounded corners */
-  padding: 12px 24px; /* Ample padding for comfort */
-  font-size: 18px; /* Larger, easy-to-read font size */
-  font-weight: bold; /* Bold text for emphasis */
-  cursor: pointer; /* Pointer cursor on hover */
-  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition effects */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
-  margin-left: 10px;
-  height: 100% !important;
+  background-color: #f43f5e; /* Rose-500 from Tailwind for a modern pink shade */
+  color: white; /* White text for contrast */
+  border: none; /* No border for a cleaner look */
+  border-radius: 8px; /* Softer, subtle rounded corners */
+  padding: 10px 20px; /* Balanced padding for better proportions */
+  font-size: 16px; /* Slightly smaller, modern font size */
+  font-weight: medium; /* Medium weight for a clean look */
+  cursor: pointer; /* Pointer cursor for interactivity */
+  transition: background-color 0.2s ease-in-out, transform 0.2s ease; /* Smooth hover animations */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); /* Softer, minimal shadow */
+  margin-left: 10px; /* Subtle spacing adjustment */
+  height: auto; /* Allow natural height */
 }
 
+/* Hover and focus states for interactivity */
+.custom-food-button {
+  background-color: #f43f5e; /* Base color */
+  color: white; /* White text for contrast */
+  border: none; /* No border for a clean look */
+  border-radius: 8px; /* Subtle rounded corners */
+  padding: 10px 20px; /* Comfortable padding */
+  font-size: 16px; /* Modern font size */
+  font-weight: 500; /* Medium weight for readability */
+  cursor: pointer; /* Interactive pointer */
+  transition: background-color 0.2s ease, transform 0.2s ease; /* Smooth transitions */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle depth */
+}
+
+/* Hover state */
 .custom-food-button:hover {
-  background-color: #e55b45; /* Darker shade on hover */
-  transform: translateY(-2px); /* Lift effect on hover */
+  background-color: #e11d48; /* Darker shade on hover */
+  transform: translateY(-2px); /* Slight lift effect */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15); /* Slightly deeper shadow on hover */
 }
 
+/* Active (pressed) state */
 .custom-food-button:active {
-  background-color: #c54b3b; /* Even darker shade when pressed */
+  background-color: #c81e41; /* Even darker shade when pressed */
   transform: translateY(0); /* Reset lift effect */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Return to default shadow */
 }
 
+/* Focus state */
 .custom-food-button:focus {
-  outline: none; /* Remove focus outline */
-  box-shadow: 0 0 0 3px rgba(255, 99, 71, 0.5); /* Add a glowing effect when focused */
+  outline: none; /* Remove browser's default focus outline */
+  box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.5); /* Accessible glowing effect */
 }
+
 .errmessage{
   color: red;
 }

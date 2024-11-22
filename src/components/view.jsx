@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Protein, Carbs, Fat } from "./food";
+import { Calories, Protein, Carbs, Fat } from "./food";
 import { Link } from "react-router-dom";
 import { Pie, Line, Doughnut } from 'react-chartjs-2';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
@@ -28,11 +28,18 @@ const Dashboard = ({ user }) => {
     const [formattedDate, setFormattedDate] = useState("");
     const [year, setYear] = useState("");
     const [settings, setSettings] = useState({ carb_goal: 0, protein_goal: 0, fat_goal: 0 });
-
+    const [isModal, setIsModal] = useState(false);
+    const [editFoodName, setEditFoodName] = useState("");
+    const [foodName, setFoodName] = useState("");
+    const [servings, setServings] = useState(0);
+    const [servingSize, setServingSize] = useState(null);
+    const [selectedServing, setSelectedServing] = useState("Serving Size");
+    const [isDrop, setISDrop] = useState(false);
+    const [cals, setCals] = useState(0);
 
 
     const [chartData, setChartData] = useState({
-        labels: [], // Start with an empty array
+        labels: [], 
         datasets: [{
             data: [],
             backgroundColor: ['#FF6384', '#36A2EB'],
@@ -40,6 +47,11 @@ const Dashboard = ({ user }) => {
             borderWidth: 1
         }]
     });
+
+    const handleClick = () => {
+        onSubmitNutritionData();
+        setIsModal(false);
+      };
 
     const [calorieChartData, setCalorieChartData] = useState({
         labels: [],
@@ -53,7 +65,6 @@ const Dashboard = ({ user }) => {
         ],
     });
 
-    // Get today's date
     const getDate = () => {
         const datenow = new Date();
         setCurrentDate(generateDatabaseDateTime(datenow));
@@ -65,7 +76,6 @@ const Dashboard = ({ user }) => {
         setYear(datenow.toLocaleDateString('en-US', yearOptions));
     };
 
-    // Format date for database
     const generateDatabaseDateTime = (date) => {
         const p = new Intl.DateTimeFormat('en', {
             year: 'numeric',
@@ -82,7 +92,6 @@ const Dashboard = ({ user }) => {
         return `${p.year}-${p.month}-${p.day}`;
     };
 
-    // Fetch user's entries for the current date
     const getEntries = async () => {
         try {
             const response = await axios.get(`http://localhost:3000/entries/${user.uid}/${currentDate}`);
@@ -92,7 +101,6 @@ const Dashboard = ({ user }) => {
         }
     };
 
-    // Fetch user settings
     const fetchSettings = async () => {
         try {
             const response = await axios.get(`http://localhost:3000/settings/${user.uid}`);
@@ -105,7 +113,6 @@ const Dashboard = ({ user }) => {
         }
     };
 
-    // Fetch calories data for the chart
     const getCalories = async () => {
         try {
             const response = await axios.get(`http://localhost:3000/entries/${user.uid}`);
@@ -116,12 +123,12 @@ const Dashboard = ({ user }) => {
                 datasets: [{
                     data: calories,
                     borderColor: 'rgba(75,192,192,1)',
-                    tension: 0.4, // Slight curve in the line
+                    tension: 0.4, 
                     pointBackgroundColor: 'rgba(75,192,192,1)',
                     pointRadius: 5,
                     pointHoverRadius: 7,
-                    fill: false, // Line is not filled under the graph
-                    borderWidth: 2, // Line thickness
+                    fill: false, 
+                    borderWidth: 2, 
                     hoverBackgroundColor: 'rgba(75,192,192,0.6)',
                 }]
             });
@@ -134,23 +141,19 @@ const Dashboard = ({ user }) => {
             const currentCals = await axios.get(`http://localhost:3000/cals/${user.uid}`);
             const calorieGoal = await axios.get(`http://localhost:3000/calgoal/${user.uid}`);
 
-            // Assuming the response structure is { total_calories: '263' } for currentCals
-            const consumedCalories = parseInt(currentCals.data.total_calories);
+            const consumedCalories = parseInt(currentCals.data?.total_calories || 0);
 
-            // Assuming the response structure is [{ calorie_goal: 2700 }] for calorieGoal
-            const goalCalories = calorieGoal.data[0]?.calorie_goal || 0;
+            const goalCalories = calorieGoal.data[0]?.calorie_goal;
 
-            // Calculate the remaining calories
             const remainingCalories = goalCalories - consumedCalories;
 
-            // Update the chart data state
             setChartData({
                 labels: ['Consumed Calories', 'Remaining Calories'],
                 datasets: [
                     {
                         label: 'Calories',
                         data: [consumedCalories, remainingCalories],
-                        backgroundColor: ['#FF6347', '#00BFFF'],  // Bright red and blue
+                        backgroundColor: ['#FF6347', '#00BFFF'], 
                         hoverBackgroundColor: ['#FF4500', '#1E90FF'],
                     }
                 ]
@@ -209,7 +212,6 @@ const Dashboard = ({ user }) => {
     };
 
 
-    // Fetch all necessary data
     useEffect(() => {
         getDate();
         if (currentDate) {
@@ -223,7 +225,6 @@ const Dashboard = ({ user }) => {
         getCurrentCals();
     }, [entries])
 
-    // Chart data for macronutrients
     const macronutrientChartData = {
         labels: ["Carbs", "Protein", "Fat"],
         datasets: [
@@ -257,23 +258,23 @@ const Dashboard = ({ user }) => {
     const calorieChartOptions = {
         plugins: {
             datalabels: {
-                color: '#000', // Set the data labels to black
+                color: '#000',
                 font: { weight: 'bold', size: 11 },
-                formatter: (value) => `${value} kcal`, // Displaying calories with unit
+                formatter: (value) => `${value} kcal`, 
                 align: 'top',
             },
             tooltip: {
                 callbacks: {
-                    label: (tooltipItem) => `${tooltipItem.raw} kcal`, // Custom tooltip text
+                    label: (tooltipItem) => `${tooltipItem.raw} kcal`, 
                 },
             },
             legend: {
-                display: false, // Remove the legend
+                display: false, 
             },
             title: {
                 display: true,
                 text: 'Daily Calorie Intake',
-                font: { size: 16, weight: 'bold', color: '#000' }, // Set title to black
+                font: { size: 16, weight: 'bold', color: '#000' }, 
             },
         },
         responsive: true,
@@ -316,8 +317,14 @@ const Dashboard = ({ user }) => {
         setEntries(entries.filter(entry => entry.id !== id));
     }
 
-    const editEntry = () => {
+    const handleSelect = (selectedServing) => {
+        setSelectedServing(selectedServing);
+      }
 
+
+    const handleEditClick = (entry) => {
+        setIsModal(!isModal);
+        setEditFoodName(entry)
     }
 
     return (
@@ -355,20 +362,102 @@ const Dashboard = ({ user }) => {
                                         <p><Fat /> {entry.fats}g</p>
                                     </div>
                                     <div className="buttons">
-                                        <button 
-                                        className="edit-button"><Edit /></button>
-                                        <button onClick={()=>deleteEntry(entry.id)}className="delete-button"><Delete /></button>
+                                        <button onClick = {()=>handleEditClick(entry.food_name)}
+                                            className="edit-button"><Edit /></button>
+                                        <button onClick={() => deleteEntry(entry.id)} className="delete-button"><Delete /></button>
                                     </div>
                                 </li>
                             ))}
                         </ul>
                     )}
                 </div>
-
                 <div className="grid-item grid-item3 shadow">
                     <Doughnut data={chartData} options={doughnutChartOptions} />
                 </div>
             </div>
+          {isModal && (
+          <div className="modal fade show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }} role="dialog">
+            <div className="modal-dialog" role="document">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title">Add Food</h5>
+                  <button type="button" className="btn-close" onClick={() => { setIsModal(false), setFoodName("") }} aria-label="Close"></button>
+                </div>
+                <div className="body-container">
+                  <div className="bodyrow1">
+                    <div className="modal-body">
+                      <div className="dropdown">
+                        <button
+                          className="btn btn-secondary dropdown-toggle"
+                          type="button"
+                          id="dropdownMenuButton"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                          onClick={() => setISDrop(!isDrop)}
+                        >
+                          {selectedServing}
+                        </button>
+                        {isDrop && (
+                          <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <li><a className="dropdown-item" href="#" onClick={() => {
+                              handleSelect('1 oz')
+
+                              { results ? calcOunces() : null };
+                            }}>1 oz</a></li>
+
+                            <li><a className="dropdown-item" href="#" onClick={() => {
+                              handleSelect('1 g')
+                              { results ? calcGrams() : null };
+                            }}>1 g</a></li>
+                          </ul>
+                        )}
+                      </div>
+                      <input type="number" className="form-control" placeholder="Number of Servings" onChange={(e) => {
+                        setServings(e.target.value);
+                        setServingSize(e.target.value)
+                        setISDrop(false);
+                      }}>
+                      </input>
+                    </div>
+                  </div>
+                  <div className="bodyrow2">
+                    <div>
+                      {cals && servings && selectedServing ? <Calories /> : null}
+                      {cals && servings && selectedServing ? <span className="mac">{total.toFixed(0)} Cal</span> : null}
+                    </div>
+                    <div>
+                      {cals && servings && selectedServing ? <Protein /> : null}
+                      {cals && servings && selectedServing ? <span className="mac">{totalP.toFixed(0)}g Protein</span> : null}</div>
+                    <div>
+                      {cals && servings && selectedServing ? <Carbs /> : null}
+                      {cals && servings && selectedServing ? <span className="mac">{totalC.toFixed(0)}g Carbs</span> : null}
+                    </div>
+                    <div>
+                      {cals && servings && selectedServing ? <Fat /> : null}
+                      {cals && servings && selectedServing ? <span className="mac">{totalF.toFixed(0)}g Fat</span> : null}
+                    </div>
+                  </div>
+                </div>
+                <div className="modal-footer">
+                  <button type="button" className="btn btn-secondary" onClick={() => { setIsModal(false); setFoodName(""); }}>Close</button>
+                  <button
+                    type="submit"
+                    className="btn btn-success log-btn"
+                    onClick={() => {
+                      if (servings && selectedServing !== "Serving Size") {
+                        handleClick();
+                      } else {
+                        alert("Please select a serving and serving size");
+                      }
+                    }}
+                  >
+                    Log Food
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
         </div>
     );
 };
