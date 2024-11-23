@@ -30,11 +30,6 @@ const Dashboard = ({ user }) => {
     const [settings, setSettings] = useState({ carb_goal: 0, protein_goal: 0, fat_goal: 0 });
     const [isModal, setIsModal] = useState(false);
     const [editFoodName, setEditFoodName] = useState("");
-    const [isEdit, setIsEdit] = useState(false);
-    const [editCals, setEditCals] = useState(0);
-    const [editProtein, setEditProtein] = useState(0);
-    const [editCarbs, setEditCarbs] = useState(0);
-    const [editFat, setEditFat] = useState(0);
 
     const [putCals, setPutCals] = useState(0);
     const [putProtein, setPutProtein] = useState(0);
@@ -231,12 +226,15 @@ const Dashboard = ({ user }) => {
     }
 
     const handleSubmit = () => {
-        // Check if any of the values are negative
         if (parseFloat(putCals) < 0 || parseFloat(putProtein) < 0 || parseFloat(putCarbs) < 0 || parseFloat(putFat) < 0) {
             setErrorMessage('Values cannot be negative. Please enter valid values.');
         } else {
             setErrorMessage(''); // Clear error message if values are valid
             onSubmitEditData(); // Proceed with form submission if values are valid
+            getEntries();
+            fetchSettings();
+            getCalories();
+            getCurrentCals();
         }
     };
 
@@ -385,7 +383,7 @@ const Dashboard = ({ user }) => {
                                         <p><Fat /> {entry.fats}g</p>
                                     </div>
                                     <div className="buttons">
-                                        <button onClick={() => { handleEditClick(entry.food_name), setEditCals(entry.calories), setEditProtein(entry.protein), setEditCarbs(entry.carbs), setEditFat(entry.fats), setFoodid(entry.id) }}
+                                        <button onClick={() => { handleEditClick(entry.food_name), setPutCals(entry.calories), setPutProtein(entry.protein), setPutCarbs(entry.carbs), setPutFat(entry.fats), setFoodid(entry.id) }}
                                             className="edit-button"><Edit /></button>
                                         <button onClick={() => deleteEntry(entry.id)} className="delete-button"><Delete /></button>
                                     </div>
@@ -434,7 +432,7 @@ const Dashboard = ({ user }) => {
                                             className="form-control"
                                             id="foodCalories"
                                             placeholder="Enter calories"
-                                            defaultValue={editCals ? editCals : null}
+                                            defaultValue={putCals ? putCals : null}
                                             onChange={(e) => setPutCals(e.target.value)}
                                             required
                                             min="0"
@@ -447,7 +445,7 @@ const Dashboard = ({ user }) => {
                                             className="form-control"
                                             id="foodProtein"
                                             placeholder="Enter protein (g)"
-                                            defaultValue={editProtein ? editProtein : null}
+                                            defaultValue={putProtein ? putProtein : null}
                                             onChange={(e) => setPutProtein(e.target.value)}
                                             required
                                             min="0"
@@ -460,7 +458,7 @@ const Dashboard = ({ user }) => {
                                             className="form-control"
                                             id="foodCarbs"
                                             placeholder="Enter carbs (g)"
-                                            defaultValue={editCarbs ? editCarbs : null}
+                                            defaultValue={putCarbs ? putCarbs : null}
                                             onChange={(e) => setPutCarbs(e.target.value)}
                                             required
                                             min="0"
@@ -473,7 +471,7 @@ const Dashboard = ({ user }) => {
                                             className="form-control"
                                             id="foodFat"
                                             placeholder="Enter fat (g)"
-                                            defaultValue={editFat ? editFat : null}
+                                            defaultValue={putFat ? putFat : null}
                                             onChange={(e) => setPutFat(e.target.value)}
                                             required
                                             min="0"
@@ -494,6 +492,7 @@ const Dashboard = ({ user }) => {
                                     className="btn btn-primary"
                                     onClick={(e) => {
                                         handleSubmit();
+                                        setIsModal(!isModal)
                                     }}
                                 >
                                     Save Changes

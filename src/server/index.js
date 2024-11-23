@@ -176,13 +176,18 @@ app.get("/calgoal/:firebaseid", async (req, res) => {
 
 //EDIT Food
 app.put("/edit-food/:firebaseid/:entryid", async (req, res) => {
-  const { cals, protein, carbs, fat } = req.body;
-  const { firebaseid, entryid } = req.params;  
+  const { calories, protein, carbs, fat } = req.body;
+  // Destructure URL parameters for firebaseid and entryid
+  const { firebaseid, entryid } = req.params;
+
+  console.log("Received Data - Calories:", calories, "Protein:", protein, "Carbs:", carbs, "Fat:", fat);
+  console.log("Firebase ID:", firebaseid, "Entry ID:", entryid);
+
   try {
     const edit = await pool.query(`UPDATE ENTRIES
        SET calories = $1, protein = $2, carbs = $3, fats = $4
        WHERE firebase_id = $5 AND id = $6;
-    `, [ cals, protein, carbs, fat, firebaseid, entryid])
+    `, [ calories, protein, carbs, fat, firebaseid, entryid])
   } catch(error) {
     console.error(error);
   }
