@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Calories, Protein, Carbs, Fat } from "./food";
+import { Protein, Carbs, Fat, Calories } from "./food";
 import { Link } from "react-router-dom";
 import { Pie, Line, Doughnut } from 'react-chartjs-2';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
@@ -30,16 +30,23 @@ const Dashboard = ({ user }) => {
     const [settings, setSettings] = useState({ carb_goal: 0, protein_goal: 0, fat_goal: 0 });
     const [isModal, setIsModal] = useState(false);
     const [editFoodName, setEditFoodName] = useState("");
-    const [foodName, setFoodName] = useState("");
-    const [servings, setServings] = useState(0);
-    const [servingSize, setServingSize] = useState(null);
-    const [selectedServing, setSelectedServing] = useState("Serving Size");
-    const [isDrop, setISDrop] = useState(false);
-    const [cals, setCals] = useState(0);
+    const [isEdit, setIsEdit] = useState(false);
+    const [editCals, setEditCals] = useState(0);
+    const [editProtein, setEditProtein] = useState(0);
+    const [editCarbs, setEditCarbs] = useState(0);
+    const [editFat, setEditFat] = useState(0);
+
+    const [putCals, setPutCals] = useState(0);
+    const [putProtein, setPutProtein] = useState(0);
+    const [putCarbs, setPutCarbs] = useState(0);
+    const [putFat, setPutFat] = useState(0);
+    const [foodid, setFoodid] = useState(0);
+    const [errorMessage, setErrorMessage] = useState('');
+
 
 
     const [chartData, setChartData] = useState({
-        labels: [], 
+        labels: [],
         datasets: [{
             data: [],
             backgroundColor: ['#FF6384', '#36A2EB'],
@@ -47,11 +54,6 @@ const Dashboard = ({ user }) => {
             borderWidth: 1
         }]
     });
-
-    const handleClick = () => {
-        onSubmitNutritionData();
-        setIsModal(false);
-      };
 
     const [calorieChartData, setCalorieChartData] = useState({
         labels: [],
@@ -123,12 +125,12 @@ const Dashboard = ({ user }) => {
                 datasets: [{
                     data: calories,
                     borderColor: 'rgba(75,192,192,1)',
-                    tension: 0.4, 
+                    tension: 0.4,
                     pointBackgroundColor: 'rgba(75,192,192,1)',
                     pointRadius: 5,
                     pointHoverRadius: 7,
-                    fill: false, 
-                    borderWidth: 2, 
+                    fill: false,
+                    borderWidth: 2,
                     hoverBackgroundColor: 'rgba(75,192,192,0.6)',
                 }]
             });
@@ -143,7 +145,7 @@ const Dashboard = ({ user }) => {
 
             const consumedCalories = parseInt(currentCals.data?.total_calories || 0);
 
-            const goalCalories = calorieGoal.data[0]?.calorie_goal;
+            const goalCalories = calorieGoal.data[0]?.calorie_goal || 0;
 
             const remainingCalories = goalCalories - consumedCalories;
 
@@ -153,7 +155,7 @@ const Dashboard = ({ user }) => {
                     {
                         label: 'Calories',
                         data: [consumedCalories, remainingCalories],
-                        backgroundColor: ['#FF6347', '#00BFFF'], 
+                        backgroundColor: ['#FF6347', '#00BFFF'],
                         hoverBackgroundColor: ['#FF4500', '#1E90FF'],
                     }
                 ]
@@ -212,6 +214,32 @@ const Dashboard = ({ user }) => {
     };
 
 
+    const onSubmitEditData = async () => {
+        const editNutritionData = {
+            calories: putCals,
+            protein: putProtein,
+            carbs: putCarbs,
+            fat: putFat,
+        }
+
+        try {
+            const response = await axios.put(`http://localhost:3000/edit-food/${user.uid}/${foodid}`, editNutritionData);
+            console.log("Success: ", response.data);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const handleSubmit = () => {
+        // Check if any of the values are negative
+        if (parseFloat(putCals) < 0 || parseFloat(putProtein) < 0 || parseFloat(putCarbs) < 0 || parseFloat(putFat) < 0) {
+            setErrorMessage('Values cannot be negative. Please enter valid values.');
+        } else {
+            setErrorMessage(''); // Clear error message if values are valid
+            onSubmitEditData(); // Proceed with form submission if values are valid
+        }
+    };
+
     useEffect(() => {
         getDate();
         if (currentDate) {
@@ -260,21 +288,21 @@ const Dashboard = ({ user }) => {
             datalabels: {
                 color: '#000',
                 font: { weight: 'bold', size: 11 },
-                formatter: (value) => `${value} kcal`, 
+                formatter: (value) => `${value} kcal`,
                 align: 'top',
             },
             tooltip: {
                 callbacks: {
-                    label: (tooltipItem) => `${tooltipItem.raw} kcal`, 
+                    label: (tooltipItem) => `${tooltipItem.raw} kcal`,
                 },
             },
             legend: {
-                display: false, 
+                display: false,
             },
             title: {
                 display: true,
                 text: 'Daily Calorie Intake',
-                font: { size: 16, weight: 'bold', color: '#000' }, 
+                font: { size: 16, weight: 'bold', color: '#000' },
             },
         },
         responsive: true,
@@ -317,16 +345,11 @@ const Dashboard = ({ user }) => {
         setEntries(entries.filter(entry => entry.id !== id));
     }
 
-    const handleSelect = (selectedServing) => {
-        setSelectedServing(selectedServing);
-      }
-
 
     const handleEditClick = (entry) => {
         setIsModal(!isModal);
         setEditFoodName(entry)
     }
-
     return (
         <div className="wrap">
             <div className="main-container">
@@ -362,7 +385,7 @@ const Dashboard = ({ user }) => {
                                         <p><Fat /> {entry.fats}g</p>
                                     </div>
                                     <div className="buttons">
-                                        <button onClick = {()=>handleEditClick(entry.food_name)}
+                                        <button onClick={() => { handleEditClick(entry.food_name), setEditCals(entry.calories), setEditProtein(entry.protein), setEditCarbs(entry.carbs), setEditFat(entry.fats), setFoodid(entry.id) }}
                                             className="edit-button"><Edit /></button>
                                         <button onClick={() => deleteEntry(entry.id)} className="delete-button"><Delete /></button>
                                     </div>
@@ -375,89 +398,113 @@ const Dashboard = ({ user }) => {
                     <Doughnut data={chartData} options={doughnutChartOptions} />
                 </div>
             </div>
-          {isModal && (
-          <div className="modal fade show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }} role="dialog">
-            <div className="modal-dialog" role="document">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title">Add Food</h5>
-                  <button type="button" className="btn-close" onClick={() => { setIsModal(false), setFoodName("") }} aria-label="Close"></button>
+            {isModal ? (
+                <div
+                    className="modal fade show"
+                    tabIndex="-1"
+                    role="dialog"
+                    style={{ display: 'block' }}
+                    aria-labelledby="editFoodModalTitle"
+                    aria-hidden="true"
+                >
+                    <div className="modal-dialog" role="document">
+                        <div className="modal-content">
+                            <div className="modal-header">
+                                <h5 className="modal-title" id="editFoodModalTitle">
+                                    Edit {editFoodName}
+                                </h5>
+                            </div>
+                            <div className="modal-body">
+                                <form
+                                    className="customForm"
+                                    onSubmit={(e) => {
+                                        e.preventDefault();
+                                        onSubmitEditData(); // Trigger the submission logic
+                                    }}
+                                >
+                                    {errorMessage && (
+                                        <div className="alert alert-danger" role="alert">
+                                            {errorMessage}
+                                        </div>
+                                    )}
+                                    <div className="form-group">
+                                        <label htmlFor="foodCalories">Calories (kcal) <Calories /></label>
+                                        <input
+                                            type="number"
+                                            className="form-control"
+                                            id="foodCalories"
+                                            placeholder="Enter calories"
+                                            defaultValue={editCals ? editCals : null}
+                                            onChange={(e) => setPutCals(e.target.value)}
+                                            required
+                                            min="0"
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label htmlFor="foodProtein">Protein (g) <Protein /></label>
+                                        <input
+                                            type="number"
+                                            className="form-control"
+                                            id="foodProtein"
+                                            placeholder="Enter protein (g)"
+                                            defaultValue={editProtein ? editProtein : null}
+                                            onChange={(e) => setPutProtein(e.target.value)}
+                                            required
+                                            min="0"
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label htmlFor="foodCarbs">Carbs (g) <Carbs /></label>
+                                        <input
+                                            type="number"
+                                            className="form-control"
+                                            id="foodCarbs"
+                                            placeholder="Enter carbs (g)"
+                                            defaultValue={editCarbs ? editCarbs : null}
+                                            onChange={(e) => setPutCarbs(e.target.value)}
+                                            required
+                                            min="0"
+                                        />
+                                    </div>
+                                    <div className="form-group">
+                                        <label htmlFor="foodFat">Fat (g) <Fat /></label>
+                                        <input
+                                            type="number"
+                                            className="form-control"
+                                            id="foodFat"
+                                            placeholder="Enter fat (g)"
+                                            defaultValue={editFat ? editFat : null}
+                                            onChange={(e) => setPutFat(e.target.value)}
+                                            required
+                                            min="0"
+                                        />
+                                    </div>
+                                </form>
+                            </div>
+                            <div className="modal-footer">
+                                <button
+                                    type="button"
+                                    className="btn btn-secondary"
+                                    onClick={() => setIsModal(false)}
+                                >
+                                    Close
+                                </button>
+                                <button
+                                    type="submit"
+                                    className="btn btn-primary"
+                                    onClick={(e) => {
+                                        handleSubmit();
+                                    }}
+                                >
+                                    Save Changes
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div className="body-container">
-                  <div className="bodyrow1">
-                    <div className="modal-body">
-                      <div className="dropdown">
-                        <button
-                          className="btn btn-secondary dropdown-toggle"
-                          type="button"
-                          id="dropdownMenuButton"
-                          data-bs-toggle="dropdown"
-                          aria-expanded="false"
-                          onClick={() => setISDrop(!isDrop)}
-                        >
-                          {selectedServing}
-                        </button>
-                        {isDrop && (
-                          <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <li><a className="dropdown-item" href="#" onClick={() => {
-                              handleSelect('1 oz')
+            ) : null}
 
-                              { results ? calcOunces() : null };
-                            }}>1 oz</a></li>
 
-                            <li><a className="dropdown-item" href="#" onClick={() => {
-                              handleSelect('1 g')
-                              { results ? calcGrams() : null };
-                            }}>1 g</a></li>
-                          </ul>
-                        )}
-                      </div>
-                      <input type="number" className="form-control" placeholder="Number of Servings" onChange={(e) => {
-                        setServings(e.target.value);
-                        setServingSize(e.target.value)
-                        setISDrop(false);
-                      }}>
-                      </input>
-                    </div>
-                  </div>
-                  <div className="bodyrow2">
-                    <div>
-                      {cals && servings && selectedServing ? <Calories /> : null}
-                      {cals && servings && selectedServing ? <span className="mac">{total.toFixed(0)} Cal</span> : null}
-                    </div>
-                    <div>
-                      {cals && servings && selectedServing ? <Protein /> : null}
-                      {cals && servings && selectedServing ? <span className="mac">{totalP.toFixed(0)}g Protein</span> : null}</div>
-                    <div>
-                      {cals && servings && selectedServing ? <Carbs /> : null}
-                      {cals && servings && selectedServing ? <span className="mac">{totalC.toFixed(0)}g Carbs</span> : null}
-                    </div>
-                    <div>
-                      {cals && servings && selectedServing ? <Fat /> : null}
-                      {cals && servings && selectedServing ? <span className="mac">{totalF.toFixed(0)}g Fat</span> : null}
-                    </div>
-                  </div>
-                </div>
-                <div className="modal-footer">
-                  <button type="button" className="btn btn-secondary" onClick={() => { setIsModal(false); setFoodName(""); }}>Close</button>
-                  <button
-                    type="submit"
-                    className="btn btn-success log-btn"
-                    onClick={() => {
-                      if (servings && selectedServing !== "Serving Size") {
-                        handleClick();
-                      } else {
-                        alert("Please select a serving and serving size");
-                      }
-                    }}
-                  >
-                    Log Food
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
         </div>
     );
 };
