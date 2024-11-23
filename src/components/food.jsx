@@ -88,6 +88,27 @@ function Food({ setSelection, user }) {
     onSubmitNutritionData();
   };
 
+
+  const validateInputs = () => {
+    if (!customName || !customCalories || !customProtein || !customCarbs || !customFat) {
+      alert("Please fill in all fields.");
+      return false;
+    }
+
+    if (
+      isNaN(customCalories) || customCalories < 0 ||
+      isNaN(customProtein) || customProtein < 0 ||
+      isNaN(customCarbs) || customCarbs < 0 ||
+      isNaN(customFat) || customFat < 0
+    ) {
+      alert("Please enter valid positive numbers for calories, protein, carbs, and fat.");
+      return false;
+    }
+
+    return true;
+  };
+
+  
   const onSubmitNutritionData = async () => {
     const nutritionData = {
       name: foodName,
@@ -311,50 +332,91 @@ function Food({ setSelection, user }) {
           ))}
         </div>
         {isDrop2 && (
-          <div className="modal fade show" tabIndex="-1" role="dialog" style={{ display: 'block' }}>
-            <div className="modal-dialog" role="document">
-              <div className="modal-content">
-                <div className="modal-header">
-                  <h5 className="modal-title">Custom Food</h5>
-                </div>
-                <div className="modal-body">
-                  <form className="customForm"
-                    onSubmit={onSubmitForm}>
-                    <div className="form-group">
-                      <input value={customName} type="text" className="form-control" id="foodName" placeholder="Enter food name"
-                        onChange={(e) => setCustomName(e.target.value)} />
-                    </div>
-                    <div className="form-group">
-                      <input value={customCalories} type="number" className="form-control" id="foodCalories" placeholder="Enter calories"
-                        onChange={(e) => setCustomCalories(e.target.value)} />
-                    </div>
-                    <div className="form-group">
-                      <input value={customProtein} type="number" className="form-control" id="foodProtein" placeholder="Enter protein (g)"
-                        onChange={(e) => setCustomProtein(e.target.value)} />
-                    </div>
-                    <div className="form-group">
-                      <input value={customCarbs} type="number" className="form-control" id="foodCarbs" placeholder="Enter carbs (g)"
-                        onChange={(e) => setCustomCarbs(e.target.value)} />
-                    </div>
-                    <div className="form-group">
-                      <input value={customFat}
-                        type="number" className="form-control" id="foodFat" placeholder="Enter fat (g)"
-                        onChange={(e) => setCustomFat(e.target.value)} />
-                    </div>
-                  </form>
-                </div>
-                <div className="modal-footer">
-                  <button type="button" className="btn btn-secondary" onClick={() => { setIsDrop2(false), setFoodName("") }}>
-                    Close
-                  </button>
-                  <button type="submit" className="btn btn-primary" onClick={onSubmitForm}>
-                    Log Food
-                  </button>
-                </div>
-              </div>
+  <div className="modal fade show" tabIndex="-1" role="dialog" style={{ display: 'block' }}>
+    <div className="modal-dialog" role="document">
+      <div className="modal-content">
+        <div className="modal-header">
+          <h5 className="modal-title">Custom Food</h5>
+        </div>
+        <div className="modal-body">
+          <form className="customForm">
+            <div className="form-group">
+              <input 
+                value={customName} 
+                type="text" 
+                className="form-control" 
+                id="foodName" 
+                placeholder="Enter food name"
+                onChange={(e) => setCustomName(e.target.value)} 
+              />
             </div>
-          </div>
-        )}
+            <div className="form-group">
+              <input 
+                value={customCalories} 
+                type="number" 
+                className="form-control" 
+                id="foodCalories" 
+                placeholder="Enter calories"
+                onChange={(e) => setCustomCalories(e.target.value)} 
+              />
+            </div>
+            <div className="form-group">
+              <input 
+                value={customProtein} 
+                type="number" 
+                className="form-control" 
+                id="foodProtein" 
+                placeholder="Enter protein (g)"
+                onChange={(e) => setCustomProtein(e.target.value)} 
+              />
+            </div>
+            <div className="form-group">
+              <input 
+                value={customCarbs} 
+                type="number" 
+                className="form-control" 
+                id="foodCarbs" 
+                placeholder="Enter carbs (g)"
+                onChange={(e) => setCustomCarbs(e.target.value)} 
+              />
+            </div>
+            <div className="form-group">
+              <input 
+                value={customFat} 
+                type="number" 
+                className="form-control" 
+                id="foodFat" 
+                placeholder="Enter fat (g)"
+                onChange={(e) => setCustomFat(e.target.value)} 
+              />
+            </div>
+          </form>
+        </div>
+        <div className="modal-footer">
+          <button 
+            type="button" 
+            className="btn btn-secondary" 
+            onClick={() => { setIsDrop2(false), setFoodName("") }}>
+            Close
+          </button>
+          <button 
+            type="button" 
+            className="btn btn-primary" 
+            onClick={() => {
+              // Error checking before submitting
+              if (validateInputs()) {
+                onSubmitCustomNutritionData(); 
+                setIsDrop2(false);
+              }
+            }}>
+            Log Food
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+)}
+
 
         {isModal && (
           <div className="modal fade show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }} role="dialog">

@@ -43,13 +43,13 @@ h2 {
 .coverTitle h2 {
   margin-top: 10px;
 }
-
 .coverTitle {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100vw;
+  justify-content: center; /* Center vertically */
+  align-items: center; /* Center horizontally */
+  height: 90vh;
+  text-align: center; /* Ensures text inside the container is centered */
 }
 body {
   overflow: hidden;
@@ -75,8 +75,7 @@ div h2 {
 
 .container {
   display: flex;
-  flex-direction: vertical;
-  justify-content: center;
+  flex-direction: column;
 }
 
 @keyframes fadeIn {

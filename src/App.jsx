@@ -77,7 +77,6 @@ function App() {
 function Main({user}) {
   return (
     <>
-
       <div className="container">
         <Cover user={user}/>
       </div>

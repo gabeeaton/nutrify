@@ -1,59 +1,126 @@
 .super-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-y: auto;
 }
 
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 80vh;
-    width: 80vw;
-    margin-top: 20px;
-    border-radius: 10px;
-    padding: 0px;
+.child-container {
+  background-color: white !important;
+  width: 90%;
+  height: 90%;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px;
 }
 
-.child {
-    height: 100%;
-    width: 80%;
-    background-color: white;
-    border-radius: 50px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-    overflow: auto; 
+.top {
+  display: flex;
+  justify-content: start;
+  width: 100%;
+  align-items: center;
+  gap: 75px;
 }
-
-.img-container {
-    display: flex;
-    justify-content: center;
-    height: 50%;
-    width: 70%;
+hr {
+  border: 0;
+  border-top: 1px solid #e0e0e0 !important;
+  width: 100%;
+  margin: 10px 0;
 }
-
-.maincontainer {
+.bottom{
     display: flex;
-    flex-direction: row;
     width: 100%;
-    height: 100%;
-    align-items: center;
 }
 
-.nutrient-container {
+  .calories-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+  }
+.left, .right{
+    display: flex !important;
+    flex-direction: column !important;
+    width: 50%;
+    align-items: center !important;
+    justify-content: center;
+}
+
+h3 {
+  font-weight: bold !important;
+}
+.legend-item span {
+    font-weight: bold;  /* Make the legend labels bold */
+    font-size: 1em;      /* Optional: Adjust the font size if needed */
+  }
+img {
+  border-radius: 10px;
+  height: 130px;
+}
+
+/* Container styling */
+.nutrition-container {
     display: flex;
-    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    padding: 1rem;
+  }
+  
+  /* Card styling */
+  .nutrition-card {
+    background: #f8f9fa;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 1rem 1.5rem;
+    width: 150px;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .nutrition-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Heading styling */
+  .nutrition-card h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #343a40;
+  }
+  
+  /* Paragraph styling */
+  .nutrition-card p {
+    margin: 0.5rem 0 0;
+    font-size: 1rem;
+    color: #495057;
+  }
+  .donut {
     width: 100%;
-    height: 100%;
-    justify-content: space-evenly;
-    gap: 20px;
-    font-size: 25px;
-}
+    height: 300px; /* Set a responsive height, or adjust as needed */
+  }
 
-img{
-    border-radius: 10px;
-}
+  @media(max-width: 400px) {
+    .nutrition-card {
+        width: 120px;
+      }
+      .top {
+        display: flex;
+        justify-content: space;
+        width: 100%;
+        align-items: center;
+        gap: 20px;
+      }
+      .child-container{
+        padding: 20px;
+      }
+  }
+  
+  

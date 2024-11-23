@@ -368,3 +368,15 @@ div h3 {
   height: 50px;
   margin-bottom: 20px;
 }
+
+@media(max-width: 400px) {
+.food-block {
+  width: 90%;
+}
+.results {
+  width: 95%;
+}
+.food-name{
+  font-size: 15px;
+}
+}
