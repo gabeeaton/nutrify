@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-export const app_key = '4f6ba1ac291cb9d9f5fced4ea3378e3b';
-export const app_id = '2553f5e4';
+export const app_key = import.meta.env.VITE_APP_KEY;
+export const app_id = import.meta.env.VITE_APP_ID;
 export const API_URL = `https://api.edamam.com/api/food-database/v2/parser?app_id=${app_id}&app_key=${app_key}`;
 
 export const fetchAPI = async (foodText) => {

@@ -108,6 +108,12 @@ span {
   font-weight: 500;
 }
 
+.hamburger.open {
+  position: fixed !important;
+  top: 20px;  /* Adjust as needed */
+  right: 20px;  /* Adjust as needed */
+  z-index: 1000;  /* Ensure it's above other content */
+}
 @media (max-width: 600px) {
   .nav-item {
     font-size: 0.6rem;
@@ -124,6 +130,7 @@ span {
   margin: 0;
   padding: 0;
   line-height: 1;
+
 }
 
 .food-item {
@@ -151,6 +158,12 @@ ul {
 li {
   padding-bottom: 0;
 }
+.hamburger.open {
+  position: fixed;
+  top: 20px;  /* Adjust as needed */
+  right: 20px;  /* Adjust as needed */
+  z-index: 1000;  /* Ensure it's above other content */
+}
 
 /* Style for Hamburger Menu */
 .hamburger {
@@ -169,21 +182,6 @@ li {
   transition: all 0.3s ease;
 }
 
-.hamburger.open .line:nth-child(1) {
-  transform: rotate(45deg);
-  position: relative;
-  top: 5px;
-}
-
-.hamburger.open .line:nth-child(2) {
-  opacity: 0;
-}
-
-.hamburger.open .line:nth-child(3) {
-  transform: rotate(-45deg);
-  position: relative;
-  top: -5px;
-}
 
 /* Mobile styles */
 @media (max-width: 1200px) {
@@ -195,6 +193,7 @@ li {
 
   .nav-section{
     padding: 20px !important;
+    z-index: 500 !important;
   }
 
   .nav-area1 .ul1.open {
@@ -203,5 +202,12 @@ li {
 
   .hamburger {
     display: flex;
+  }
+
+  .hamburger.open {
+    position: fixed !important;
+    top: 20px;  /* Adjust as needed */
+    right: 20px;  /* Adjust as needed */
+    z-index: 1000;  /* Ensure it's above other content */
   }
 }
