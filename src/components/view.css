@@ -234,6 +234,7 @@
   .grid-item-header{
     min-height: 100px;
     flex-direction: column-reverse;
+    align-items: end;
   }
 
   .entry-item{

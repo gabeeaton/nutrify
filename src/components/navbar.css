@@ -109,10 +109,8 @@ span {
 }
 
 .hamburger.open {
-  position: fixed !important;
-  top: 20px;  /* Adjust as needed */
-  right: 20px;  /* Adjust as needed */
-  z-index: 1000;  /* Ensure it's above other content */
+  right: 20px; /* Adjust as needed */
+  z-index: 1000; /* Ensure it's above other content */
 }
 @media (max-width: 600px) {
   .nav-item {
@@ -130,7 +128,6 @@ span {
   margin: 0;
   padding: 0;
   line-height: 1;
-
 }
 
 .food-item {
@@ -159,10 +156,10 @@ li {
   padding-bottom: 0;
 }
 .hamburger.open {
-  position: fixed;
-  top: 20px;  /* Adjust as needed */
-  right: 20px;  /* Adjust as needed */
-  z-index: 1000;  /* Ensure it's above other content */
+  top: 20px; /* Adjust as needed */
+  right: 20px; /* Adjust as needed */
+  z-index: 1000; /* Ensure it's above other content */
+  transform: translateY(-100%) !important; 
 }
 
 /* Style for Hamburger Menu */
@@ -173,6 +170,27 @@ li {
   width: 30px;
   height: 25px;
   cursor: pointer;
+  transition: transform 0.5s ease !important;
+}
+
+.hamburger div {
+  width: 100%;
+  height: 4px;
+  background-color: #333;
+  border-radius: 4px;
+  transition: transform 0.3s ease; /* Smooth transitions for each bar */
+}
+
+.hamburger.open div:nth-child(1) {
+  transform: rotate(45deg) translateY(6px); /* First bar rotates to form X */
+}
+
+.hamburger.open div:nth-child(2) {
+  opacity: 0; /* Hide middle bar */
+}
+
+.hamburger.open div:nth-child(3) {
+  transform: rotate(-45deg) translateY(-6px); /* Last bar rotates to form X */
 }
 
 .line {
@@ -182,7 +200,6 @@ li {
   transition: all 0.3s ease;
 }
 
-
 /* Mobile styles */
 @media (max-width: 1200px) {
   .nav-area1 .ul1 {
@@ -191,9 +208,19 @@ li {
     width: 100%;
   }
 
-  .nav-section{
+  .nav-section {
     padding: 20px !important;
+    position: fixed;
     z-index: 500 !important;
+    transition: top 0.3s ease-in-out !important;
+    top: 0;
+    
+  }
+
+
+
+  .ul1 {
+    transition: height 0.3s ease, opacity 0.3s ease;
   }
 
   .nav-area1 .ul1.open {
@@ -204,10 +231,10 @@ li {
     display: flex;
   }
 
-  .hamburger.open {
-    position: fixed !important;
-    top: 20px;  /* Adjust as needed */
-    right: 20px;  /* Adjust as needed */
-    z-index: 1000;  /* Ensure it's above other content */
+  .sign-in {
+    margin-top: 10px;
+  }
+  .sign-out {
+    margin-top: 10px;
   }
 }

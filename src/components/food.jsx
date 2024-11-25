@@ -124,7 +124,6 @@ function Food({ setSelection, user }) {
 
     try {
       const response = await axios.post("http://localhost:3000/log-food", nutritionData);
-      console.log("Success: ", response.data);
     }
     catch (error) {
       console.error("error", error);
@@ -165,7 +164,6 @@ function Food({ setSelection, user }) {
         },
       });
       const data = response.data;
-      console.log(data);
       setResults(data.hints);
     } catch (err) {
       console.error(err.message);
@@ -207,28 +205,14 @@ function Food({ setSelection, user }) {
     setIndex(index);
   }
 
-  const onSubmitForm = async (e) => {
-    e.preventDefault();
-    try {
-      const body = { customName, customCalories, customProtein, customCarbs, customFat }
-      const response = await axios.post("http://localhost:3000/log-custom", body);
-    }
-    catch (error) {
-      console.error(error);
-    }
-  }
 
   useEffect(() => {
     calcSingleServingNutrition(cals, weight, servings, type, protein, carbs, fat);
-    console.log("Calories: ", cals, " Weight: ", weight, " Servings: ", servings, " Type: ", type, " Protein: ", protein, " Carbs: ", carbs, " Fat: ", fat)
   }, [cals, weight, servings, type, protein, carbs, fat])
 
 
   return (
     <>
-      <div>
-        <h3 style={{ color: "white" }}>Log Your Food</h3>
-      </div>
       <div className="search-container">
         <div className="group">
           <svg className="icon" aria-hidden="true" viewBox="0 0 24 24">
@@ -239,7 +223,7 @@ function Food({ setSelection, user }) {
           <form
             onSubmit={submitForm}>
             <input
-              placeholder="Search"
+              placeholder="Log your food"
               type="search"
               className="input"
               onChange={(e) => setSearch(e.target.value)}
@@ -251,10 +235,10 @@ function Food({ setSelection, user }) {
             data-toggle="modal"
             data-target="#exampleModal"
             onClick={() => setIsDrop2(!isDrop2)}>
-            Add a custom food
+            Custom
             <svg
               xmlns="http://www.w3.org/200"
-              height="21"
+              height="15"
               fill="currentColor"
               className="bi bi-plus-lg cust"
               viewBox="0 0 16 16"

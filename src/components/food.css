@@ -87,9 +87,10 @@ input:hover {
   display: flex;
   justify-content: center;
   width: 100%;
+  margin-top: 40px;
 }
 div h3 {
-  margin-top: 25px;
+
   margin-bottom: 20px;
   animation: fadeIn 1.5s ease-in-out forwards;
 }
@@ -124,9 +125,9 @@ div h3 {
   border-radius: 15px;
   width: 70%;
   padding-top: 5px;
-  background-color: #d7d7d7;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   min-width: 300px;
+  background-color: rgb(255, 255, 255, 0.2) !important; 
 }
 @media (max-height: 600px) {
   .results {
@@ -368,15 +369,30 @@ div h3 {
   height: 50px;
   margin-bottom: 20px;
 }
-
+@media(max-width: 1200px) {
+  .search-container{
+    margin-top: 145px;
+  }
+}
 @media(max-width: 400px) {
 .food-block {
   width: 90%;
 }
 .results {
-  width: 95%;
+  width: 90%;
 }
 .food-name{
   font-size: 15px;
 }
+.group{
+  width: 90%;
+}
+.custom-food-button {
+  font-size: 80%;
+  padding: 10px;
+}
+.add-button, .info-button{
+  width: 60px;
+}
+
 }

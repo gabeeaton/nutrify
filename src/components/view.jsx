@@ -286,7 +286,7 @@ const Dashboard = ({ user }) => {
             datalabels: {
                 color: '#000',
                 font: { weight: 'bold', size: 11 },
-                formatter: (value) => `${value} kcal`,
+                formatter: (value) => `${value}`,
                 align: 'top',
             },
             tooltip: {

@@ -118,3 +118,9 @@ h2 {
 h2:hover .arrow {
   transform: translateX(10px);
 }
+
+@media (max-width: 1200px) {
+  .coverTitle {
+    margin-top: 50px;
+  }
+}
