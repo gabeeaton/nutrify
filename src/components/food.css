@@ -434,13 +434,16 @@ div h3 {
     margin-top: 145px;
   }
 }
-@media (max-width: 400px) {
-  .food-block {
-    width: 90%;
-  }
+@media (max-width: 500px) {
   .results {
     width: 90%;
   }
+  .food-block {
+    width: 90% !important;
+  }
+}
+@media (max-width: 400px) {
+ 
   .food-name {
     font-size: 15px;
   }
@@ -455,4 +458,5 @@ div h3 {
   .info-button {
     width: 60px;
   }
+
 }
