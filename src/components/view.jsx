@@ -150,11 +150,12 @@ const Dashboard = ({ user }) => {
                     {
                         label: 'Calories',
                         data: [consumedCalories, remainingCalories],
-                        backgroundColor: ['#FF6347', '#00BFFF'],
-                        hoverBackgroundColor: ['#FF4500', '#1E90FF'],
+                        backgroundColor: ['#f28e59', '#f0c9a0'], // Lighter coral and burnt orange
+                        hoverBackgroundColor: ['#f4d5b3', '#f3d2af'], 
                     }
                 ]
             });
+            
         } catch (err) {
             console.error(err);
         }
@@ -257,11 +258,13 @@ const Dashboard = ({ user }) => {
             {
                 label: "Macro Goals",
                 data: [settings.carb_goal, settings.protein_goal, settings.fat_goal],
-                backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
-                hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"]
+                backgroundColor: ["#f28e59", "#e66c28", "#f0c9a0"], // Coral, Burnt Orange, Soft Peach
+                hoverBackgroundColor: ["#f28e59", "#e66c28", "#f3d2af"] // Slightly lighter hover for Fat
             }
         ]
     };
+    
+
 
     const macronutrientChartOptions = {
         plugins: {
