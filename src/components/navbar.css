@@ -6,7 +6,7 @@ svg {
   margin-right: 5px;
 }
 .nav-item a {
-  color: black;
+  color: #fff; 
   text-transform: uppercase;
   text-decoration: none;
   letter-spacing: 0.15em;
@@ -18,7 +18,7 @@ svg {
 }
 
 .nav-item a:hover {
-  color: black;
+  color: white;
   transform: translateY(-7px);
 }
 
@@ -30,7 +30,7 @@ svg {
   height: 2px;
   left: 50%;
   position: absolute;
-  background: black;
+  background: white;
   transition: width 0.3s ease 0s, left 0.3s ease 0s;
   width: 0;
 }
@@ -44,9 +44,13 @@ svg {
   background: none !important;
 }
 
+/* Sign In Button */
 .sign-in {
-  background: linear-gradient(90deg, #007bff, #00c6ff) !important;
-  border: none;
+  font-size: inherit;
+  padding: 10px 15px;
+  background: linear-gradient(90deg, #f28e59, #f7b38d) !important; /* Warm Coral to Peach */
+  color: white;
+  border: none; 
   border-radius: 50px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   text-transform: uppercase;
@@ -54,47 +58,50 @@ svg {
   cursor: pointer;
   transition: all 0.3s ease;
 }
+
+/* Hover Effect */
 .sign-in:hover {
-  background: linear-gradient(90deg, #0062cc, #00a7e1) !important;
+  background: linear-gradient(90deg, #e66c28, #f28e59) !important; /* Burnt Orange to Warm Coral */
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
   transform: translateY(-1px) !important;
 }
+
+/* Active Effect */
 .sign-in:active {
-  background: linear-gradient(90deg, #004ba0, #008bbd) !important;
+  background: linear-gradient(90deg, #c44d14, #e66c28) !important; /* Deep Orange to Burnt Orange */
   transform: translateY(1px) !important;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15);
 }
+
 .signIn {
   padding: 10px 15px !important;
 }
-.signOut {
-  font-size: inherit;
-  padding: 10px 15px;
-  background: none;
-  border: none;
-  color: white;
-}
-
 .sign-out {
-  background: linear-gradient(90deg, #ff0000, #ff6347) !important;
+  font-size: inherit;
+  padding: 10px 15px !important;
+  background: linear-gradient(90deg, #f28e59, #e66c28) !important; /* Warm Coral to Burnt Orange */
+  border: none;
   border-radius: 50px;
+  color: white;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition: all 0.3s ease;
-  padding: 10px 15px;
 }
 
+/* Hover Effect */
 .sign-out:hover {
-  background: linear-gradient(90deg, #cc0000, #e15634) !important;
+  background: linear-gradient(90deg, #e66c28, #d85e1f) !important; /* Darker Burnt Orange */
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
   transform: translateY(-1px) !important;
 }
 
+/* Active Effect */
 .sign-out:active {
-  background: linear-gradient(90deg, #a00000, #bd4534) !important;
+  background: linear-gradient(90deg, #c44d14, #b84312) !important; /* Deep Orange tones */
   transform: translateY(1px) !important;
   box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15);
 }
+
 
 span {
   color: white;
@@ -103,7 +110,7 @@ span {
   letter-spacing: 1px;
 }
 .username {
-  color: black;
+  color: white;
   text-transform: none;
   font-weight: 500;
 }
@@ -119,7 +126,7 @@ span {
 }
 .nav-section {
   width: 100vw;
-  background: white;
+  background-color: #f7b38d;
   animation: fadeIn 1s ease-in-out forwards;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 15px;
   display: flex;
@@ -161,9 +168,9 @@ li {
   z-index: 1000; /* Ensure it's above other content */
   transform: translateY(-100%) !important; 
 }
-
 /* Style for Hamburger Menu */
 .hamburger {
+  color: white;
   display: none;
   flex-direction: column;
   justify-content: space-between;
@@ -196,10 +203,9 @@ li {
 .line {
   width: 100%;
   height: 4px;
-  background-color: black;
+  background-color: white !important;
   transition: all 0.3s ease;
 }
-
 /* Mobile styles */
 @media (max-width: 1200px) {
   .nav-area1 .ul1 {

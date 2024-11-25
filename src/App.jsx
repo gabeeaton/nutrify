@@ -59,7 +59,7 @@ function App() {
           <Route path="/food-info" element={<><Navbar user={user} /><Foodinfo /></>} />
           <Route path="/view" element={
             <ProtectedRoute user={user}>
-              <Dashboard user={user}></Dashboard>
+                <Navbar user={user} /><Dashboard user={user}></Dashboard>
             </ProtectedRoute>
           } />
              <Route path="/settings" element={
@@ -103,7 +103,7 @@ function Cover({user}) {
         </h2>
         <div className="first">
           <Link to={user ? "/food" : "/login"} style={{ textDecoration: 'none', color: 'inherit' }}> 
-            <h2 style={{ fontSize: "25px" }}>Log your first meal <span className="arrow"><Arrow /></span></h2>
+            <h2 className = "firsttext" style={{ fontSize: "25px" }}>Log your first meal <span className="arrow"><Arrow /></span></h2>
           </Link>
         </div>
       </div>

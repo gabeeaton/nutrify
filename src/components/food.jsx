@@ -108,7 +108,7 @@ function Food({ setSelection, user }) {
     return true;
   };
 
-  
+
   const onSubmitNutritionData = async () => {
     const nutritionData = {
       name: foodName,
@@ -264,9 +264,9 @@ function Food({ setSelection, user }) {
                   <div>
                     <div className="food-item">
                       <div className="food-name">
-                        {result.food.label}: {result.food.nutrients.ENERC_KCAL.toFixed(0)} cal per 
+                        {result.food.label}: {result.food.nutrients.ENERC_KCAL.toFixed(0)} cal per
                         100g{" "}
-                        (approx. 3.5 oz)
+                        (3.5 oz)
                       </div>
                       <div className="buttons">
                         <button className="add-button" onClick={() => {
@@ -299,7 +299,7 @@ function Food({ setSelection, user }) {
                               xmlns="http://www.w3.org/2000/svg"
                               width="21"
                               height="21"
-                              fill="currentColor"
+                              fill="darkgray"
                               className="bi bi-info-lg"
                               viewBox="0 0 16 16"
                             >
@@ -316,90 +316,90 @@ function Food({ setSelection, user }) {
           ))}
         </div>
         {isDrop2 && (
-  <div className="modal fade show" tabIndex="-1" role="dialog" style={{ display: 'block' }}>
-    <div className="modal-dialog" role="document">
-      <div className="modal-content">
-        <div className="modal-header">
-          <h5 className="modal-title">Custom Food</h5>
-        </div>
-        <div className="modal-body">
-          <form className="customForm">
-            <div className="form-group">
-              <input 
-                value={customName} 
-                type="text" 
-                className="form-control" 
-                id="foodName" 
-                placeholder="Enter food name"
-                onChange={(e) => setCustomName(e.target.value)} 
-              />
+          <div className="modal fade show" tabIndex="-1" role="dialog" style={{ display: 'block' }}>
+            <div className="modal-dialog" role="document">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title">Custom Food</h5>
+                </div>
+                <div className="modal-body">
+                  <form className="customForm">
+                    <div className="form-group">
+                      <input
+                        value={customName}
+                        type="text"
+                        className="form-control"
+                        id="foodName"
+                        placeholder="Enter food name"
+                        onChange={(e) => setCustomName(e.target.value)}
+                      />
+                    </div>
+                    <div className="form-group">
+                      <input
+                        value={customCalories}
+                        type="number"
+                        className="form-control"
+                        id="foodCalories"
+                        placeholder="Enter calories"
+                        onChange={(e) => setCustomCalories(e.target.value)}
+                      />
+                    </div>
+                    <div className="form-group">
+                      <input
+                        value={customProtein}
+                        type="number"
+                        className="form-control"
+                        id="foodProtein"
+                        placeholder="Enter protein (g)"
+                        onChange={(e) => setCustomProtein(e.target.value)}
+                      />
+                    </div>
+                    <div className="form-group">
+                      <input
+                        value={customCarbs}
+                        type="number"
+                        className="form-control"
+                        id="foodCarbs"
+                        placeholder="Enter carbs (g)"
+                        onChange={(e) => setCustomCarbs(e.target.value)}
+                      />
+                    </div>
+                    <div className="form-group">
+                      <input
+                        value={customFat}
+                        type="number"
+                        className="form-control"
+                        id="foodFat"
+                        placeholder="Enter fat (g)"
+                        onChange={(e) => setCustomFat(e.target.value)}
+                      />
+                    </div>
+                  </form>
+                </div>
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    className="closeout"
+                    onClick={() => { setIsDrop2(false), setFoodName("") }}>
+                    Close
+                  </button>
+                  <button
+                    type="button"
+                    className="cust-log"
+                    onClick={() => {
+                      // Error checking before submitting
+                      if (validateInputs()) {
+                        onSubmitCustomNutritionData();
+                        setIsDrop2(false);
+                      }
+                    }}>
+                    Log Food
+                  </button>
+                </div>
+              </div>
             </div>
-            <div className="form-group">
-              <input 
-                value={customCalories} 
-                type="number" 
-                className="form-control" 
-                id="foodCalories" 
-                placeholder="Enter calories"
-                onChange={(e) => setCustomCalories(e.target.value)} 
-              />
-            </div>
-            <div className="form-group">
-              <input 
-                value={customProtein} 
-                type="number" 
-                className="form-control" 
-                id="foodProtein" 
-                placeholder="Enter protein (g)"
-                onChange={(e) => setCustomProtein(e.target.value)} 
-              />
-            </div>
-            <div className="form-group">
-              <input 
-                value={customCarbs} 
-                type="number" 
-                className="form-control" 
-                id="foodCarbs" 
-                placeholder="Enter carbs (g)"
-                onChange={(e) => setCustomCarbs(e.target.value)} 
-              />
-            </div>
-            <div className="form-group">
-              <input 
-                value={customFat} 
-                type="number" 
-                className="form-control" 
-                id="foodFat" 
-                placeholder="Enter fat (g)"
-                onChange={(e) => setCustomFat(e.target.value)} 
-              />
-            </div>
-          </form>
-        </div>
-        <div className="modal-footer">
-          <button 
-            type="button" 
-            className="btn btn-secondary" 
-            onClick={() => { setIsDrop2(false), setFoodName("") }}>
-            Close
-          </button>
-          <button 
-            type="button" 
-            className="btn btn-primary" 
-            onClick={() => {
-              // Error checking before submitting
-              if (validateInputs()) {
-                onSubmitCustomNutritionData(); 
-                setIsDrop2(false);
-              }
-            }}>
-            Log Food
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-)}
+          </div>
+        )}
 
 
         {isModal && (

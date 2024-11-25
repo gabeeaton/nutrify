@@ -351,12 +351,7 @@ const Dashboard = ({ user }) => {
     return (
         <div className="wrap">
             <div className="main-container">
-                <div className="grid-item grid-item-header">
-                    {user && <h1>Welcome, {user.email}</h1>}
-                    <Link className="nav-link" to="/">
-                        <button className="home-btn">Home</button>
-                    </Link>
-                </div>
+        
                 <div className="grid-item grid-item-main shadow">
                     <Line data={calorieChartData} options={calorieChartOptions} />
                 </div>
