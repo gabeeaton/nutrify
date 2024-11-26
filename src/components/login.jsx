@@ -123,6 +123,7 @@ export function Login({ user }) {
                     {errorMessage && <p className="error-message" style={{ color: "red" }}>{errorMessage}</p>}
                     <div className="input-container">
                         <input
+                            className = "em"
                             placeholder="Email"
                             type="email"
                             onChange={handleEmailChange}
@@ -134,6 +135,7 @@ export function Login({ user }) {
                     </div>
                     <div className="input-container">
                         <input
+                            className = "pwd"
                             placeholder="Password"
                             type={passwordVisible ? "text" : "password"}
                             onChange={handlePasswordChange}

@@ -36,7 +36,7 @@ h2 {
     display: flex;
     align-items: center;
     height: 87vh;
-  
+  }
   .settings-container {
     display: flex;
     flex-direction: column;
@@ -138,7 +138,7 @@ h2 {
     }
   }
   
-}
+
 
 .form-group label {
   margin-bottom: 5px;

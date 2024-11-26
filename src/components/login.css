@@ -67,7 +67,7 @@
   padding-bottom: 0.75rem;
   padding-left: 1.25rem;
   padding-right: 1.25rem;
-  background:  #f28e59;
+  background: linear-gradient(145deg, #f3d2af, #ff9e4a);
   color: #ffffff;
   font-size: 0.875rem;
   line-height: 1.25rem;
@@ -76,6 +76,11 @@
   border-radius: 0.5rem;
   text-transform: uppercase;
 }
+
+.submit:hover {
+  background: linear-gradient(145deg, #f0c9a0, #ff7c29); 
+}
+
 
 .signup-link {
   color: #6b7280;
@@ -88,7 +93,9 @@
 .signup-link a {
   text-decoration: underline;
 }
-
+.em, .pwd{
+  width: 100% !important;
+}
 .login-container {
   border-radius: 20px;
   display: flex;

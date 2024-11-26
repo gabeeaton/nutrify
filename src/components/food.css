@@ -51,11 +51,10 @@ html {
   z-index: -1 !important;
 }
 .input, input {
-  width: 100%;
+  width: 100% !important;
   height: 40px;
   line-height: 28px;
   padding: 0 1rem;
-  padding-left: 2.5rem;
   border: 2px solid transparent;
   outline: none;
   border-radius: 8px;
@@ -105,7 +104,7 @@ div h3 {
   justify-content: center;
 }
 .food-block {
-  background-color: #fff7f2; /* Light Peach */
+  background-color: white; /* Light Peach */
   width: 80%;
   min-height: 50px;
   margin: 5px 0;
@@ -352,7 +351,6 @@ div h3 {
   outline-offset: 4px; /* Spaced outline for clarity */
 }
 
-
 .errmessage {
   color: red;
 }
@@ -410,8 +408,12 @@ div h3 {
   margin-bottom: 20px;
 }
 
-.form-control{
+
+.cust-form{
+  width: 100% !important;
   border: 1px solid lightgray !important;
+  display: flex;
+  justify-content: center;
 }
 
 @media (max-width: 1200px) {
@@ -426,6 +428,7 @@ div h3 {
   .food-block {
     width: 90% !important;
   }
+  
 }
 @media (max-width: 400px) {
  
@@ -443,5 +446,9 @@ div h3 {
   .info-button {
     width: 60px;
   }
+  .input{
+    width: 100% !important;
+  }
+
 
 }
