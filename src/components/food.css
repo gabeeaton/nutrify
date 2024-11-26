@@ -430,10 +430,8 @@ div h3 {
   }
   
 }
-@media (max-width: 450px) {
-  .search-container {
-    margin-top: 100px !important;
-  }
+@media (max-width: 400px) {
+ 
   .food-name {
     font-size: 15px;
   }
@@ -451,8 +449,6 @@ div h3 {
   .input{
     width: 100% !important;
   }
-  .results{
-    height: 55vh !important;
-  }
+  
 
 }

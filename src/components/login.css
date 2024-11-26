@@ -117,3 +117,9 @@
   margin-top: 5px;
   display: block;
 }
+
+@media(max-width: 450px) {
+  .login-container{
+    height: 500px !important;
+  }
+}

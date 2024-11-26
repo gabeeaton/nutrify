@@ -10,9 +10,6 @@ html {
   overflow-y: hidden;
 }
 
-* {
-  box-sizing: border-box !important; /* Ensures padding and borders are included in the element's total width and height */
-}
 body {
   overflow: hidden;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -126,12 +123,5 @@ h2:hover .arrow {
   .coverTitle {
     margin-top: 50px;
   }
-}
-
-@media (max-width: 450px) {
-  .cover,
-html {
-  height: 85vh !important;
-}
 }
 
