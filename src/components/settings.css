@@ -229,6 +229,6 @@ input{
     font-size: 70% !important;
   }
   .main-cont{
-    height: 80vh;
+    height: 80vh !important;
   }
 }

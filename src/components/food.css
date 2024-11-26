@@ -450,7 +450,7 @@ div h3 {
     width: 100% !important;
   }
   .results{
-    height: 60vh;
+    height: 60vh !important;
   }
 
 }
