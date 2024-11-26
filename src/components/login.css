@@ -118,8 +118,8 @@
   display: block;
 }
 
-@media(max-width: 450px) {
-  .login-container{
-    height: 500px !important;
+@media(max-width: 450px){
+  form{
+    height: 60% !important;
   }
 }
