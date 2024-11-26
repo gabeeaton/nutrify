@@ -1,11 +1,24 @@
 import express from "express";
 import cors from "cors";
 import pool from "./db.js";
+import pkg from 'pg';
+const { Client } = pkg;
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+
+const client = new Client({
+  connectionString: 'postgresql://gabeeaton:HYXBeklHKrvaqcnq8nzK05v3tW9lISk1@dpg-ct2vtlbtq21c73b94iag-a.virginia-postgres.render.com/nutrition_tracker_db',
+  ssl: {
+    rejectUnauthorized: false // Set this to false to allow self-signed certificates if required
+  }
+});
+
+
+client.connect(); 
 
 //ROUTES//
 
