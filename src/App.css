@@ -128,3 +128,10 @@ h2:hover .arrow {
   }
 }
 
+@media (max-width: 450px) {
+  .cover,
+html {
+  height: 90vh !important;
+}
+}
+
