@@ -50,16 +50,15 @@ html {
 .modal-footer {
   z-index: -1 !important;
 }
-.input {
+.input, input {
   width: 100%;
   height: 40px;
   line-height: 28px;
   padding: 0 1rem;
   padding-left: 2.5rem;
   border: 2px solid transparent;
-  border-radius: 8px;
   outline: none;
-  background-color: #f3f3f4;
+  background-color: white !important;
   color: #0d0c22;
   margin-right: 10px;
   transition: 0.3s ease;
@@ -68,7 +67,7 @@ html {
   color: #9e9ea7;
 }
 .input:focus,
-input:hover {
+.input:hover {
   outline: none;
   border-color: rgba(255, 255, 255, 0.544);
   background-color: #fff;
@@ -209,7 +208,6 @@ div h3 {
   padding-left: 20px;
   padding-right: 20px;
   color: white;
-  background-color: #45a049;
   font-size: 1rem;
   font-weight: 500;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -248,14 +246,6 @@ div h3 {
   padding: 20px;
   justify-content: space-evenly;
   z-index: -100 !important;
-}
-
-.input{
-  background-color: #fdf0e6 !important;
-}
-.input:focus {
-  border-color: #f8d7b8 !important; 
-  outline: none !important;
 }
 @keyframes fadeIn {
   0% {
@@ -301,17 +291,6 @@ div h3 {
   position: relative;
 }
 
-.form-control {
-  border-radius: 5px; /* Slightly round the corners */
-  border: 1px solid #ccc; /* Light border */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  transition: border-color 0.3s, box-shadow 0.3s; /* Smooth transition */
-}
-
-.form-control:focus {
-  border-color: #007bff; /* Highlight border on focus */
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Shadow effect on focus */
-}
 
 .modal-header {
   background-color: #f8f9fa; /* Light background for header */
@@ -429,6 +408,11 @@ div h3 {
   height: 50px;
   margin-bottom: 20px;
 }
+
+.form-control{
+  border: 1px solid lightgray !important;
+}
+
 @media (max-width: 1200px) {
   .search-container {
     margin-top: 145px;

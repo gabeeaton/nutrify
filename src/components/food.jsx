@@ -466,10 +466,10 @@ function Food({ setSelection, user }) {
                   </div>
                 </div>
                 <div className="modal-footer">
-                  <button type="button" className="btn btn-secondary" onClick={() => { setIsModal(false); setFoodName(""); }}>Close</button>
+                  <button type="button" className="closeout" onClick={() => { setIsModal(false); setFoodName(""); }}>Close</button>
                   <button
                     type="submit"
-                    className="btn btn-success log-btn"
+                    className="cust-log"
                     onClick={() => {
                       if (servings && selectedServing !== "Serving Size") {
                         handleClick();

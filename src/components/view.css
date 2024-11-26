@@ -84,42 +84,45 @@
 }
 
 .edit-button {
-  background-color: #007bff;
+  background-color: #f28e59;
   color: white;
 }
 
 .edit-button:hover {
-  background-color: #0056b3;
+  background-color: #e66c28;
   transform: translateY(-1px);
 }
 
 .delete-button {
-  background-color: #dc3545;
+  background-color: #e66c28;
   color: white;
 }
 
 .delete-button:hover {
-  background-color: #c82333;
+  background-color: #b9481e;
   transform: translateY(-2px);
 }
 
 .entry-item {
-  background: linear-gradient(145deg, #f0f0f0, #e9e9e9);
+  background-color: #fbe1c9; /* Softer warm beige */
   margin-bottom: 20px;
   border-radius: 15px;
   width: 80%;
   padding: 20px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s, box-shadow 0.2s;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #e6c8a7; /* Warm, subtle border */
   min-width: 200px;
+  color: white; /* White text */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3); /* Add shadow to make text pop */
 }
-
 .entry-item:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
-
+.serve{
+  color: white !important;
+}
 .entry-list {
   display: flex;
   flex-direction: column;
@@ -165,6 +168,9 @@
   text-transform: capitalize;
   margin: 0;
   padding: 0;
+}
+.bi-trash{
+  margin-left: 3px;
 }
 @media(max-width: 1200px) {
   .main-container{

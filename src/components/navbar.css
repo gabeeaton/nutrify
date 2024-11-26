@@ -38,7 +38,9 @@ svg {
   width: 100%;
   left: 0;
 }
-
+.nav-item a:focus{
+  color: white !important;
+}
 .sign-in:after,
 .sign-up:after {
   background: none !important;

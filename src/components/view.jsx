@@ -119,16 +119,17 @@ const Dashboard = ({ user }) => {
                 labels: days,
                 datasets: [{
                     data: calories,
-                    borderColor: 'rgba(75,192,192,1)',
+                    borderColor: '#e66c28', // Warm burnt orange for the line
                     tension: 0.4,
-                    pointBackgroundColor: 'rgba(75,192,192,1)',
+                    pointBackgroundColor: '#f28e59', // Coral for the data points
                     pointRadius: 5,
                     pointHoverRadius: 7,
                     fill: false,
                     borderWidth: 2,
-                    hoverBackgroundColor: 'rgba(75,192,192,0.6)',
+                    hoverBackgroundColor: '#f3d2af', // Light beige for hover effect
                 }]
             });
+            
         } catch (err) {
             console.error(err);
         }
@@ -373,7 +374,7 @@ const Dashboard = ({ user }) => {
                             {entries.map((entry) => (
                                 <li key={entry.id} className="entry-item">
                                     <h5>{entry.food_name}</h5>
-                                    <p><span style={{ fontWeight: "normal", color: "black", textTransform: "none" }}>Serving:</span> {entry.servings} {entry.serving_type.split("1")[1]}
+                                    <p><span className = "serve" style={{ fontWeight: "normal", color: "black", textTransform: "none" }}>Serving:</span> {entry.servings} {entry.serving_type.split("1")[1]}
                                     </p>
                                     <div className="macros">
                                         <p><Protein /> {entry.protein}g</p>

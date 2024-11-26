@@ -23,13 +23,13 @@ export function Foodinfo() {
     datasets: [
       {
         data: [fat, carbohydrates, protein],
-        backgroundColor: ['#ff6384', '#36a2eb', '#cc65fe'],
-        hoverBackgroundColor: ['#ff4380', '#28a0d9', '#aa59d3'],
+        backgroundColor: ['#f3d2af', '#ff9e4a', '#e66c28'], // Light beige, orange, dark orange
+        hoverBackgroundColor: ['#f0c9a0', '#ff7c29', '#d75f1d'], // Lighter beige, lighter orange, darkened orange
         borderWidth: 1,
       }
     ]
   };
-
+  
   return (
     <>
       <div className="super-container">
