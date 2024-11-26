@@ -214,9 +214,7 @@ input{
   width: 60% !important;
 }
 @media (max-width: 1200px) {
-  .settings-container{
-    margin-top: 185px !important;
-  }
+
 
 }
 @media (max-width: 400px) {
@@ -229,5 +227,9 @@ input{
   }
   label, p, input{
     font-size: 70% !important;
+  }
+  .settings-container{
+    padding-top: 30px;
+    padding-bottom: 30px;
   }
 }
