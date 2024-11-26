@@ -10,6 +10,9 @@ html {
   overflow-y: hidden;
 }
 
+* {
+  box-sizing: border-box !important; /* Ensures padding and borders are included in the element's total width and height */
+}
 body {
   overflow: hidden;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
