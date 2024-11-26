@@ -449,6 +449,8 @@ div h3 {
   .input{
     width: 100% !important;
   }
-  
+  .search-container{
+    margin-top: 100px !important;
+  }
 
 }

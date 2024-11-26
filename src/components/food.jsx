@@ -214,7 +214,6 @@ function Food({ setSelection, user }) {
     <>
       <div className="search-container">
         <div className="group">
-    
           <form
             onSubmit={submitForm}>
             <input
