@@ -91,7 +91,7 @@ const Dashboard = ({ user }) => {
 
     const getEntries = async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/entries/${user.uid}/${currentDate}`);
+            const response = await axios.get(`https://nutrify-9dyi.onrender.com/entries/${user.uid}/${currentDate}`);
             setEntries(response.data);
         } catch (err) {
             console.error(err);
@@ -100,7 +100,7 @@ const Dashboard = ({ user }) => {
 
     const fetchSettings = async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/settings/${user.uid}`);
+            const response = await axios.get(`https://nutrify-9dyi.onrender.com/settings/${user.uid}`);
             if (response.data.length > 0) {
                 const { carb_goal, protein_goal, fat_goal } = response.data[0];
                 setSettings({ carb_goal, protein_goal, fat_goal });
@@ -112,7 +112,7 @@ const Dashboard = ({ user }) => {
 
     const getCalories = async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/entries/${user.uid}`);
+            const response = await axios.get(`https://nutrify-9dyi.onrender.com/entries/${user.uid}`);
             const days = response.data.map(entry => new Date(entry.day).toLocaleDateString());
             const calories = response.data.map(entry => entry.total_calories);
             setCalorieChartData({
@@ -136,8 +136,8 @@ const Dashboard = ({ user }) => {
     };
     const getCurrentCals = async () => {
         try {
-            const currentCals = await axios.get(`http://localhost:3000/cals/${user.uid}`);
-            const calorieGoal = await axios.get(`http://localhost:3000/calgoal/${user.uid}`);
+            const currentCals = await axios.get(`https://nutrify-9dyi.onrender.com/cals/${user.uid}`);
+            const calorieGoal = await axios.get(`https://nutrify-9dyi.onrender.com/calgoal/${user.uid}`);
 
             const consumedCalories = parseInt(currentCals.data?.total_calories || 0);
 
@@ -220,7 +220,7 @@ const Dashboard = ({ user }) => {
         }
 
         try {
-            const response = await axios.put(`http://localhost:3000/edit-food/${user.uid}/${foodid}`, editNutritionData);
+            const response = await axios.put(`https://nutrify-9dyi.onrender.com/edit-food/${user.uid}/${foodid}`, editNutritionData);
         } catch (error) {
             console.error(error);
         }
@@ -340,7 +340,7 @@ const Dashboard = ({ user }) => {
     };
 
     const deleteEntry = async (id) => {
-        const deleteEntry = await axios.delete(`http://localhost:3000/entries/${user.uid}/${id}`);
+        const deleteEntry = await axios.delete(`https://nutrify-9dyi.onrender.com/entries/${user.uid}/${id}`);
         setEntries(entries.filter(entry => entry.id !== id));
     }
 

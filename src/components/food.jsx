@@ -123,7 +123,7 @@ function Food({ setSelection, user }) {
     };
 
     try {
-      const response = await axios.post("http://localhost:3000/log-food", nutritionData);
+      const response = await axios.post("https://nutrify-9dyi.onrender.com/log-food", nutritionData);
     }
     catch (error) {
       console.error("error", error);
@@ -144,7 +144,7 @@ function Food({ setSelection, user }) {
     }
 
     try {
-      const response = await axios.post("http://localhost:3000/log-food", customNutritionData);
+      const response = await axios.post("https://nutrify-9dyi.onrender.com/log-food", customNutritionData);
     } catch (error) {
       console.error(error);
     }

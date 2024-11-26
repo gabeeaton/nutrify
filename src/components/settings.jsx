@@ -20,7 +20,7 @@ const SettingsPage = ({ user }) => {
             fat_goal: (fat * (calories * 0.01) / 9).toFixed(0),
             carbs_goal: (carbs * (calories * 0.01) / 4).toFixed(0),
         };
-        const result = await axios.put("http://localhost:3000/settings", goals);
+        const result = await axios.put("https://nutrify-9dyi.onrender.com/settings", goals);
 
     }
     const handleRedirect = () => {
