@@ -21,15 +21,6 @@ app.post("/sign-up", async (req, res) => {
       carbs_goal,
     } = req.body;
 
-    console.log(
-      firebase_id,
-      email,
-      calories_goal,
-      protein_goal,
-      fat_goal,
-      carbs_goal
-    );
-    
     if (!firebase_id || !email) {
       return res.status(400).json({ error: "Must have id and email. " });
     }
@@ -64,17 +55,6 @@ app.post("/log-food", async (req, res) => {
       return res.status(400).json({ error: "All fields are requried." });
     }
 
-    console.log(
-      user,
-      email,
-      name,
-      calories,
-      protein,
-      carbs,
-      fat,
-      servingType,
-      serving_size
-    );
     const newEntry = await pool.query(
       `INSERT INTO entries (firebase_id, email, food_name, calories, protein, carbs, fats, serving_type, servings) 
        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) 
@@ -180,8 +160,6 @@ app.put("/edit-food/:firebaseid/:entryid", async (req, res) => {
   // Destructure URL parameters for firebaseid and entryid
   const { firebaseid, entryid } = req.params;
 
-  console.log("Received Data - Calories:", calories, "Protein:", protein, "Carbs:", carbs, "Fat:", fat);
-  console.log("Firebase ID:", firebaseid, "Entry ID:", entryid);
 
   try {
     const edit = await pool.query(`UPDATE ENTRIES

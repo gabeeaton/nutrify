@@ -145,7 +145,6 @@ function Food({ setSelection, user }) {
 
     try {
       const response = await axios.post("http://localhost:3000/log-food", customNutritionData);
-      console.log("Success: ", response.data);
     } catch (error) {
       console.error(error);
     }

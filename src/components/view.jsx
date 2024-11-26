@@ -221,7 +221,6 @@ const Dashboard = ({ user }) => {
 
         try {
             const response = await axios.put(`http://localhost:3000/edit-food/${user.uid}/${foodid}`, editNutritionData);
-            console.log("Success: ", response.data);
         } catch (error) {
             console.error(error);
         }
@@ -231,8 +230,8 @@ const Dashboard = ({ user }) => {
         if (parseFloat(putCals) < 0 || parseFloat(putProtein) < 0 || parseFloat(putCarbs) < 0 || parseFloat(putFat) < 0) {
             setErrorMessage('Values cannot be negative. Please enter valid values.');
         } else {
-            setErrorMessage(''); // Clear error message if values are valid
-            onSubmitEditData(); // Proceed with form submission if values are valid
+            setErrorMessage('');
+            onSubmitEditData();
             getEntries();
             fetchSettings();
             getCalories();
@@ -342,8 +341,6 @@ const Dashboard = ({ user }) => {
 
     const deleteEntry = async (id) => {
         const deleteEntry = await axios.delete(`http://localhost:3000/entries/${user.uid}/${id}`);
-        console.log(user.uid, " ", id)
-        console.log(deleteEntry.data);
         setEntries(entries.filter(entry => entry.id !== id));
     }
 

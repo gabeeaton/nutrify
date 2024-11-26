@@ -25,7 +25,6 @@ export function Login({ user }) {
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             const user = userCredential.user;
-            console.log(user);
             setErrorMessage("");
 
             if (user) {
@@ -35,7 +34,6 @@ export function Login({ user }) {
         } catch (error) {
             const errorCode = error.code;
             const errorMessage = error.message;
-            console.log(errorCode, errorMessage);
 
             if (errorCode === "auth/invalid-email") {
                 setErrorMessage("Email address is not valid.");
@@ -77,7 +75,6 @@ export function Login({ user }) {
             };
 
             const response = await axios.post("http://localhost:3000/sign-up", settingsData);
-            console.log("Success: ", response.data);
 
         } catch (error) {
             console.error(error);
@@ -90,14 +87,12 @@ export function Login({ user }) {
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
-                console.log(user);
                 setUser(user);
                 setErrorMessage("");
             })
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                console.log(errorCode, errorMessage);
                 if (errorMessage.includes("auth/invalid-email")) {
                     setErrorMessage("Email not found.");
                 }
