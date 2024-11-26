@@ -488,26 +488,26 @@ function Food({ setSelection, user }) {
 
 export function Calories() {
   return (
-    <img className="calories" src="/public/assets/fire-svgrepo-com.svg"></img>
+    <img className="calories" src="/assets/fire-svgrepo-com.svg"></img>
   )
 }
 
 export function Protein() {
   return (
-    <img className="protein" src="/public/assets/meat-on-bone-svgrepo-com.svg"></img>
+    <img className="protein" src="/assets/meat-on-bone-svgrepo-com.svg"></img>
   )
 }
 
 
 export function Carbs() {
   return (
-    <img className="carb" src="/public/assets/bread-svgrepo-com.svg"></img>
+    <img className="carb" src="/assets/bread-svgrepo-com.svg"></img>
   )
 }
 
 export function Fat() {
   return (
-    <img className="fat" src="/public/assets/butter-svgrepo-com.svg"></img>
+    <img className="fat" src="/assets/butter-svgrepo-com.svg"></img>
   )
 }
 
