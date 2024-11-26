@@ -229,7 +229,6 @@ input{
     font-size: 70% !important;
   }
   .settings-container{
-    padding-top: 30px;
-    padding-bottom: 30px;
+    height: 60vh !important;
   }
 }

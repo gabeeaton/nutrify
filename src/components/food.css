@@ -431,7 +431,9 @@ div h3 {
   
 }
 @media (max-width: 450px) {
- 
+  .search-container {
+    margin-top: 100px !important;
+  }
   .food-name {
     font-size: 15px;
   }
