@@ -238,6 +238,9 @@ label{
   .modal{
     margin-top: 100px;
   }
+  .body, html{
+    overflow-y: auto !important;
+  }
 }
 /* Media Query for Tablets and Smaller Screens */
 @media (max-width: 768px) {

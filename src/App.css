@@ -7,7 +7,7 @@ html {
   justify-content: center;
   align-items: center;
   text-align: center;
-  overflow-y: auto;
+  overflow-y: hidden;
 }
 
 body {
