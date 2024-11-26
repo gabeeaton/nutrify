@@ -228,7 +228,4 @@ input{
   label, p, input{
     font-size: 70% !important;
   }
-  .main-cont{
-    height: 80vh !important;
-  }
 }
