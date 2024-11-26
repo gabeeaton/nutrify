@@ -228,7 +228,7 @@ input{
   label, p, input{
     font-size: 70% !important;
   }
-  .settings-container{
-    height: 60vh !important;
+  .main-cont{
+    height: 80vh;
   }
 }

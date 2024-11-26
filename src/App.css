@@ -122,6 +122,7 @@ h2:hover .arrow {
 @media (max-width: 1200px) {
   .coverTitle {
     margin-top: 50px;
+    height: 80vh;
   }
 }
 
