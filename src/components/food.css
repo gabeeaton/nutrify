@@ -58,6 +58,7 @@ html {
   padding-left: 2.5rem;
   border: 2px solid transparent;
   outline: none;
+  border-radius: 8px;
   background-color: white !important;
   color: #0d0c22;
   margin-right: 10px;
