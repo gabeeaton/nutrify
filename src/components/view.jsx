@@ -374,12 +374,12 @@ const Dashboard = ({ user }) => {
                             {entries.map((entry) => (
                                 <li key={entry.id} className="entry-item">
                                     <h5>{entry.food_name}</h5>
-                                    <p><span className = "serve" style={{ fontWeight: "normal", color: "black", textTransform: "none" }}>Serving:</span> {entry.servings} {entry.serving_type.split("1")[1]}
+                                    <p className = "wt"> <span className = "serve" style={{ fontWeight: "normal", color: "black", textTransform: "none" }}>Serving:</span> {entry.servings} {entry.serving_type.split("1")[1]}
                                     </p>
                                     <div className="macros">
-                                        <p><Protein /> {entry.protein}g</p>
-                                        <p><Carbs /> {entry.carbs}g</p>
-                                        <p><Fat /> {entry.fats}g</p>
+                                        <p className = "wt"><Protein /> {entry.protein}g</p>
+                                        <p className = "wt"><Carbs /> {entry.carbs}g</p>
+                                        <p className = "wt"><Fat /> {entry.fats}g</p>
                                     </div>
                                     <div className="buttons">
                                         <button onClick={() => { handleEditClick(entry.food_name), setPutCals(entry.calories), setPutProtein(entry.protein), setPutCarbs(entry.carbs), setPutFat(entry.fats), setFoodid(entry.id) }}
@@ -481,14 +481,14 @@ const Dashboard = ({ user }) => {
                             <div className="modal-footer">
                                 <button
                                     type="button"
-                                    className="btn btn-secondary"
+                                    className="closeout"
                                     onClick={() => setIsModal(false)}
                                 >
                                     Close
                                 </button>
                                 <button
                                     type="submit"
-                                    className="btn btn-primary"
+                                    className="save"
                                     onClick={(e) => {
                                         handleSubmit();
                                         setIsModal(!isModal)
