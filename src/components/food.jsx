@@ -221,7 +221,6 @@ function Food({ setSelection, user }) {
               type="search"
               className="input"
               onChange={(e) => setSearch(e.target.value)}
-              autoFocus
             />
           </form>
           <button
