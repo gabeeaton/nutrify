@@ -92,6 +92,8 @@ app.post("/log-food", async (req, res) => {
 //GET entries
 app.get("/entries/:firebaseid/:date", async (req, res) => {
   const { firebaseid, date } = req.params;
+  
+  console.log(firebaseid, " ", date);
   try {
     const result = await pool.query(
       `SELECT * FROM entries WHERE firebase_id = $1 AND created_at::date = $2`,

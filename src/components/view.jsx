@@ -88,11 +88,21 @@ const Dashboard = ({ user }) => {
         }, {});
         return `${p.year}-${p.month}-${p.day}`;
     };
-
     const getEntries = async () => {
         try {
+            // Derive current date in UTC
+            const now = new Date();
+            const currentDate = now.toISOString().split('T')[0]; // Get UTC date in YYYY-MM-DD
+    
+            // Log the timezone and derived date
+            console.log("Timezone Offset (minutes):", now.getTimezoneOffset()); // 360 in your case
+            console.log("Locale Timezone String:", Intl.DateTimeFormat().resolvedOptions().timeZone);
+            console.log("Formatted Current Date (UTC):", currentDate);
+    
+            // Make the API call
             const response = await axios.get(`https://nutrify-9dyi.onrender.com/entries/${user.uid}/${currentDate}`);
             setEntries(response.data);
+            console.log("Entries:", response.data);
         } catch (err) {
             console.error(err);
         }
@@ -114,6 +124,7 @@ const Dashboard = ({ user }) => {
         try {
             const response = await axios.get(`https://nutrify-9dyi.onrender.com/total/${user.uid}`);
             const days = response.data.map(entry => new Date(entry.day).toLocaleDateString());
+            console.log("Timezone Offset (minutes):", new Date().getTimezoneOffset());
             const calories = response.data.map(entry => entry.total_calories);
             setCalorieChartData({
                 labels: days,
