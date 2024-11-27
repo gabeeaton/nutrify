@@ -247,6 +247,10 @@ const Dashboard = ({ user }) => {
     }, [currentDate]);
 
     useEffect(() => {
+        getEntries();
+    }, [])
+
+    useEffect(() => {
         fetchSettings();
         getCalories();
         getCurrentCals();
