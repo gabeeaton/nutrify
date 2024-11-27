@@ -112,21 +112,21 @@ const Dashboard = ({ user }) => {
 
     const getCalories = async () => {
         try {
-            const response = await axios.get(`https://nutrify-9dyi.onrender.com/entries/${user.uid}`);
+            const response = await axios.get(`https://nutrify-9dyi.onrender.com/total/${user.uid}`);
             const days = response.data.map(entry => new Date(entry.day).toLocaleDateString());
             const calories = response.data.map(entry => entry.total_calories);
             setCalorieChartData({
                 labels: days,
                 datasets: [{
                     data: calories,
-                    borderColor: '#e66c28', // Warm burnt orange for the line
+                    borderColor: '#e66c28', 
                     tension: 0.4,
-                    pointBackgroundColor: '#f28e59', // Coral for the data points
+                    pointBackgroundColor: '#f28e59',
                     pointRadius: 5,
                     pointHoverRadius: 7,
                     fill: false,
                     borderWidth: 2,
-                    hoverBackgroundColor: '#f3d2af', // Light beige for hover effect
+                    hoverBackgroundColor: '#f3d2af', 
                 }]
             });
             
@@ -151,7 +151,7 @@ const Dashboard = ({ user }) => {
                     {
                         label: 'Calories',
                         data: [consumedCalories, remainingCalories],
-                        backgroundColor: ['#f28e59', '#f0c9a0'], // Lighter coral and burnt orange
+                        backgroundColor: ['#f28e59', '#f0c9a0'],
                         hoverBackgroundColor: ['#f4d5b3', '#f3d2af'], 
                     }
                 ]
@@ -498,8 +498,6 @@ const Dashboard = ({ user }) => {
                     </div>
                 </div>
             ) : null}
-
-
         </div>
     );
 };

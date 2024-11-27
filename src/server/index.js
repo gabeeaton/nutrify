@@ -107,7 +107,7 @@ app.get("/entries/:firebaseid/:date", async (req, res) => {
 });
 
 //GET total cals over past month
-app.get("/entries/:firebaseid", async (req, res) => {
+app.get("/total/:firebaseid", async (req, res) => {
   const { firebaseid } = req.params;
   try {
     const result = await pool.query(
