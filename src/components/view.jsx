@@ -247,7 +247,10 @@ const Dashboard = ({ user }) => {
     }, [currentDate]);
 
     useEffect(() => {
-        getEntries();
+        getDate();
+        if (currentDate) {
+            getEntries();
+        }
     }, [])
 
     useEffect(() => {
