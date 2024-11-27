@@ -74,7 +74,7 @@ export function Login({ user }) {
                 carbs_goal: 0
             };
 
-            const response = await axios.post("http://localhost:3000/sign-up", settingsData);
+            const response = await axios.post("https://nutrify-9dyi.onrender.com/sign-up", settingsData);
 
         } catch (error) {
             console.error(error);
