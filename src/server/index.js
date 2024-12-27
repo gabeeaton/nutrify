@@ -11,7 +11,7 @@ app.use(express.json());
 
 
 const client = new Client({
-  connectionString: 'postgresql://gabeeaton:HYXBeklHKrvaqcnq8nzK05v3tW9lISk1@dpg-ct2vtlbtq21c73b94iag-a.virginia-postgres.render.com/nutrition_tracker_db',
+  connectionString: 'postgresql://nutrify_db_user:q6k1t2u6kyZmEN9KDbpisfK6Iim61Spx@dpg-ctnhhia3esus73a22jag-a.virginia-postgres.render.com/nutrify_db',
   ssl: {
     rejectUnauthorized: false
   }

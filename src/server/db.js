@@ -2,11 +2,11 @@ import pg from "pg";
 const { Pool } = pg; 
 
 const pool = new Pool ({
-    user: "gabeeaton",
-    password: "HYXBeklHKrvaqcnq8nzK05v3tW9lISk1",
-    host: "dpg-ct2vtlbtq21c73b94iag-a",
-    port: 5432,
-    database: "nutrition_tracker_db"
+    user: import.meta.env.VITE_DB_USER,
+    password: import.meta.env.VITE_DB_PASSWORD,
+    host:import.meta.env.VITE_DB_HOST,
+    port: import.meta.env.VITE_DB_PORT,
+    database: import.meta.env.VITE_DB_DATABASE
 })
 
 export default pool;
