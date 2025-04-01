@@ -17,6 +17,8 @@ import {
 } from 'chart.js';
 import "./view.css";
 
+const url = "https://nutrify-9dyi.onrender.com"
+
 ChartJS.register(
     Title, Tooltip, Legend, ArcElement, CategoryScale,
     LinearScale, PointElement, LineElement, ChartDataLabels
@@ -100,7 +102,7 @@ const Dashboard = ({ user }) => {
             console.log("Formatted Current Date (UTC):", currentDate);
     
             // Make the API call
-            const response = await axios.get(`https://nutrify-9dyi.onrender.com/entries/${user.uid}/${currentDate}`);
+            const response = await axios.get(`${url}/entries/${user.uid}/${currentDate}`);
             setEntries(response.data);
             console.log("Entries:", response.data);
         } catch (err) {
@@ -110,7 +112,7 @@ const Dashboard = ({ user }) => {
 
     const fetchSettings = async () => {
         try {
-            const response = await axios.get(`https://nutrify-9dyi.onrender.com/settings/${user.uid}`);
+            const response = await axios.get(`${url}/settings/${user.uid}`);
             if (response.data.length > 0) {
                 const { carb_goal, protein_goal, fat_goal } = response.data[0];
                 setSettings({ carb_goal, protein_goal, fat_goal });
@@ -122,7 +124,7 @@ const Dashboard = ({ user }) => {
 
     const getCalories = async () => {
         try {
-            const response = await axios.get(`https://nutrify-9dyi.onrender.com/total/${user.uid}`);
+            const response = await axios.get(`${url}/total/${user.uid}`);
             const days = response.data.map(entry => new Date(entry.day).toLocaleDateString());
             console.log("Timezone Offset (minutes):", new Date().getTimezoneOffset());
             const calories = response.data.map(entry => entry.total_calories);
@@ -147,8 +149,8 @@ const Dashboard = ({ user }) => {
     };
     const getCurrentCals = async () => {
         try {
-            const currentCals = await axios.get(`https://nutrify-9dyi.onrender.com/cals/${user.uid}`);
-            const calorieGoal = await axios.get(`https://nutrify-9dyi.onrender.com/calgoal/${user.uid}`);
+            const currentCals = await axios.get(`${url}/cals/${user.uid}`);
+            const calorieGoal = await axios.get(`${url}/calgoal/${user.uid}`);
 
             const consumedCalories = parseInt(currentCals.data?.total_calories || 0);
 
@@ -231,7 +233,7 @@ const Dashboard = ({ user }) => {
         }
 
         try {
-            const response = await axios.put(`https://nutrify-9dyi.onrender.com/edit-food/${user.uid}/${foodid}`, editNutritionData);
+            const response = await axios.put(`${url}/edit-food/${user.uid}/${foodid}`, editNutritionData);
         } catch (error) {
             console.error(error);
         }
@@ -358,7 +360,7 @@ const Dashboard = ({ user }) => {
     };
 
     const deleteEntry = async (id) => {
-        const deleteEntry = await axios.delete(`https://nutrify-9dyi.onrender.com/entries/${user.uid}/${id}`);
+        const deleteEntry = await axios.delete(`${url}/entries/${user.uid}/${id}`);
         setEntries(entries.filter(entry => entry.id !== id));
     }
 

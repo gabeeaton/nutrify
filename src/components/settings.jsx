@@ -10,6 +10,8 @@ const SettingsPage = ({ user }) => {
     const [carbs, setCarbs] = useState(null);
     const [submitMessage, setSubmitMessage] = useState("");
 
+    const url = "https://nutrify-9dyi.onrender.com"
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const goals = {
@@ -20,7 +22,7 @@ const SettingsPage = ({ user }) => {
             fat_goal: (fat * (calories * 0.01) / 9).toFixed(0),
             carbs_goal: (carbs * (calories * 0.01) / 4).toFixed(0),
         };
-        const result = await axios.put("https://nutrify-9dyi.onrender.com/settings", goals);
+        const result = await axios.put(`${url}/settings`, goals);
 
     }
     const handleRedirect = () => {

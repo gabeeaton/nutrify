@@ -2,12 +2,13 @@ import pg from "pg";
 const { Pool } = pg; 
 
 const pool = new Pool ({
-    user: "nutrify_db_user",
-    password: "q6k1t2u6kyZmEN9KDbpisfK6Iim61Spx",
-    host: "dpg-ctnhhia3esus73a22jag-a",
-    port: "5432",
-    database: "nutrify_db"
+    user: "postgres.ahhnjzoatydxvxoosptr",
+    password: "Sheckwes0..",
+    host: "aws-0-us-west-1.pooler.supabase.com",
+    port: 6543,
+    database: "postgres",
+    pool_mode: "transaction",
 })
 
-export default pool;
 
+export default pool;

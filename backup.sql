@@ -123,54 +123,22 @@ ALTER TABLE ONLY public.settings ALTER COLUMN id SET DEFAULT nextval('public.set
 -- Data for Name: entries; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.entries (id, firebase_id, email, food_name, calories, protein, carbs, fats, serving_type, servings, created_at, updated_at) FROM stdin;
-2	q29L8GoOskWyN7J6YKde6nHhLTn1	eatong13@gmail.com	Rice	118	2	26	0	1g	32	2024-11-10	2024-11-11
-1	q29L8GoOskWyN7J6YKde6nHhLTn1	eatong13@gmail.com	Rice	29	1	6	0	1g	8	2024-11-10	2024-11-11
-4	q29L8GoOskWyN7J6YKde6nHhLTn1	eatong13@gmail.com	Chicken	121	11	0	8	1oz	5	2024-11-09	2024-11-11
-10	q29L8GoOskWyN7J6YKde6nHhLTn1	eatong13@gmail.com	Steak	760	67	0	53	1oz	10	2024-11-11	2024-11-11
-11	q29L8GoOskWyN7J6YKde6nHhLTn1	eatong13@gmail.com	Toast	348	14	62	4	1oz	1	2024-11-11	2024-11-11
-12	q29L8GoOskWyN7J6YKde6nHhLTn1	eatong13@gmail.com	Chick-Fil-a Deluxe Sandwich	423	25	35	20	1oz	16	2024-11-11	2024-11-11
-13	q29L8GoOskWyN7J6YKde6nHhLTn1	eatong13@gmail.com	Pop Tart	412	5	68	13	1oz	3.7	2024-11-11	2024-11-11
-15	q29L8GoOskWyN7J6YKde6nHhLTn1	eatong13@gmail.com	Bacon Burger	336	18	17	22	1oz	12	2024-11-12	2024-11-12
-16	q29L8GoOskWyN7J6YKde6nHhLTn1	eatong13@gmail.com	Rice	514	10	113	1	1oz	5	2024-11-12	2024-11-12
-17	q29L8GoOskWyN7J6YKde6nHhLTn1	eatong13@gmail.com	Fries	452	7	53	25	1oz	30	2024-11-12	2024-11-12
-18	q29L8GoOskWyN7J6YKde6nHhLTn1	eatong13@gmail.com	Pop Tart	412	5	68	13	1oz	3.7	2024-11-12	2024-11-12
-20	q29L8GoOskWyN7J6YKde6nHhLTn1	eatong13@gmail.com	Beef	180	30	0	7	1g	235	2024-11-21	2024-11-21
-21	q29L8GoOskWyN7J6YKde6nHhLTn1	eatong13@gmail.com	Rice	514	10	113	1	1oz	5	2024-11-21	2024-11-21
-23	q29L8GoOskWyN7J6YKde6nHhLTn1	eatong13@gmail.com	Beef	75	13	0	3	1oz	3.5	2024-11-22	2024-11-22
-24	q29L8GoOskWyN7J6YKde6nHhLTn1	eatong13@gmail.com	Cheeseburger	787	39	84	36	1g	356	2024-11-22	2024-11-22
-25	q29L8GoOskWyN7J6YKde6nHhLTn1	eatong13@gmail.com	Egg	239	233	30	180	1oz	32	2024-11-23	2024-11-23
-36	q29L8GoOskWyN7J6YKde6nHhLTn1	eatong13@gmail.com	Rice	411	8	90	1	1oz	4	2024-11-23	2024-11-23
-37	q29L8GoOskWyN7J6YKde6nHhLTn1	eatong13@gmail.com	Rice	3291	64	722	9	1oz	32	2024-11-24	2024-11-24
-38	q29L8GoOskWyN7J6YKde6nHhLTn1	eatong13@gmail.com	Rice	1029	20	226	3	1oz	10	2024-11-25	2024-11-25
-39	q29L8GoOskWyN7J6YKde6nHhLTn1	eatong13@gmail.com	Beef and rice	342	32	1	34	custom	1	2024-11-25	2024-11-25
-40	q29L8GoOskWyN7J6YKde6nHhLTn1	eatong13@gmail.com	Beef	639	108	0	25	1oz	30	2024-11-25	2024-11-25
-41	q29L8GoOskWyN7J6YKde6nHhLTn1	eatong13@gmail.com	Beef	922	4	12	5	1g	32	2024-11-26	2024-11-26
-42	q29L8GoOskWyN7J6YKde6nHhLTn1	eatong13@gmail.com	Beef	2343	1	0	0	1g	4	2024-11-26	2024-11-26
-\.
 
 
 --
 -- Data for Name: settings; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.settings (id, firebase_id, email, calorie_goal, protein_goal, carb_goal, fat_goal, created_at, updated_at) FROM stdin;
-1	q29L8GoOskWyN7J6YKde6nHhLTn1	eatong13@gmail.com	2700	236	270	75	2024-11-11 00:11:58.183445	2024-11-11 00:11:58.183445
-\.
-
 
 --
 -- Name: entries_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.entries_id_seq', 42, true);
 
 
 --
 -- Name: settings_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
-
-SELECT pg_catalog.setval('public.settings_id_seq', 1, true);
 
 
 --

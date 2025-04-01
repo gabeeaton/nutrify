@@ -8,6 +8,8 @@ export const app_key = import.meta.env.VITE_APP_KEY;
 export const app_id = import.meta.env.VITE_APP_ID
 export const API_URL = `https://api.edamam.com/api/food-database/v2/parser?app_id=${app_id}&app_key=${app_key}`;
 
+const url = "https://nutrify-9dyi.onrender.com"
+
 export const ApiContext = createContext(null);
 
 function Food({ setSelection, user }) {
@@ -123,7 +125,7 @@ function Food({ setSelection, user }) {
     };
 
     try {
-      const response = await axios.post("https://nutrify-9dyi.onrender.com/log-food", nutritionData);
+      const response = await axios.post(`${url}/log-food`, nutritionData);
     }
     catch (error) {
       console.error("error", error);
@@ -144,7 +146,7 @@ function Food({ setSelection, user }) {
     }
 
     try {
-     const response = await axios.post("https://nutrify-9dyi.onrender.com/log-food", customNutritionData);
+     const response = await axios.post(`${url}/log-food`, customNutritionData);
     } catch (error) {
       console.error(error);
     }

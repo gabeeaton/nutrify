@@ -5,12 +5,15 @@ import "./login.css";
 import { Navigate } from "react-router-dom";
 import axios from "axios";
 
+
 export function Login({ user }) {
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isSignUpActive, setIsSignUpActive] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
+
+    const url = "https://nutrify-9dyi.onrender.com"
 
     if (user) {
         return <Navigate to='/'></Navigate>
@@ -74,7 +77,7 @@ export function Login({ user }) {
                 carbs_goal: 0
             };
 
-            const response = await axios.post("https://nutrify-9dyi.onrender.com/sign-up", settingsData);
+            const response = await axios.post(`${url}/sign-up`, settingsData);
 
         } catch (error) {
             console.error(error);

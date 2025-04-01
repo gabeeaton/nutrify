@@ -10,15 +10,26 @@ app.use(cors());
 app.use(express.json());
 
 
+// const client = new Client({
+//   connectionString: 'postgresql://nutrify_db_user:q6k1t2u6kyZmEN9KDbpisfK6Iim61Spx@dpg-ctnhhia3esus73a22jag-a.virginia-postgres.render.com/nutrify_db',
+//   ssl: {
+//     rejectUnauthorized: false
+//   }
+// });
+
 const client = new Client({
-  connectionString: 'postgresql://nutrify_db_user:q6k1t2u6kyZmEN9KDbpisfK6Iim61Spx@dpg-ctnhhia3esus73a22jag-a.virginia-postgres.render.com/nutrify_db',
+  connectionString: 'postgresql://postgres.ahhnjzoatydxvxoosptr:Sheckwes0..@aws-0-us-west-1.pooler.supabase.com:6543/postgres',
   ssl: {
     rejectUnauthorized: false
   }
 });
 
 
-client.connect(); 
+
+
+client.connect()
+  .then(() => console.log("Connected to Supabase PostgreSQL"))
+  .catch(err => console.error("Connection error", err.stack));
 
 //ROUTES//
 
@@ -92,8 +103,7 @@ app.post("/log-food", async (req, res) => {
 //GET entries
 app.get("/entries/:firebaseid/:date", async (req, res) => {
   const { firebaseid, date } = req.params;
-  
-  console.log(firebaseid, " ", date);
+
   try {
     const result = await pool.query(
       `SELECT * FROM entries WHERE firebase_id = $1 AND created_at::date = $2`,
