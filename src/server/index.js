@@ -3,7 +3,6 @@ import cors from "cors";
 import pool from "./db.js";
 import pkg from 'pg';
 const { Client } = pkg;
-export const pw = import.meta.env.VITE_SUPABASE_PASSWORD
 
 const app = express();
 
@@ -19,7 +18,7 @@ app.use(express.json());
 // });
 
 const client = new Client({
-  connectionString: `postgresql://postgres.ahhnjzoatydxvxoosptr:${pw}@aws-0-us-west-1.pooler.supabase.com:6543/postgres`,
+  connectionString: `postgresql://postgres.ahhnjzoatydxvxoosptr:Sheckwes0..@aws-0-us-west-1.pooler.supabase.com:6543/postgres`,
   ssl: {
     rejectUnauthorized: false
   }
