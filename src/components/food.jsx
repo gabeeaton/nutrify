@@ -8,7 +8,7 @@ export const app_key = import.meta.env.VITE_APP_KEY;
 export const app_id = import.meta.env.VITE_APP_ID
 export const API_URL = `https://api.edamam.com/api/food-database/v2/parser?app_id=${app_id}&app_key=${app_key}`;
 
-const url = "https://nutrify-9dyi.onrender.com"
+const url = "https://ahhnjzoatydxvxoosptr.supabase.co"
 
 export const ApiContext = createContext(null);
 

@@ -17,7 +17,7 @@ import {
 } from 'chart.js';
 import "./view.css";
 
-const url = "https://nutrify-9dyi.onrender.com"
+const url = "https://ahhnjzoatydxvxoosptr.supabase.co"
 
 ChartJS.register(
     Title, Tooltip, Legend, ArcElement, CategoryScale,

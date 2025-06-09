@@ -25,8 +25,6 @@ const client = new Client({
 });
 
 
-
-
 client.connect()
   .then(() => console.log("Connected to Supabase PostgreSQL"))
   .catch(err => console.error("Connection error", err.stack));

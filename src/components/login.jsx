@@ -13,7 +13,7 @@ export function Login({ user }) {
     const [isSignUpActive, setIsSignUpActive] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
-    const url = "https://nutrify-9dyi.onrender.com"
+    const url = "https://ahhnjzoatydxvxoosptr.supabase.co"
 
     if (user) {
         return <Navigate to='/'></Navigate>

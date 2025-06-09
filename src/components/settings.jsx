@@ -10,7 +10,7 @@ const SettingsPage = ({ user }) => {
     const [carbs, setCarbs] = useState(null);
     const [submitMessage, setSubmitMessage] = useState("");
 
-    const url = "https://nutrify-9dyi.onrender.com"
+    const url = "https://ahhnjzoatydxvxoosptr.supabase.co"
 
     const handleSubmit = async (e) => {
         e.preventDefault();
