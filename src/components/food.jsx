@@ -8,7 +8,7 @@ export const app_key = import.meta.env.VITE_APP_KEY;
 export const app_id = import.meta.env.VITE_APP_ID;
 export const API_URL = `https://api.edamam.com/api/food-database/v2/parser?app_id=${app_id}&app_key=${app_key}`;
 
-const url = import.meta.env.VITE_SUPABASE_URL;
+const url = import.meta.env.VITE_RENDER_URL;
 
 export const ApiContext = createContext(null);
 
@@ -39,8 +39,6 @@ function Food({ setSelection, user }) {
   const [foodName, setFoodName] = useState("");
   const [servingSize, setServingSize] = useState(null);
   const [servingType, setServingType] = useState("");
-
-
 
   function calcSingleServingNutrition(cals, weight, servings, type, protein, carbs, fat) {
     var caloriesPerWeight = 0;
@@ -90,7 +88,6 @@ function Food({ setSelection, user }) {
     onSubmitNutritionData();
   };
 
-
   const validateInputs = () => {
     if (!customName || !customCalories || !customProtein || !customCarbs || !customFat) {
       alert("Please fill in all fields.");
@@ -110,8 +107,10 @@ function Food({ setSelection, user }) {
     return true;
   };
 
-
   const onSubmitNutritionData = async () => {
+    // Create current timestamp
+    const now = new Date();
+    
     const nutritionData = {
       name: foodName,
       calories: total.toFixed(0),
@@ -121,11 +120,18 @@ function Food({ setSelection, user }) {
       servingType: servingType,
       serving_size: servingSize,
       user: user.uid,
-      email: user.email
+      email: user.email,
+      // Add timestamp fields
+      timestamp: now.toISOString(), // ISO string format
+      date: now.toISOString().split('T')[0], // YYYY-MM-DD format
+      time: now.toTimeString().split(' ')[0], // HH:MM:SS format
+      // Alternative: Unix timestamp
+      unixTimestamp: Math.floor(now.getTime() / 1000)
     };
 
     try {
       const response = await axios.post(`${url}/log-food`, nutritionData);
+      console.log('Food logged successfully:', response.data);
     }
     catch (error) {
       console.error("error", error);
@@ -133,6 +139,9 @@ function Food({ setSelection, user }) {
   }
 
   const onSubmitCustomNutritionData = async () => {
+    // Create current timestamp
+    const now = new Date();
+    
     const customNutritionData = {
       name: customName,
       calories: customCalories,
@@ -142,11 +151,18 @@ function Food({ setSelection, user }) {
       servingType: 'custom',
       serving_size: 1,
       user: user.uid,
-      email: user.email
+      email: user.email,
+      // Add timestamp fields
+      timestamp: now.toISOString(), // ISO string format
+      date: now.toISOString().split('T')[0], // YYYY-MM-DD format
+      time: now.toTimeString().split(' ')[0], // HH:MM:SS format
+      // Alternative: Unix timestamp
+      unixTimestamp: Math.floor(now.getTime() / 1000)
     }
 
     try {
-     const response = await axios.post(`${url}/log-food`, customNutritionData);
+      const response = await axios.post(`${url}/log-food`, customNutritionData);
+      console.log('Custom food logged successfully:', response.data);
     } catch (error) {
       console.error(error);
     }
@@ -206,11 +222,9 @@ function Food({ setSelection, user }) {
     setIndex(index);
   }
 
-
   useEffect(() => {
     calcSingleServingNutrition(cals, weight, servings, type, protein, carbs, fat);
   }, [cals, weight, servings, type, protein, carbs, fat])
-
 
   return (
     <>
@@ -396,7 +410,6 @@ function Food({ setSelection, user }) {
           </div>
         )}
 
-
         {isModal && (
           <div className="modal fade show" style={{ display: 'block', backgroundColor: 'rgba(0,0,0,0.5)' }} role="dialog">
             <div className="modal-dialog" role="document">
@@ -485,7 +498,6 @@ function Food({ setSelection, user }) {
   );
 }
 
-
 export function Calories() {
   return (
     <img className="calories" src="/assets/fire-svgrepo-com.svg"></img>
@@ -498,7 +510,6 @@ export function Protein() {
   )
 }
 
-
 export function Carbs() {
   return (
     <img className="carb" src="/assets/bread-svgrepo-com.svg"></img>
@@ -510,6 +521,5 @@ export function Fat() {
     <img className="fat" src="/assets/butter-svgrepo-com.svg"></img>
   )
 }
-
 
 export default Food

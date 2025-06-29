@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase.js";
-import "./login.css";
+import "./index.css";
 import { Navigate } from "react-router-dom";
 import axios from "axios";
 
@@ -13,7 +13,7 @@ export function Login({ user }) {
     const [isSignUpActive, setIsSignUpActive] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
-    const url = import.meta.env.VITE_SUPABASE_URL
+    const url = import.meta.env.VITE_RENDER_URL;
 
     if (user) {
         return <Navigate to='/'></Navigate>
@@ -114,14 +114,14 @@ export function Login({ user }) {
 
     return (
         <>
-            <div className="login-container">
-                <form className="form">
-                    {isSignUpActive && <p className="form-title">Create an account</p>}
-                    {!isSignUpActive && <p className="form-title">Login to your account</p>}
-                    {errorMessage && <p className="error-message" style={{ color: "red" }}>{errorMessage}</p>}
-                    <div className="input-container">
+            <div className="rounded-[20px] flex justify-center items-center h-screen w-screen">
+                <div className="bg-white block p-[60px] rounded-lg shadow-[0_10px_15px_-3px_rgba(0,0,0,0.1),0_4px_6px_-2px_rgba(0,0,0,0.05)] h-full w-full flex justify-center items-center flex-col min-w-[300px] h-[80vh] w-[80vw] max-[450px]:h-[70%]">
+                    {isSignUpActive && <p className="text-xl leading-7 font-semibold text-center text-black">Create an account</p>}
+                    {!isSignUpActive && <p className="text-xl leading-7 font-semibold text-center text-black">Login to your account</p>}
+                    {errorMessage && <p className="text-red-500 text-xs mt-[5px] block" style={{ color: "red" }}>{errorMessage}</p>}
+                    <div className="relative w-full">
                         <input
-                            className = "em"
+                            className="w-full outline-none border border-gray-300 my-2 bg-white p-4 pr-12 text-sm leading-5 w-full rounded-lg shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]"
                             placeholder="Email"
                             type="email"
                             onChange={handleEmailChange}
@@ -129,11 +129,10 @@ export function Login({ user }) {
                                 outline: errorMessage ? "2px solid red" : "none",
                             }}
                         />
-
                     </div>
-                    <div className="input-container">
+                    <div className="relative w-full">
                         <input
-                            className = "pwd"
+                            className="w-full outline-none border border-gray-300 my-2 bg-white p-4 pr-12 text-sm leading-5 w-full rounded-lg shadow-[0_1px_2px_0_rgba(0,0,0,0.05)]"
                             placeholder="Password"
                             type={passwordVisible ? "text" : "password"}
                             onChange={handlePasswordChange}
@@ -141,12 +140,13 @@ export function Login({ user }) {
                                 outline: errorMessage ? "2px solid red" : "none",
                             }}
                         />
-                        <span onClick={toggleVisible} style={{ cursor: "pointer" }}>
+                        <span onClick={toggleVisible} style={{ cursor: "pointer" }} className="grid absolute top-0 bottom-0 right-0 pl-4 pr-4 place-content-center">
                             <svg
                                 stroke="currentColor"
                                 viewBox="0 0 24 24"
                                 fill="none"
                                 xmlns="http://www.w3.org/2000/svg"
+                                className="text-gray-400 w-4 h-4"
                             >
                                 <path
                                     d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
@@ -164,33 +164,34 @@ export function Login({ user }) {
                         </span>
                     </div>
                     {isSignUpActive ? (
-                        <button className="submit" onClick={() => {
+                        <button className="block py-3 px-5 bg-gradient-to-br from-[#f3d2af] to-[#ff9e4a] hover:bg-gradient-to-br hover:from-[#f0c9a0] hover:to-[#ff7c29] text-white text-sm leading-5 font-medium w-full rounded-lg uppercase outline-none border border-gray-300 my-2" onClick={() => {
                             handleSignUp();
                         }}
                             type="button">Sign Up</button>
                     ) : (
-                        <button className="submit" type="button" onClick={handleSignIn}>Sign In</button>
+                        <button className="block py-3 px-5 bg-gradient-to-br from-[#f3d2af] to-[#ff9e4a] hover:bg-gradient-to-br hover:from-[#f0c9a0] hover:to-[#ff7c29] text-white text-sm leading-5 font-medium w-full rounded-lg uppercase outline-none border border-gray-300 my-2" type="button" onClick={handleSignIn}>Sign In</button>
                     )}
 
                     {isSignUpActive ? (
-                        <p className="login-link">
+                        <p className="text-gray-500 text-sm leading-5 text-center mt-5">
                             Already have an account?{" "}
-                            <a href="/login" onClick={handleMethodChange}>
+                            <a href="/login" onClick={handleMethodChange} className="underline">
                                 Login
                             </a>
                         </p>
                     ) : (
-                        <p className="login-link">
+                        <p className="text-gray-500 text-sm leading-5 text-center mt-5">
                             Don't have an account?{" "}
-                            <a href="" onClick={handleMethodChange}>
+                            <a href="" onClick={handleMethodChange} className="underline">
                                 Sign Up
                             </a>
                         </p>
                     )}
-                </form>
+                </div>
             </div>
         </>
     );
 }
+
 
 export default Login;

@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Protein, Carbs, Fat, Calories } from "./food";
-import { Link } from "react-router-dom";
 import { Pie, Line, Doughnut } from 'react-chartjs-2';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import {
-    Chart as ChartJS,
-    Title,
-    Tooltip,
-    Legend,
-    PointElement,
-    LineElement,
-    ArcElement,
-    CategoryScale,
-    LinearScale,
+  Chart as ChartJS,
+  Title,
+  Tooltip,
+  Legend,
+  PointElement,
+  LineElement,
+  ArcElement,
+  CategoryScale,
+  LinearScale,
 } from 'chart.js';
-import "./view.css";
+import "./index.css";
 
-const url = import.meta.env.VITE_SUPABASE_URL
+// Fix the URL - should use template literal
+const url = import.meta.env.VITE_RENDER_URL;
 
 ChartJS.register(
     Title, Tooltip, Legend, ArcElement, CategoryScale,
@@ -25,7 +25,7 @@ ChartJS.register(
 );
 
 const Dashboard = ({ user }) => {
-    const [entries, setEntries] = useState([]);
+    const [entries, setEntries] = useState([]); // Initialize as empty array
     const [currentDate, setCurrentDate] = useState("");
     const [formattedDate, setFormattedDate] = useState("");
     const [year, setYear] = useState("");
@@ -39,8 +39,7 @@ const Dashboard = ({ user }) => {
     const [putFat, setPutFat] = useState(0);
     const [foodid, setFoodid] = useState(0);
     const [errorMessage, setErrorMessage] = useState('');
-
-
+    const [loading, setLoading] = useState(false);
 
     const [chartData, setChartData] = useState({
         labels: [],
@@ -90,73 +89,99 @@ const Dashboard = ({ user }) => {
         }, {});
         return `${p.year}-${p.month}-${p.day}`;
     };
+
     const getEntries = async () => {
         try {
+            setLoading(true);
             // Derive current date in UTC
             const now = new Date();
-            const currentDate = now.toISOString().split('T')[0]; // Get UTC date in YYYY-MM-DD
+            const currentDate = now.toLocaleDateString('en-CA');
     
             // Log the timezone and derived date
-            console.log("Timezone Offset (minutes):", now.getTimezoneOffset()); // 360 in your case
+            console.log("Timezone Offset (minutes):", now.getTimezoneOffset());
             console.log("Locale Timezone String:", Intl.DateTimeFormat().resolvedOptions().timeZone);
             console.log("Formatted Current Date (UTC):", currentDate);
     
             // Make the API call
             const response = await axios.get(`${url}/entries/${user.uid}/${currentDate}`);
-            setEntries(response.data);
-            console.log("Entries:", response.data);
+            
+            // Handle new API response format
+            const entriesData = response.data.data || response.data || [];
+            setEntries(Array.isArray(entriesData) ? entriesData : []);
+            console.log("Entries:", entriesData);
         } catch (err) {
-            console.error(err);
+            console.error("Error fetching entries:", err);
+            setEntries([]); // Set empty array on error
+        } finally {
+            setLoading(false);
         }
     };
 
     const fetchSettings = async () => {
         try {
             const response = await axios.get(`${url}/settings/${user.uid}`);
-            if (response.data.length > 0) {
-                const { carb_goal, protein_goal, fat_goal } = response.data[0];
+            
+            // Handle new API response format
+            const settingsData = response.data.data || response.data;
+            
+            if (settingsData && (Array.isArray(settingsData) ? settingsData.length > 0 : settingsData)) {
+                const settings = Array.isArray(settingsData) ? settingsData[0] : settingsData;
+                const { carb_goal, protein_goal, fat_goal } = settings;
                 setSettings({ carb_goal, protein_goal, fat_goal });
             }
         } catch (err) {
-            console.error(err);
+            console.error("Error fetching settings:", err);
         }
     };
 
     const getCalories = async () => {
         try {
-            const response = await axios.get(`${url}/total/${user.uid}`);
-            const days = response.data.map(entry => new Date(entry.day).toLocaleDateString());
-            console.log("Timezone Offset (minutes):", new Date().getTimezoneOffset());
-            const calories = response.data.map(entry => entry.total_calories);
-            setCalorieChartData({
-                labels: days,
-                datasets: [{
-                    data: calories,
-                    borderColor: '#e66c28', 
-                    tension: 0.4,
-                    pointBackgroundColor: '#f28e59',
-                    pointRadius: 5,
-                    pointHoverRadius: 7,
-                    fill: false,
-                    borderWidth: 2,
-                    hoverBackgroundColor: '#f3d2af', 
-                }]
-            });
-            
+          const response = await axios.get(`${url}/total/${user.uid}`);
+          const caloriesData = response.data.data || response.data || [];
+      
+          // ✅ Safely format as MM/DD/YYYY
+          const days = caloriesData.map(entry => {
+            const datePart = entry.day.split('T')[0]; // Get "YYYY-MM-DD"
+            const [year, month, day] = datePart.split('-');
+            return `${month}/${day}/${year}`;
+          });
+      
+          const calories = caloriesData.map(entry => entry.total_calories);
+      
+          setCalorieChartData({
+            labels: days,
+            datasets: [{
+              data: calories,
+              borderColor: '#e66c28',
+              tension: 0.4,
+              pointBackgroundColor: '#f28e59',
+              pointRadius: 5,
+              pointHoverRadius: 7,
+              fill: false,
+              borderWidth: 2,
+              hoverBackgroundColor: '#f3d2af',
+            }]
+          });
         } catch (err) {
-            console.error(err);
+          console.error("Error fetching calories:", err);
         }
-    };
+      };
+      
+      
+
     const getCurrentCals = async () => {
         try {
             const currentCals = await axios.get(`${url}/cals/${user.uid}`);
             const calorieGoal = await axios.get(`${url}/calgoal/${user.uid}`);
 
-            const consumedCalories = parseInt(currentCals.data?.total_calories || 0);
+            // Handle new API response format
+            const currentCalsData = currentCals.data.data || currentCals.data;
+            const calorieGoalData = calorieGoal.data.data || calorieGoal.data;
 
-            const goalCalories = calorieGoal.data[0]?.calorie_goal || 0;
+            const consumedCalories = parseInt(currentCalsData?.total_calories || 0);
+            const goalCalories = (Array.isArray(calorieGoalData) ? calorieGoalData[0] : calorieGoalData)?.calorie_goal || 0;
 
-            const remainingCalories = goalCalories - consumedCalories;
+            const remainingCalories = Math.max(0, goalCalories - consumedCalories);
 
             setChartData({
                 labels: ['Consumed Calories', 'Remaining Calories'],
@@ -171,7 +196,7 @@ const Dashboard = ({ user }) => {
             });
             
         } catch (err) {
-            console.error(err);
+            console.error("Error fetching current calories:", err);
         }
     };
 
@@ -223,19 +248,31 @@ const Dashboard = ({ user }) => {
         },
     };
 
-
     const onSubmitEditData = async () => {
         const editNutritionData = {
-            calories: putCals,
-            protein: putProtein,
-            carbs: putCarbs,
-            fat: putFat,
+            calories: parseFloat(putCals),
+            protein: parseFloat(putProtein),
+            carbs: parseFloat(putCarbs),
+            fat: parseFloat(putFat),
         }
 
         try {
             const response = await axios.put(`${url}/edit-food/${user.uid}/${foodid}`, editNutritionData);
+            console.log("Edit response:", response.data);
+            
+            // Refresh data after successful edit
+            await Promise.all([
+                getEntries(),
+                fetchSettings(),
+                getCalories(),
+                getCurrentCals()
+            ]);
+            
+            setIsModal(false);
+            setErrorMessage('');
         } catch (error) {
-            console.error(error);
+            console.error("Error editing food:", error);
+            setErrorMessage('Failed to update food entry. Please try again.');
         }
     }
 
@@ -245,32 +282,26 @@ const Dashboard = ({ user }) => {
         } else {
             setErrorMessage('');
             onSubmitEditData();
-            getEntries();
-            fetchSettings();
-            getCalories();
-            getCurrentCals();
         }
     };
 
     useEffect(() => {
         getDate();
-        if (currentDate) {
-            getEntries();
-        }
-    }, [currentDate]);
+    }, []);
 
     useEffect(() => {
-        getDate();
-        if (currentDate) {
+        if (currentDate && user) {
             getEntries();
         }
-    }, [])
+    }, [currentDate, user]);
 
     useEffect(() => {
-        fetchSettings();
-        getCalories();
-        getCurrentCals();
-    }, [entries])
+        if (user) {
+            fetchSettings();
+            getCalories();
+            getCurrentCals();
+        }
+    }, [entries, user]);
 
     const macronutrientChartData = {
         labels: ["Carbs", "Protein", "Fat"],
@@ -283,8 +314,6 @@ const Dashboard = ({ user }) => {
             }
         ]
     };
-    
-
 
     const macronutrientChartOptions = {
         plugins: {
@@ -360,164 +389,210 @@ const Dashboard = ({ user }) => {
     };
 
     const deleteEntry = async (id) => {
-        const deleteEntry = await axios.delete(`${url}/entries/${user.uid}/${id}`);
-        setEntries(entries.filter(entry => entry.id !== id));
+        try {
+            const response = await axios.delete(`${url}/entries/${user.uid}/${id}`);
+            console.log("Delete response:", response.data);
+            
+            // Update state immediately for better UX
+            setEntries(entries.filter(entry => entry.id !== id));
+            
+            // Refresh charts after deletion
+            setTimeout(() => {
+                getCurrentCals();
+                getCalories();
+            }, 100);
+        } catch (error) {
+            console.error("Error deleting entry:", error);
+            alert("Failed to delete entry. Please try again.");
+        }
     }
-
 
     const handleEditClick = (entry) => {
         setIsModal(!isModal);
-        setEditFoodName(entry)
+        setEditFoodName(entry);
     }
+
+    // Show loading state
+    if (loading && entries.length === 0) {
+        return (
+            <div className="wrap">
+                <div className="main-container">
+                    <div className="loading">Loading dashboard...</div>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="wrap">
-            <div className="main-container">
+            <div className="w-screen h-[88vh] grid grid-cols-3 grid-rows-2 gap-2.5 p-8 overflow-y-auto relative max-[1200px]:pt-24 max-[1200px]:h-screen max-[768px]:pt-24 max-[768px]:overflow-y-auto max-[768px]:p-5 max-[768px]:flex max-[768px]:flex-col max-[768px]:h-screen max-[400px]:p-1.5 max-[400px]:overflow-y-auto max-[400px]:p-5">
         
-                <div className="grid-item grid-item-main shadow">
+                <div className="col-span-2 p-1.5 rounded-lg bg-white overflow-y-auto shadow-lg max-[768px]:min-h-[300px]">
                     <Line data={calorieChartData} options={calorieChartOptions} />
                 </div>
-                <div className="grid-item grid-item2 shadow">
-                    <h3 className="date">{formattedDate}</h3>
-                    <h1 className="year">{year}</h1>
+                <div className="p-1.5 rounded-lg bg-white overflow-y-auto flex flex-col items-center justify-center gap-5 shadow-lg max-[768px]:min-h-[300px] max-[400px]:min-h-[100px] max-[400px]:flex-col-reverse max-[400px]:items-end">
+                    <h3 className="text-[22px] text-gray-600 capitalize m-0 p-0">{formattedDate}</h3>
+                    <h1 className="text-[80px] font-bold text-gray-800 uppercase m-0 p-2.5 tracking-wider hover:text-blue-500 max-[768px]:text-[40px]">{year}</h1>
                 </div>
-                <div className="grid-item grid-item3 shadow">
+                <div className="rounded-lg bg-white overflow-y-auto shadow-lg max-[768px]:min-h-[300px]">
                     <Pie data={macronutrientChartData} options={macronutrientChartOptions} />
                 </div>
-                <div className="grid-item grid-item4 shadow">
-                    {entries.length === 0 ? (
-                        <p className="none">No entries found.</p>
+                <div className="p-2.5 overflow-y-auto rounded-lg bg-white shadow-lg max-[768px]:min-h-[300px]">
+                    {loading ? (
+                        <p className="mt-6 text-2xl">Loading entries...</p>
+                    ) : entries.length === 0 ? (
+                        <p className="mt-6 text-2xl">No entries found.</p>
                     ) : (
-                        <ul className="entry-list">
+                        <ul className="flex flex-col w-full items-center p-0">
                             {entries.map((entry) => (
-                                <li key={entry.id} className="entry-item">
-                                    <h5>{entry.food_name}</h5>
-                                    <p className = "wt"> <span className = "serve" style={{ fontWeight: "normal", color: "black", textTransform: "none" }}>Serving:</span> {entry.servings} {entry.serving_type.split("1")[1]}
+                                <li key={entry.id} className="bg-[#fbe1c9] mb-5 rounded-2xl w-4/5 p-5 shadow-lg transition-all duration-200 border border-[#e6c8a7] min-w-[200px] text-white hover:transform hover:-translate-y-1 hover:shadow-2xl max-[768px]:w-[85%]">
+                                    <h5 className="text-white">{entry.food_name}</h5>
+                                    <p className="text-white"> 
+                                        <span className="text-white font-normal text-black normal-case">
+                                            Serving:
+                                        </span> {entry.servings} {entry.serving_type?.split("1")[1] || entry.serving_type}
                                     </p>
-                                    <div className="macros">
-                                        <p className = "wt"><Protein /> {entry.protein}g</p>
-                                        <p className = "wt"><Carbs /> {entry.carbs}g</p>
-                                        <p className = "wt"><Fat /> {entry.fats}g</p>
+                                    <div className="flex justify-evenly m-0">
+                                        <p className="text-white"><Protein /> {entry.protein}g</p>
+                                        <p className="text-white"><Carbs /> {entry.carbs}g</p>
+                                        <p className="text-white"><Fat /> {entry.fats}g</p>
                                     </div>
-                                    <div className="buttons">
-                                        <button onClick={() => { handleEditClick(entry.food_name), setPutCals(entry.calories), setPutProtein(entry.protein), setPutCarbs(entry.carbs), setPutFat(entry.fats), setFoodid(entry.id) }}
-                                            className="edit-button"><Edit /></button>
-                                        <button onClick={() => deleteEntry(entry.id)} className="delete-button"><Delete /></button>
+                                    <div className="flex justify-evenly m-0">
+                                        <button 
+                                            onClick={() => { 
+                                                handleEditClick(entry.food_name);
+                                                setPutCals(entry.calories);
+                                                setPutProtein(entry.protein);
+                                                setPutCarbs(entry.carbs);
+                                                setPutFat(entry.fats);
+                                                setFoodid(entry.id);
+                                            }}
+                                            className="font-['Segoe_UI',_Tahoma,_Geneva,_Verdana,_sans-serif] text-base py-2.5 px-5 border-none rounded-lg cursor-pointer transition-all duration-300 shadow-md outline-none bg-[#f28e59] text-white hover:bg-[#e66c28] hover:transform hover:-translate-y-0.5"
+                                        >
+                                            <Edit />
+                                        </button>
+                                        <button 
+                                            onClick={() => {
+                                                if (window.confirm('Are you sure you want to delete this entry?')) {
+                                                    deleteEntry(entry.id);
+                                                }
+                                            }} 
+                                            className="font-['Segoe_UI',_Tahoma,_Geneva,_Verdana,_sans-serif] text-base py-2.5 px-5 border-none rounded-lg cursor-pointer transition-all duration-300 shadow-md outline-none bg-[#e66c28] text-white hover:bg-[#b9481e] hover:transform hover:-translate-y-1"
+                                        >
+                                            <Delete />
+                                        </button>
                                     </div>
                                 </li>
                             ))}
                         </ul>
                     )}
                 </div>
-                <div className="grid-item grid-item3 shadow">
+                <div className="rounded-lg bg-white overflow-y-auto shadow-lg max-[768px]:min-h-[300px]">
                     <Doughnut data={chartData} options={doughnutChartOptions} />
                 </div>
             </div>
-            {isModal ? (
+            {isModal && (
                 <div
-                    className="modal fade show"
+                    className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 max-[1200px]:mt-24"
                     tabIndex="-1"
                     role="dialog"
                     style={{ display: 'block' }}
                     aria-labelledby="editFoodModalTitle"
                     aria-hidden="true"
                 >
-                    <div className="modal-dialog" role="document">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title" id="editFoodModalTitle">
-                                    Edit {editFoodName}
-                                </h5>
+                    <div className="bg-white rounded-lg shadow-xl max-w-lg w-full mx-4" role="document">
+                        <div className="px-6 py-4 border-b border-gray-200">
+                            <h5 className="text-lg font-semibold text-black" id="editFoodModalTitle">
+                                Edit {editFoodName}
+                            </h5>
+                        </div>
+                        <div className="p-6">
+                            <div className="customForm">
+                                {errorMessage && (
+                                    <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4" role="alert">
+                                        {errorMessage}
+                                    </div>
+                                )}
+                                <div className="mb-4">
+                                    <label htmlFor="foodCalories" className="block text-sm font-medium text-black mb-2">Calories (kcal) <Calories /></label>
+                                    <input
+                                        type="number"
+                                        step="0.01"
+                                        className="w-1/2 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        id="foodCalories"
+                                        placeholder="Enter calories"
+                                        value={putCals}
+                                        onChange={(e) => setPutCals(e.target.value)}
+                                        required
+                                        min="0"
+                                    />
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="foodProtein" className="block text-sm font-medium text-black mb-2">Protein (g) <Protein /></label>
+                                    <input
+                                        type="number"
+                                        step="0.01"
+                                        className="w-1/2 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        id="foodProtein"
+                                        placeholder="Enter protein (g)"
+                                        value={putProtein}
+                                        onChange={(e) => setPutProtein(e.target.value)}
+                                        required
+                                        min="0"
+                                    />
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="foodCarbs" className="block text-sm font-medium text-black mb-2">Carbs (g) <Carbs /></label>
+                                    <input
+                                        type="number"
+                                        step="0.01"
+                                        className="w-1/2 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        id="foodCarbs"
+                                        placeholder="Enter carbs (g)"
+                                        value={putCarbs}
+                                        onChange={(e) => setPutCarbs(e.target.value)}
+                                        required
+                                        min="0"
+                                    />
+                                </div>
+                                <div className="mb-6">
+                                    <label htmlFor="foodFat" className="block text-sm font-medium text-black mb-2">Fat (g) <Fat /></label>
+                                    <input
+                                        type="number"
+                                        step="0.01"
+                                        className="w-1/2 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        id="foodFat"
+                                        placeholder="Enter fat (g)"
+                                        value={putFat}
+                                        onChange={(e) => setPutFat(e.target.value)}
+                                        required
+                                        min="0"
+                                    />
+                                </div>
                             </div>
-                            <div className="modal-body">
-                                <form
-                                    className="customForm"
-                                    onSubmit={(e) => {
-                                        e.preventDefault();
-                                        onSubmitEditData(); // Trigger the submission logic
-                                    }}
-                                >
-                                    {errorMessage && (
-                                        <div className="alert alert-danger" role="alert">
-                                            {errorMessage}
-                                        </div>
-                                    )}
-                                    <div className="form-group">
-                                        <label htmlFor="foodCalories">Calories (kcal) <Calories /></label>
-                                        <input
-                                            type="number"
-                                            className="form-control"
-                                            id="foodCalories"
-                                            placeholder="Enter calories"
-                                            defaultValue={putCals ? putCals : null}
-                                            onChange={(e) => setPutCals(e.target.value)}
-                                            required
-                                            min="0"
-                                        />
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="foodProtein">Protein (g) <Protein /></label>
-                                        <input
-                                            type="number"
-                                            className="form-control"
-                                            id="foodProtein"
-                                            placeholder="Enter protein (g)"
-                                            defaultValue={putProtein ? putProtein : null}
-                                            onChange={(e) => setPutProtein(e.target.value)}
-                                            required
-                                            min="0"
-                                        />
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="foodCarbs">Carbs (g) <Carbs /></label>
-                                        <input
-                                            type="number"
-                                            className="form-control"
-                                            id="foodCarbs"
-                                            placeholder="Enter carbs (g)"
-                                            defaultValue={putCarbs ? putCarbs : null}
-                                            onChange={(e) => setPutCarbs(e.target.value)}
-                                            required
-                                            min="0"
-                                        />
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="foodFat">Fat (g) <Fat /></label>
-                                        <input
-                                            type="number"
-                                            className="form-control"
-                                            id="foodFat"
-                                            placeholder="Enter fat (g)"
-                                            defaultValue={putFat ? putFat : null}
-                                            onChange={(e) => setPutFat(e.target.value)}
-                                            required
-                                            min="0"
-                                        />
-                                    </div>
-                                </form>
-                            </div>
-                            <div className="modal-footer">
-                                <button
-                                    type="button"
-                                    className="closeout"
-                                    onClick={() => setIsModal(false)}
-                                >
-                                    Close
-                                </button>
-                                <button
-                                    type="submit"
-                                    className="save"
-                                    onClick={(e) => {
-                                        handleSubmit();
-                                        setIsModal(!isModal)
-                                    }}
-                                >
-                                    Save Changes
-                                </button>
-                            </div>
+                        </div>
+                        <div className="px-6 py-4 border-t border-gray-200 flex justify-end space-x-3">
+                            <button
+                                type="button"
+                                className="bg-gray-500 border-none text-white text-base font-bold py-3 px-5 rounded-lg cursor-pointer shadow-md transition-all duration-300 hover:bg-gray-600 hover:transform hover:-translate-y-0.5"
+                                onClick={() => {
+                                    setIsModal(false);
+                                    setErrorMessage('');
+                                }}
+                            >
+                                Close
+                            </button>
+                            <button
+                                type="button"
+                                className="bg-[#f28e59] border-none text-white text-base font-bold py-3 px-5 rounded-lg cursor-pointer shadow-md transition-all duration-300 hover:bg-[#e66c28] hover:transform hover:-translate-y-0.5 active:bg-[#cc5a1d] active:transform active:translate-y-0 active:shadow-sm"
+                                onClick={handleSubmit}
+                            >
+                                Save Changes
+                            </button>
                         </div>
                     </div>
                 </div>
-            ) : null}
+            )}
         </div>
     );
 };
