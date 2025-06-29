@@ -17,7 +17,7 @@ import {
 } from 'chart.js';
 import "./view.css";
 
-const url = "https://ahhnjzoatydxvxoosptr.supabase.co"
+const url = import.meta.env.VITE_SUPABASE_URL
 
 ChartJS.register(
     Title, Tooltip, Legend, ArcElement, CategoryScale,

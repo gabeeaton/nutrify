@@ -1,78 +1,115 @@
-.cover,
-html {
-  height: 100vh;
-  width: 100vw;
+@import "tailwindcss";
+
+/* Custom styles that work alongside Tailwind */
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow-y: auto; /* or just remove overflow-y setting */
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+/* Custom component styles - using regular CSS to avoid @apply issues */
+.cover-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: center;
+  height: 100vh;
+  width: 100vw;
   overflow-y: hidden;
-}
-
-body {
-  overflow: hidden;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
 }
 
-h1 {
+.cover-title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+  text-align: center;
+  margin-top: 0;
+}
+
+.cover-main-heading {
   font-size: 3rem;
   font-weight: bold;
+  color: white;
+  margin-bottom: 1.25rem;
+  transition: opacity 0.5s ease-in-out;
 }
-@media (max-width: 768px) {
-  h1 {
-    font-size: 2rem;
-  }
-  h2 {
-    font-size: 1.2rem;
-  }
-}
-h2 {
+
+.cover-sub-heading {
   font-size: 1.5rem;
   font-weight: 300;
-}
-.coverTitle h1 {
-  margin-bottom: 20px;
+  color: white;
+  margin-top: 0.625rem;
+  transition: opacity 0.5s ease-in-out;
 }
 
-.coverTitle h2 {
-  margin-top: 10px;
-}
-.coverTitle {
-  display: flex;
-  flex-direction: column;
-  justify-content: center; /* Center vertically */
-  align-items: center; /* Center horizontally */
-  height: 90vh;
-  text-align: center; /* Ensures text inside the container is centered */
-}
-body {
-  overflow: hidden;
-}
-ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  text-align: center;
-}
-h2 {
-  text-decoration: none !important;
-}
-li {
+.cover-button {
+  margin-top: 2.5rem;
+  background: #f7b38d;
+  border-radius: 50px;
+  border: 1px solid #f8d7b8;
+  color: white;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
   display: inline-block;
-  padding: 15px 0;
 }
 
-div h1,
-div h2 {
-  color: white; 
+.cover-button:hover {
+  background: #f8d7b8;
+  border: 1px solid #f7b38d;
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
+.cover-button-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  padding: 0.5rem 1.5rem;
 }
 
+.cover-button-text {
+  display: inline-block;
+  position: relative;
+  color: white;
+  font-size: 25px;
+}
+
+.cover-arrow {
+  display: inline-block;
+  margin-left: 0.25rem;
+  transition: transform 0.3s ease-in-out;
+}
+
+.cover-button:hover .cover-arrow {
+  transform: translateX(0.5rem);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .cover-main-heading {
+    @apply text-3xl;
+  }
+  .cover-sub-heading {
+    @apply text-lg;
+  }
+  .cover-button-text {
+    @apply text-xl;
+  }
+}
+
+@media (max-width: 1200px) {
+  .cover-title {
+    @apply xl:mt-12;
+  }
+}
+
+/* Animation keyframes */
 @keyframes fadeIn {
   0% {
     opacity: 0;
@@ -81,47 +118,21 @@ div h2 {
     opacity: 1;
   }
 }
+
 .fade-in {
   animation: fadeIn 0.5s ease-in-out forwards;
   opacity: 0;
 }
-.firsttext{
-  color: white;
-}
-.first {
-  margin-top: 40px;
-  background: #f7b38d;
-  border-radius: 50px;
-  border: 1px solid #f8d7b8;
-  transition: 0.3s ease;
-  color: white !important;
-}
-.first:hover {
-  background: #f8d7b8;
 
-  width: auto;
-  border: 1px solid #f7b38d;
+/* Legacy styles for backward compatibility - use sparingly */
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: center;
 }
-h2 {
+
+li {
   display: inline-block;
-  position: relative;
-  padding: 10px;
-  padding-right: 23px;
-  padding-left: 23px;
+  padding: 15px 0;
 }
-.arrow {
-  display: inline-block;
-  transition: transform 0.3s ease;
-  margin-left: 2px;
-}
-
-h2:hover .arrow {
-  transform: translateX(10px);
-}
-
-@media (max-width: 1200px) {
-  .coverTitle {
-    margin-top: 50px;
-  }
-}
-

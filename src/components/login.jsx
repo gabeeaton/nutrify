@@ -13,7 +13,7 @@ export function Login({ user }) {
     const [isSignUpActive, setIsSignUpActive] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
-    const url = "https://ahhnjzoatydxvxoosptr.supabase.co"
+    const url = import.meta.env.VITE_SUPABASE_URL
 
     if (user) {
         return <Navigate to='/'></Navigate>

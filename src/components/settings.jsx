@@ -10,7 +10,7 @@ const SettingsPage = ({ user }) => {
     const [carbs, setCarbs] = useState(null);
     const [submitMessage, setSubmitMessage] = useState("");
 
-    const url = "https://ahhnjzoatydxvxoosptr.supabase.co"
+    const url = import.meta.env.VITE_SUPABASE_URL
 
     const handleSubmit = async (e) => {
         e.preventDefault();

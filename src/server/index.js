@@ -10,20 +10,12 @@ app.use(cors());
 app.use(express.json());
 
 
-// const client = new Client({
-//   connectionString: 'postgresql://nutrify_db_user:q6k1t2u6kyZmEN9KDbpisfK6Iim61Spx@dpg-ctnhhia3esus73a22jag-a.virginia-postgres.render.com/nutrify_db',
-//   ssl: {
-//     rejectUnauthorized: false
-//   }
-// });
-
 const client = new Client({
   connectionString: `postgresql://postgres.ahhnjzoatydxvxoosptr:Sheckwes0..@aws-0-us-west-1.pooler.supabase.com:6543/postgres`,
   ssl: {
     rejectUnauthorized: false
   }
 });
-
 
 client.connect()
   .then(() => console.log("Connected to Supabase PostgreSQL"))
