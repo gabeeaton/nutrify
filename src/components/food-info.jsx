@@ -23,8 +23,8 @@ export function Foodinfo() {
     datasets: [
       {
         data: [fat, carbohydrates, protein],
-        backgroundColor: ['#f3d2af', '#ff9e4a', '#e66c28'], // Light beige, orange, dark orange
-        hoverBackgroundColor: ['#f0c9a0', '#ff7c29', '#d75f1d'], // Lighter beige, lighter orange, darkened orange
+        backgroundColor: ['#f3d2af', '#ff9e4a', '#e66c28'], 
+        hoverBackgroundColor: ['#f0c9a0', '#ff7c29', '#d75f1d'], 
         borderWidth: 1,
       }
     ]
